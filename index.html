@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Libscore</title>
+	<link href="http://fonts.googleapis.com/css?family=Source+Code+Pro:300" rel="stylesheet">
+	<link href="css/normalize.css" rel="stylesheet">
+	<link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+	<img id="body-flare" src="flare.png" />
+	<img id="body-flash" src="about.jpg" />
+	<main>
+		<header id="header">
+			<!-- Put help button here -->
+			<div id="code">
+				<span id="dong"><span id="shlong">window</span>.<span id="codesnippet">closure()</span></span>
+			</div>
+			<div id="header-logo">
+				Libsc<o>o<blorp></blorp></o>re
+			</div>
+			<hr >
+		</header>
+
+		<span id="description" class="text">
+			Search the top million sites for JavaScript libraries<span>.</span>
+		</span>
+
+		<div id="field--lookup" class="field">
+			<span class="field-label">
+				L<o>o</o><o>o</o>kup
+			</span>
+			<div class="field-input-container">
+				<div class="field-input-symbols"></div>
+				<input id="lookup" class="field-input" type="text" value="" />
+			</div>
+		</div>
+
+		<!-- Clicking one of these slowly types it into the box and hits enter. -->
+		<!-- Apply linear gradient overlay div when blacked out -->
+		<table id="legend--lookup" class="legend">
+			<tr>
+				<td>global</td>
+				<td>jQuery, yepnope</td>
+			</tr>
+			<tr>
+				<td>jquery</td>
+				<td>$<span>.</span>cookie, $<span>.</span>fn<span>.</span>Swype</td>
+			</tr>
+			<tr>
+				<td>script</td>
+				<td>script<span>:</span>b<span>.</span>akamai<span>.</span>net</td>
+			</tr>
+			<tr>
+				<td>domain</td>
+				<td>tumblr<span>.</span>com, etsy<span>.</span>com</td>
+			</tr>
+			
+		</table>
+
+		<!-- Make sure this stands out somehow once it's faded in -->
+		<div id="field--subscribe" class="field">
+			<span class="field-label">
+				Notify Me
+			</span>
+			<div class="field-input-container">
+				<div class="field-input-symbols"></div>
+				<input id="subscribe" class="field-input" type="text" value="email@domain.com" />
+			</div>
+		</div>
+
+		<table id="legend--subscribe" class="legend">
+			<tr>
+				<td style="text-align: justify">data is updated every two months. get notified of updates in summary format.</td>
+			</tr>
+		</table>
+	</main>
+	<footer>
+		<a class="text footer-text" href="http://twitter.com/shapiro">julian shapiro</a>
+		<span class="text footer-text--divider">+</span>
+		<a class="text footer-text" href="http://mattduvall.com/">matt duvall</a>
+		<span class="text footer-text--divider">+</span>
+		<a class="text footer-text" href="http://stripe.com/blog/crawler">stripe</a>
+	</footer>
+	<script src="../js/libs/cash.js"></script>
+	<script src="../velocity/build/velocity.js"></script>
+	<script src="../velocity/build/velocity.ui.js"></script>
+	<script src="../velocity/velocity.ui.custom.js"></script>
+	<script src="script.js"></script>
+</body>
+</html>
