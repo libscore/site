@@ -11,9 +11,7 @@ body {
   body main {
     position: absolute;
     left: 50%;
-    -webkit-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
-            transform: translateX(-50%);
+    transform: translateX(-50%);
     width: 9.8rem; }
   body #body-flare, body #body-flash {
     position: fixed;
@@ -103,8 +101,6 @@ div.field {
       font-weight: 100; }
       div.field div.field-input-container input.field-input:focus {
         outline: none; }
-      div.field div.field-input-container input.field-input::-moz-selection {
-        background: #2482be; }
       div.field div.field-input-container input.field-input::selection {
         background: #2482be; }
     div.field div.field-input-container .field-input-symbols {
@@ -133,15 +129,14 @@ div.field {
 footer {
   position: fixed;
   bottom: 0.65rem;
-  left: calc(50% - 3rem);
+  left: calc(50% - 5rem);
   text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.35);
   font-size: 8px; }
   footer .footer-text {
     opacity: 0.4;
     color: #e1ff48;
     text-transform: uppercase;
-    -webkit-transition: 250ms all;
-            transition: 250ms all; }
+    transition: 250ms all; }
     footer .footer-text:hover {
       opacity: 0.85;
       color: #f1ff07; }
@@ -168,8 +163,6 @@ main, #field--subscribe, #legend--subscribe, footer {
   #code #dong {
     display: inline-block; }
   #code #codesnippet {
-    -webkit-transform-origin: 50% 50% -9px;
-        -ms-transform-origin: 50% 50% -9px;
-            transform-origin: 50% 50% -9px;
+    transform-origin: 50% 50% -9px;
     display: inline-block;
     text-align: left; }
