@@ -1,0 +1,175 @@
+body {
+  padding: 1.65rem;
+  background: #191f25;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQIW2NkYGAwBuKzQAwGjDAGNgGwSgwVAFCGAgUGpiTrAAAAAElFTkSuQmCC), -webkit-radial-gradient(circle, #191f25, #050b14);
+  color: #f4f4f4;
+  text-align: center;
+  font-family: "Avenir-Light";
+  font-size: 0.85rem;
+  text-shadow: 0px 0px 2px #1b1b1b, 0px 0px 20px rgba(225, 225, 255, 0.45);
+  cursor: default; }
+  body main {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+            transform: translateX(-50%);
+    width: 9.8rem; }
+  body #body-flare, body #body-flash {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 85%; }
+  body #body-flare {
+    z-index: -1; }
+
+#header-logo o {
+  display: inline;
+  position: relative;
+  text-shadow: 0px 0px 0px rgba(55, 143, 254, 0.65);
+  /* Velocity($("blorp"), { scale: [ 1, 0 ] }, { duration: 3000, display: "block" }) */ }
+  #header-logo o blorp {
+    display: none;
+    left: 0.12rem;
+    bottom: 0.80rem;
+    position: absolute;
+    width: 1.4rem;
+    height: 1.4rem;
+    background: #f4f4f4;
+    border-radius: 1rem; }
+
+#field--subscribe o {
+  _color: #d8d8d8; }
+
+.text-highlight, .legend td:nth-child(even) span, footer .footer-text--divider {
+  color: #5bb7ff; }
+
+a {
+  text-decoration: none; }
+
+span.text {
+  display: inline-block;
+  letter-spacing: 0.025rem; }
+
+header {
+  width: 9.35rem;
+  font-family: "Avenir-Black";
+  text-transform: uppercase;
+  font-size: 2rem;
+  text-align: center;
+  text-shadow: 0px 0px 1px black;
+  letter-spacing: 0.025rem; }
+  header #header-logo {
+    text-shadow: 0px 0px 0px rgba(225, 245, 225, 0.5); }
+  header hr {
+    height: 5px;
+    width: 9.75rem;
+    margin: -0.25rem 0rem 0rem 0.05rem;
+    opacity: 0;
+    background: #d9f245;
+    border: none; }
+
+#description {
+  margin: 0.9rem 0rem 1.4rem 0em;
+  color: #f3f3f3;
+  letter-spacing: 0.035rem;
+  line-height: 1.075rem; }
+  #description span {
+    color: #daeb7c; }
+
+div.field {
+  margin-top: 2rem; }
+  div.field span.field-label {
+    display: inline-block;
+    margin-bottom: 0.375rem;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    letter-spacing: 0.075rem; }
+  div.field div.field-input-container {
+    position: static;
+    width: 92.5%;
+    margin: 0 auto; }
+    div.field div.field-input-container input.field-input {
+      width: 100%;
+      padding-bottom: 0.175rem;
+      border: none;
+      border-bottom: 1px solid #1d1d1d;
+      box-shadow: 0px 3px 0px -2px #1c3348;
+      background: transparent;
+      color: #a7c03e;
+      font-family: "Avenir-Light";
+      letter-spacing: 0.03rem;
+      text-align: center;
+      font-weight: 100; }
+      div.field div.field-input-container input.field-input:focus {
+        outline: none; }
+      div.field div.field-input-container input.field-input::-moz-selection {
+        background: #2482be; }
+      div.field div.field-input-container input.field-input::selection {
+        background: #2482be; }
+    div.field div.field-input-container .field-input-symbols {
+      position: absolute;
+      margin-top: 0.2rem;
+      left: 45%;
+      color: #e8ff92;
+      font-size: 0.9rem; }
+
+.legend {
+  margin: 1.15rem auto 0rem auto;
+  width: 92%;
+  opacity: 0.225;
+  text-align: left;
+  text-shadow: 0px 0px 1px #0a0a0a;
+  font-family: "Source Code Pro";
+  font-size: 0.55rem; }
+  .legend tr:nth-child(1), .legend tr:nth-child(4) {
+    opacity: 0.90; }
+  .legend td:nth-child(odd) {
+    color: #b9b9b9; }
+  .legend td:nth-child(even) {
+    color: #ddeb4c;
+    text-align: right; }
+
+footer {
+  position: fixed;
+  bottom: 0.65rem;
+  left: calc(50% - 3rem);
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.35);
+  font-size: 8px; }
+  footer .footer-text {
+    opacity: 0.4;
+    color: #e1ff48;
+    text-transform: uppercase;
+    -webkit-transition: 250ms all;
+            transition: 250ms all; }
+    footer .footer-text:hover {
+      opacity: 0.85;
+      color: #f1ff07; }
+
+/* Start States */
+main, #field--subscribe, #legend--subscribe, footer {
+  display: none; }
+
+#body-flare, #body-flash {
+  opacity: 0; }
+
+#code {
+  display: none;
+  position: absolute;
+  top: -0.45rem;
+  right: -0.1rem;
+  font-size: 0.3rem;
+  font-family: "Source Code Pro";
+  font-weight: 300;
+  color: #e1ff48;
+  text-transform: none;
+  text-shadow: 0px 0px 15px rgba(225, 219, 96, 0.5);
+  z-index: 55; }
+  #code #dong {
+    display: inline-block; }
+  #code #codesnippet {
+    -webkit-transform-origin: 50% 50% -9px;
+        -ms-transform-origin: 50% 50% -9px;
+            transform-origin: 50% 50% -9px;
+    display: inline-block;
+    text-align: left; }

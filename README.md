@@ -1,0 +1,4 @@
+libscore
+========
+
+Open source stats.
