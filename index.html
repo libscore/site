@@ -6,81 +6,138 @@
 	<link href="http://fonts.googleapis.com/css?family=Source+Code+Pro:300" rel="stylesheet">
 	<link href="css/normalize.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
+	<link href="css/hint.css" rel="stylesheet">
 </head>
 <body>
+	<div id="body-bigScore"></div>
+	<div id="body-error">X</div>
 	<img id="body-flare" src="flare.png" />
-	<img id="body-flash" src="about.jpg" />
+
+	<header id="header">
+		<div id="header-code">
+			<span id="header-code-object">window.</span><span id="header-code-property">closure()</span>
+		</div>
+		<div id="header-logo">
+			Libsc<o>o<span></span></o>re
+		</div>
+		<div id="header-hr"></div>
+	</header>
+	
 	<main>
-		<header id="header">
-			<!-- Put help button here -->
-			<div id="code">
-				<span id="dong"><span id="shlong">window</span>.<span id="codesnippet">closure()</span></span>
-			</div>
-			<div id="header-logo">
-				Libsc<o>o<blorp></blorp></o>re
-			</div>
-			<hr >
-		</header>
+		<div id="about">
+			<p>
+				Libscore scans the top million sites to detect JavaScript library usage<span>.</span>
+			</p>
+			<p>
+				It provides open source developers the data they need to measure their impact<span>.</span>
+			</p>
+			<p>
+				It detects modules loaded via RequireJS, jQuery plugins, window variables produced by non-jQuery plugins, and external scripts<span>.</span>
+			</p>
+			<p>
+				Libscore was created by <a href="http://twitter.com/shapiro">Julian Shapiro</a>. <a href="http://twitter.com/mduvall_">Matt DuVall</a> built the API<span>.</span>
+			</p>
+			<p>
+				Sponsored by <a href="http://stripe.com">Stripe</a> and <a href="http://digitalocean.com">Digital Ocean</a><span>.</span>
+			</p>
+			<p>
+				Learn more <a href="http://hacks.mozilla.org/libscore/#usage">here</a><span>.</span>
+			</p>
+		</div>
 
-		<span id="description" class="text">
+		<div id="description">
 			Search the top million sites for JavaScript libraries<span>.</span>
-		</span>
+		</div>
 
-		<div id="field--lookup" class="field">
+		<form 
+			id="field--subscribe"
+			class="field hint--right"
+			data-hint="Get emailed a data update every two months."
+			action="//libscore.us9.list-manage.com/subscribe/post?u=30c0d4c5d64d5d9fcf7b76792&amp;id=69666fd115" method="post" name="mc-embedded-subscribe-form"
+			target="_blank"
+			novalidate
+		>
 			<span class="field-label">
-				L<o>o</o><o>o</o>kup
+				Su<o>b</o>scribe
 			</span>
 			<div class="field-input-container">
 				<div class="field-input-symbols"></div>
-				<input id="lookup" class="field-input" type="text" value="" />
+				<input id="subscribe" name="EMAIL" class="field-input" type="text" value="email@domain.com" />
 			</div>
-		</div>
+			<div style="position: absolute; left: -5000px;">
+				<input type="text" name="b_30c0d4c5d64d5d9fcf7b76792_69666fd115" tabindex="-1" value="">
+			</div>
+		</form>
 
-		<!-- Clicking one of these slowly types it into the box and hits enter. -->
-		<!-- Apply linear gradient overlay div when blacked out -->
-		<table id="legend--lookup" class="legend">
+		<div id="field--charts" class="field">
+			<span class="field-label">
+				Charts
+			</span>
+		</div>
+		<table id="legend--search-charts" class="legend">
 			<tr>
-				<td>global</td>
-				<td>jQuery, yepnope</td>
+				<td>
+					<span class="legend--search-option" data-query="*">Top Libs</span>
+				</td>
+				<td>
+					<span class="legend--search-option" data-query="*.*">Top Sites</span>
+				</td>
+				<!-- top rising, top falling -->
 			</tr>
-			<tr>
-				<td>jquery</td>
-				<td>$<span>.</span>cookie, $<span>.</span>fn<span>.</span>Swype</td>
-			</tr>
-			<tr>
-				<td>script</td>
-				<td>script<span>:</span>b<span>.</span>akamai<span>.</span>net</td>
-			</tr>
-			<tr>
-				<td>domain</td>
-				<td>tumblr<span>.</span>com, etsy<span>.</span>com</td>
-			</tr>
-			
 		</table>
 
-		<!-- Make sure this stands out somehow once it's faded in -->
-		<div id="field--subscribe" class="field">
+		<div id="field--search" class="field">
 			<span class="field-label">
-				Notify Me
+				Se<o>a</o>rch
+				<a id="field--search-help" class="hint" data-hint="Click to learn how Libscore's search works." href="http://hacks.mozilla.org/libscore/#usage">(?)</a>
 			</span>
 			<div class="field-input-container">
 				<div class="field-input-symbols"></div>
-				<input id="subscribe" class="field-input" type="text" value="email@domain.com" />
+				<input id="search" class="field-input" type="text" value="jQuery" />
 			</div>
 		</div>
-
-		<table id="legend--subscribe" class="legend">
+		<table id="legend--search" class="legend">
 			<tr>
-				<td style="text-align: justify">data is updated monthly. get notified of updates in summary format. no spam.</td>
+				<td>global:</td>
+				<td class="hint--right" data-hint="Find sites with a global variable.">
+					<span class="legend--search-option" data-query="jQuery">jQuery</span>,
+					<span class="legend--search-option" data-query="Modernizr">Modernizr</span>
+				</td>
+			</tr>
+			<tr>
+				<td>jquery:</td>
+				<td class="hint--right" data-hint="Find sites with a jQuery plugin.">
+					<span class="legend--search-option" data-query="$.Velocity">$<span class="accent">.</span>Velocity</span>,
+					<span class="legend--search-option" data-query="$.fn.ui">$<span class="accent">.</span>fn<span class="accent">.</span>ui</span>
+				</td>
+			</tr>
+			<tr>
+				<td>script:</td>
+				<td class="hint--right" data-hint="Find sites with an external script.">
+					<span class="legend--search-option" data-query="s.adroll.com">script<span class="accent">:</span>s<span class="accent">.</span>adroll<span class="accent">.</span>com</span>
+				</td>
+			</tr>
+			<tr>
+				<td>domain:</td>
+				<td class="hint--right" data-hint="Find all libraries on a site.">
+					<span class="legend--search-option" data-query="tumblr.com">tumblr<span class="accent">.</span>com</span>,
+					<span class="legend--search-option" data-query="do.co">do<span class="accent">.</span>co</span>
+				</td>
 			</tr>
 		</table>
+		<!-- delta trends -->
+		<div>
+			<div id="data--search" class="data">
+				<table id="data-cols"><tr></tr></table>
+			</div>
+		</div>
 	</main>
 	<footer>
-		<a class="text footer-text" href="http://twitter.com/shapiro">julian shapiro</a>
-		<span class="text footer-text--divider">+</span>
-		<a class="text footer-text" href="http://twitter.com/mduvall_">matt duvall</a>
-		<span class="text footer-text--divider">+</span>
-		<a class="text footer-text" href="http://stripe.com/blog/crawler">stripe</a>
+		<a class="footer-text" href="http://twitter.com/shapiro">julian shapiro</a>
+		<span class="footer-text--divider">+</span>
+		<a class="footer-text" href="http://stripe.com/blog/libscore">stripe</a>
+		<span class="footer-text--divider">+</span>
+		<a class="footer-text" href="http://digitalocean.com/blog/libscore">digital ocean</a>
 	</footer>
 	<script src="../../js/libs/cash.js"></script>
 	<script src="../../velocity/build/velocity.js"></script>
