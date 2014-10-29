@@ -1,168 +1,242 @@
+/****************
+    Template
+****************/
+@font-face {
+  font-family: "Avenir Black";
+  src: url(../font/Avenir_Black.ttf); }
+@font-face {
+  font-family: "Avenir Light";
+  src: url(../font/Avenir_Light.ttf); }
+.text-faded {
+  opacity: 0.65; }
+
+.text-grey, #description span, #about span, .legend td:nth-child(odd), .data td:nth-child(odd), #legend--subscribe tr td {
+  color: #b9b9b9; }
+
+.text-yellow, a, a:visited, #header #header-code #header-code-property, .field div.field-input-container input.field-input, .data td:nth-child(odd), footer .footer-text {
+  color: #d9f245; }
+
+.text-blue, a:hover, a .accent, [data-query]:hover, [data-query] .accent, #header #header-code #header-code-property:hover, footer .footer-text--divider, #field--search-help:hover {
+  color: #5bb7ff; }
+
+.text-blue-dark, a:active, [data-query]:active, #header #header-code #header-code-property:active {
+  color: #3874a3; }
+
+.text-green, body #body-bigScore, .data td:nth-child(even) {
+  color: #90ffb2; }
+
+.text-green-dark, .field div.field-input-container input.field-input:focus {
+  color: #5aa074; }
+
+.text-red {
+  color: #ff274d; }
+
 body {
-  padding: 1.65rem;
-  background: #191f25;
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQIW2NkYGAwBuKzQAwGjDAGNgGwSgwVAFCGAgUGpiTrAAAAAElFTkSuQmCC), -webkit-radial-gradient(circle, #191f25, #050b14);
-  color: #f4f4f4;
+  cursor: default;
+  overflow: hidden;
+  background: -webkit-radial-gradient(circle, #191f29, #050b18);
+  color: #f3f3f3;
   text-align: center;
-  font-family: "Avenir-Light";
-  font-size: 0.85rem;
-  text-shadow: 0px 0px 2px #1b1b1b, 0px 0px 20px rgba(225, 225, 255, 0.45);
-  cursor: default; }
+  font-family: "Avenir Light";
+  font-size: 0.90rem; }
   body main {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     width: 9.8rem; }
-  body #body-flare, body #body-flash {
+  body #body-flare {
     position: fixed;
     left: 0;
     top: 0;
-    width: 85%; }
-  body #body-flare {
-    z-index: -1; }
-
-#header-logo o {
-  display: inline;
-  position: relative;
-  text-shadow: 0px 0px 0px rgba(55, 143, 254, 0.65);
-  /* Velocity($("blorp"), { scale: [ 1, 0 ] }, { duration: 3000, display: "block" }) */ }
-  #header-logo o blorp {
-    display: none;
-    left: 0.12rem;
-    bottom: 0.80rem;
+    width: 100%; }
+  body #body-error {
+    z-index: -1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding-top: 10vh;
+    background: #ff1718;
+    color: #091418;
+    text-align: center;
+    font-size: 80vh; }
+  body #body-bigScore {
     position: absolute;
-    width: 1.4rem;
-    height: 1.4rem;
-    background: #f4f4f4;
-    border-radius: 1rem; }
+    left: 50%;
+    bottom: -16vw;
+    transform: translateX(-50%);
+    font-size: 40vw; }
+    body #body-bigScore:after {
+      content: "Score";
+      position: absolute;
+      top: 4vw;
+      right: 1.75vw;
+      font-size: 1.35vw;
+      letter-spacing: 0.025vw; }
 
-#field--subscribe o {
-  _color: #d8d8d8; }
-
-.text-highlight, .legend td:nth-child(even) span, footer .footer-text--divider {
-  color: #5bb7ff; }
-
-a {
+a, a:visited {
   text-decoration: none; }
 
-span.text {
-  display: inline-block;
-  letter-spacing: 0.025rem; }
+a, [data-query] {
+  cursor: pointer; }
 
-header {
-  width: 9.35rem;
-  font-family: "Avenir-Black";
+#header {
+  padding-top: 1.65rem;
+  font-family: "Avenir Black";
   text-transform: uppercase;
-  font-size: 2rem;
-  text-align: center;
-  text-shadow: 0px 0px 1px black;
+  font-size: 2.2rem;
   letter-spacing: 0.025rem; }
-  header #header-logo {
+  #header #header-code {
+    margin: 0rem auto -0.35rem auto;
+    width: 10.65rem;
+    text-align: right;
+    font-size: 0.35rem;
+    font-family: "Source Code Pro";
+    text-transform: none; }
+    #header #header-code #header-code-property {
+      display: inline-block;
+      cursor: pointer; }
+  #header #header-logo {
     text-shadow: 0px 0px 0px rgba(225, 245, 225, 0.5); }
-  header hr {
-    height: 5px;
-    width: 9.75rem;
-    margin: -0.25rem 0rem 0rem 0.05rem;
-    opacity: 0;
-    background: #d9f245;
-    border: none; }
+    #header #header-logo o {
+      display: inline;
+      position: relative;
+      text-shadow: 0px 0px 0px rgba(55, 143, 254, 0.65); }
+      #header #header-logo o span {
+        left: 0.12rem;
+        bottom: 0.80rem;
+        position: absolute;
+        width: 1.4rem;
+        height: 1.4rem;
+        background: #f4f4f4;
+        border-radius: 1rem; }
+  #header #header-hr {
+    margin: -0.15rem auto 0rem auto;
+    height: 0.3rem;
+    width: 10.65rem;
+    background: #d9f245; }
 
-#description {
-  margin: 0.9rem 0rem 1.4rem 0em;
-  color: #f3f3f3;
+#description, #about {
+  margin: 0.85rem 0rem 0.5rem 0rem;
   letter-spacing: 0.035rem;
-  line-height: 1.075rem; }
-  #description span {
-    color: #daeb7c; }
+  line-height: 1.035rem; }
+  #description p, #about p {
+    margin-top: 0rem; }
 
-div.field {
-  margin-top: 2rem; }
-  div.field span.field-label {
+#about {
+  font-size: 0.825rem; }
+
+.field, .field {
+  margin-top: 1.65rem; }
+  .field span.field-label, .field span.field-label {
     display: inline-block;
-    margin-bottom: 0.375rem;
+    position: relative;
+    margin-bottom: 0.5rem;
     text-transform: uppercase;
     font-size: 0.6rem;
     letter-spacing: 0.075rem; }
-  div.field div.field-input-container {
+  .field div.field-input-container, .field div.field-input-container {
     position: static;
-    width: 92.5%;
+    width: 100%;
     margin: 0 auto; }
-    div.field div.field-input-container input.field-input {
-      width: 100%;
-      padding-bottom: 0.175rem;
-      border: none;
-      border-bottom: 1px solid #1d1d1d;
-      box-shadow: 0px 3px 0px -2px #1c3348;
+    .field div.field-input-container input.field-input, .field div.field-input-container input.field-input {
+      transition: color 550ms;
+      opacity: 0.85;
       background: transparent;
-      color: #a7c03e;
-      font-family: "Avenir-Light";
+      border: none;
       letter-spacing: 0.03rem;
       text-align: center;
-      font-weight: 100; }
-      div.field div.field-input-container input.field-input:focus {
-        outline: none; }
-      div.field div.field-input-container input.field-input::selection {
-        background: #2482be; }
-    div.field div.field-input-container .field-input-symbols {
+      font-size: 0.8rem; }
+      .field div.field-input-container input.field-input:focus, .field div.field-input-container input.field-input:focus {
+        outline: none;
+        color: #caf400; }
+      .field div.field-input-container input.field-input::selection, .field div.field-input-container input.field-input::selection {
+        background: #c0d230; }
+    .field div.field-input-container .field-input-symbols, .field div.field-input-container .field-input-symbols {
       position: absolute;
-      margin-top: 0.2rem;
       left: 45%;
       color: #e8ff92;
-      font-size: 0.9rem; }
+      font-size: 0.85rem; }
+
+.legend, .data {
+  margin: 0.3rem auto 0rem auto;
+  opacity: 0.65;
+  font-family: "Source Code Pro";
+  font-size: 0.575rem;
+  text-align: left;
+  line-height: 0.7rem; }
+  .legend tr:nth-child(1) td, .data tr:nth-child(1) td {
+    padding-top: 0.5rem; }
+  .legend td, .data td {
+    width: 100%;
+    white-space: nowrap; }
+    .legend td:nth-child(even), .data td:nth-child(even) {
+      text-align: right; }
 
 .legend {
-  margin: 1.15rem auto 0rem auto;
-  width: 92%;
-  opacity: 0.225;
-  text-align: left;
-  text-shadow: 0px 0px 1px #0a0a0a;
-  font-family: "Source Code Pro";
-  font-size: 0.55rem; }
-  .legend tr:nth-child(1), .legend tr:nth-child(4) {
-    opacity: 0.90; }
-  .legend td:nth-child(odd) {
-    color: #b9b9b9; }
-  .legend td:nth-child(even) {
-    color: #ddeb4c;
-    text-align: right; }
+  transition: opacity 135ms; }
+  .legend:hover {
+    opacity: 1; }
+
+.data {
+  display: none;
+  overflow-y: scroll;
+  position: absolute;
+  max-height: 18.5rem;
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQIW2NkYGAwBuKzQAwGjDAGNgGwSgwVAFCGAgUGpiTrAAAAAElFTkSuQmCC);
+  line-height: 0.75rem; }
+  .data #data-cols {
+    opacity: 0.725;
+    margin-bottom: -0.2rem;
+    letter-spacing: 0.05rem;
+    font-family: "Avenir Light"; }
 
 footer {
   position: fixed;
-  bottom: 0.65rem;
-  left: calc(50% - 5rem);
-  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.35);
-  font-size: 8px; }
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #858585;
+  font-size: 0.4rem; }
   footer .footer-text {
-    opacity: 0.4;
-    color: #e1ff48;
+    opacity: 0.475;
     text-transform: uppercase;
-    transition: 250ms all; }
-    footer .footer-text:hover {
-      opacity: 0.85;
-      color: #f1ff07; }
+    letter-spacing: 0.04rem;
+    word-spacing: -0.075rem; }
+  footer .footer-text--divider {
+    padding: 0rem 0.10rem; }
 
-/* Start States */
-main, #field--subscribe, #legend--subscribe, footer {
+/**************
+    Custom
+**************/
+#legend--search-charts {
+  opacity: 0.85;
+  margin-top: -0.3rem; }
+  #legend--search-charts td {
+    width: 10rem;
+    letter-spacing: 0.025rem;
+    font-size: 0.75rem;
+    font-family: "Avenir Light";
+    color: #ddeb4c; }
+    #legend--search-charts td:nth-child(odd) {
+      padding-right: 0.6rem;
+      text-align: right; }
+    #legend--search-charts td:nth-child(even) {
+      text-align: left; }
+
+#field--search-help {
+  position: absolute;
+  right: -0.925rem;
+  top: -0.02rem;
+  color: #b5b5b5;
+  font-size: 0.4rem; }
+  #field--search-help:hover {
+    border-bottom: 1px solid #3874a3; }
+
+/*************
+    Start
+*************/
+main, #body-flare, #body-bigScore, #header-logo o span, #about, footer {
   display: none; }
 
-#body-flare, #body-flash {
+#body-error, #header-code, #header-logo, #header-hr {
   opacity: 0; }
-
-#code {
-  display: none;
-  position: absolute;
-  top: -0.45rem;
-  right: -0.1rem;
-  font-size: 0.3rem;
-  font-family: "Source Code Pro";
-  font-weight: 300;
-  color: #e1ff48;
-  text-transform: none;
-  text-shadow: 0px 0px 15px rgba(225, 219, 96, 0.5);
-  z-index: 55; }
-  #code #dong {
-    display: inline-block; }
-  #code #codesnippet {
-    transform-origin: 50% 50% -9px;
-    display: inline-block;
-    text-align: left; }
