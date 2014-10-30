@@ -117,7 +117,7 @@ var UI = {
 		});
 
 		// fill in api here
-		function request (data) {
+		function request (data, callback) {
 			var response = data;
 
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(response)) {
@@ -125,33 +125,48 @@ var UI = {
 			} else {
 				response = data;
 			}
+			var apiResponse;
+			var apiServer = 'http://libscore.jsonresume.org';
+			var apiLibrariesPath = '/v1/libraries';
 
 			switch (response) {
 				case "domain":
 					UI.requestTarget = "domain";
 
-					return {
+					apiResponse = {
 						matches: [ [ "jQuery", "jquery/jquery", 9999 ], [ "Hogan", "jack/hogan", 3180 ], [ "Modernizr", "html5/Modernizr", 1739 ], [ "$.fn.velocity", "julianshapiro/velocity", 804 ], [ "$.fn.zipzap", null, 773 ] ]
 					};
 
 				case "*":
 					UI.requestTarget = "libs";
-
-					return {
+					$.ajax({
+						url: apiServer + apiLibrariesPath,
+						contentType: "application/json",
+						success: function (res) {
+							var matches = [];
+							// Convert API response into format that this website is setup for
+							res.results.forEach(function(lib){
+								matches.push([lib.library, 'jquery/jquery', lib.rank]);
+							});
+							callback({matches: matches});
+						}
+					});
+					/*
+					apiResponse = {
 						matches: [ [ "jQuery", "jquery/jquery", 9999 ], [ "Hogan", "jack/hogan", 3180 ], [ "Modernizr", "html5/Modernizr", 1739 ], [ "$.fn.velocity", "julianshapiro/velocity", 804 ], [ "$.fn.zipzap", null, 773 ] ]
 					};
-
+					*/
 				case "*.*":
 					UI.requestTarget = "sites";
 
-					return {
+					apiResponse = {
 						matches: [ [ "msn.com", 1 ], [ "yahoo.com", 2 ], [ "tumblr.com", 3 ], [ "bbc.co.uk", 4 ], [ "mozilla.com", 5 ], [ "stripe.com", 6 ], [ "buzzfeed.com", 7 ], [ "ebay.com", 8 ] ]
 					};
 
 				default:
 					UI.requestTarget = "lookup";
 
-					return {
+					apiResponse = {
 						score: Math.round(10000 * Math.random()),
 						matches: [ [ "msn.com", 4 ], [ "yahoo.com", 6 ], [ "tumblr.com", 18 ], [ "bbc.co.uk", 22 ], [ "mozilla.com", 26 ], [ "stripe.com", 182 ], [ "buzzfeed.com", 1301 ], [ "ebay.com", 14030 ] ]
 					};
@@ -162,104 +177,105 @@ var UI = {
 			$subscribe[0].submit();
 			$target.val("Check your email.");
 		} else {	
-			var response = request(data);
+			// request() has to make an async call so it has a callback now
+			request(data, function(response) {
+				if (response) {
+					var $html = "";
 
-			if (response) {
-				var $html = "";
+					response.matches.forEach(function(match) {
+						$html += "<tr>";
 
-				response.matches.forEach(function(match) {
-					$html += "<tr>";
+						match.forEach(function(matchData, i) {
+							switch (UI.requestTarget) {
+								case "domain":
+									$dataCols.html("<td>lib</td><td>count</td>");
 
-					match.forEach(function(matchData, i) {
-						switch (UI.requestTarget) {
-							case "domain":
-								$dataCols.html("<td>lib</td><td>count</td>");
+									switch (i) {
+										case 0:
+											matchData = "<a href='http://" + (match[i+1] ? ("github.com/" + match[i+1]) : "hacks.moz.org/libscore/#helplinks") + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + "</a>  <span class='text-faded'>" + (match[i+1] ? "⇗" : "?") + "</span>";
+											break;
 
-								switch (i) {
-									case 0:
-										matchData = "<a href='http://" + (match[i+1] ? ("github.com/" + match[i+1]) : "hacks.moz.org/libscore/#helplinks") + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + "</a>  <span class='text-faded'>" + (match[i+1] ? "⇗" : "?") + "</span>";
-										break;
+										case 1:
+											return true;
+									}
+									break;
 
-									case 1:
-										return true;
-								}
-								break;
+								case "libs":
+									$dataCols.html("<td>lib (<a href='dump.txt' class='text-grey'>download full list</a>)</td><td>count</td>");
 
-							case "libs":
-								$dataCols.html("<td>lib (<a href='dump.txt' class='text-grey'>download full list</a>)</td><td>count</td>");
+									switch (i) {
+										case 0:
+											matchData = "<a href='http://" + (match[i+1] ? ("github.com/" + match[i+1]) : "hacks.moz.org/libscore/#helplinks") + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + "  <span class='text-faded'>" + (match[i+1] ? "⇗" : "?") + "</span></a>";
+											break;
 
-								switch (i) {
-									case 0:
-										matchData = "<a href='http://" + (match[i+1] ? ("github.com/" + match[i+1]) : "hacks.moz.org/libscore/#helplinks") + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + "  <span class='text-faded'>" + (match[i+1] ? "⇗" : "?") + "</span></a>";
-										break;
+										case 1:
+											return true;
+									}
+									break;
 
-									case 1:
-										return true;
-								}
-								break;
+								case "sites":
+									$dataCols.html("<td>site</td><td>rank</td>");
 
-							case "sites":
-								$dataCols.html("<td>site</td><td>rank</td>");
+									switch (i) {
+										case 0:
+											matchData = "<span data-query='" + matchData + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + "</span><span class='text-grey'>...</span>";
+											break;
 
-								switch (i) {
-									case 0:
-										matchData = "<span data-query='" + matchData + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + "</span><span class='text-grey'>...</span>";
-										break;
+										case 1:
+											matchData = "<span class='text-green-dark'>#</span>" + matchData;
+											break;
+									}
+									break;
 
-									case 1:
-										matchData = "<span class='text-green-dark'>#</span>" + matchData;
-										break;
-								}
-								break;
+								case "lookup":
+									// also pop open an alert when 'get badge' is clicked telling people to subscribe since badge code is about to change
+									$dataCols.html("<td>" + response.matches.length + " sites (<a href='http://status.io/blah/' class='text-grey'>get badge</a>)</td><td>rank</td>");
 
-							case "lookup":
-								// also pop open an alert when 'get badge' is clicked telling people to subscribe since badge code is about to change
-								$dataCols.html("<td>" + response.matches.length + " sites (<a href='http://status.io/blah/' class='text-grey'>get badge</a>)</td><td>rank</td>");
+									switch (i) {
+										case 0:
+											matchData = "<a href='http://" + matchData + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + " <span class='text-faded'>⇗</span></a>";
+											break;
 
-								switch (i) {
-									case 0:
-										matchData = "<a href='http://" + matchData + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + " <span class='text-faded'>⇗</span></a>";
-										break;
+										case 1:
+											matchData = "<span class='text-green-dark'>#</span>" + matchData;
+											break;
+									}
+									break;
+							}
 
-									case 1:
-										matchData = "<span class='text-green-dark'>#</span>" + matchData;
-										break;
-								}
-								break;
-						}
+							$html += "<td>" + matchData + "</td>";
+						});
 
-						$html += "<td>" + matchData + "</td>";
+						$html += "</tr>";
 					});
+					
+					$data.find("table").eq(1).remove();
+					$data.append("<table>" + $html + "</table>");
 
-					$html += "</tr>";
-				});
-				
-				$data.find("table").eq(1).remove();
-				$data.append("<table>" + $html + "</table>");
+					if (UI.requestTarget === "lookup") {
+						$bigCount.html(response.score.toString());
+						UI.showCount();
+					} else {
+						UI.hideCount();
+					}
 
-				if (UI.requestTarget === "lookup") {
-					$bigCount.html(response.score.toString());
-					UI.showCount();
+					Velocity(
+						$data,
+						"transition.vanishTopIn",
+						{ 
+							duration: 475,
+							complete: function() {
+								$data.parent().css("height", $data.outerHeight() + "px");
+							}
+						});
 				} else {
-					UI.hideCount();
+					Velocity.RunSequence([
+						{ elements: $field_search, properties: "callout.shake", options: { duration: 375 } },
+						{ elements: $error, properties: { opacity: 1 }, options: { sequenceQueue: false,  duration: 200, easing: "linear" } },
+						{ elements: $error, properties: "reverse", options: { duration: 150 } },
+					]);
 				}
-
-				Velocity(
-					$data,
-					"transition.vanishTopIn",
-					{ 
-						duration: 475,
-						complete: function() {
-							$data.parent().css("height", $data.outerHeight() + "px");
-						}
-					});
-			} else {
-				Velocity.RunSequence([
-					{ elements: $field_search, properties: "callout.shake", options: { duration: 375 } },
-					{ elements: $error, properties: { opacity: 1 }, options: { sequenceQueue: false,  duration: 200, easing: "linear" } },
-					{ elements: $error, properties: "reverse", options: { duration: 150 } },
-				]);
-			}
+			});
 		}
 	},
 	activateO: function() {

@@ -5,8 +5,10 @@ var NodeCache = require( "node-cache" );
 var cors = require('cors');
 
 var app = express();
-app.use(cors());
 
+// CORS
+app.use(cors());
+app.options('*', cors());
 
 // Config variables
 var MONGO_URL = 'mongodb://localhost:27017/libscore';
