@@ -361,8 +361,8 @@ Velocity.RunSequence([
 	{ elements: $header_logo, properties: { textShadowBlur: 70 }, options: { duration: 3000, complete: UI.activateO } }
 ]);
 
-$("#legend--search .legend--search-option").each(function(el, i) {
-	Velocity(el, { color: "#5bb7ff" }, { delay: Math.random() * 10000, duration: 450 });
+$("#legend--search .legend--search-option .accent").each(function(el, i) {
+	Velocity(el, { color: "#fff" }, { delay: Math.random() * 10000, duration: 450 });
 	Velocity(el, "reverse");
 });
 
