@@ -32,10 +32,10 @@ MongoClient.connect(MONGO_URL, function(err, db) {
       var collection = db.collection('usage');
       var mostRecentCrawlTime = crawl.crawlTime;
       // Find some documents
-      collection.find({library: library, crawlTime: mostRecentCrawlTime}, {limit: limit, skip: skip, sort: [['count', 'desc']]}).toArray(function(err, libraries) {
-        libraries = _.map(libraries, function (lib) {
+      collection.find({library: library}, {limit: limit, skip: skip, sort: [['crawlTime', 'desc']]}).toArray(function(err, libraries) {
+        history = _.map(libraries, function (lib) {
           return {
-            library: lib.library,
+            crawlTime: lib.crawlTime,
             count: lib.count
           };
         });
@@ -44,6 +44,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
         res.send({
           count: lib.count,
           sites: [],
+          history: history,
           meta: {
             crawl: {
               crawlTime: mostRecentCrawlTime
