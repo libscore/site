@@ -15,7 +15,6 @@ MongoClient.connect(MONGO_URL, function(err, db) {
     // Find some documents
     collection.find({}).toArray(function(err, docs) {
       docs = _.map(docs, function (doc) {
-        doc.blah = 'hah';
         return docs;
       });
       res.send(docs);
