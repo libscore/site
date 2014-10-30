@@ -1,0 +1,16 @@
+{
+  "name": "ingestion",
+  "version": "0.0.0",
+  "description": "Don't eat too much curry",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "line-reader": "^0.2.4",
+    "lodash": "^2.4.1",
+    "mongodb": "^1.4.19"
+  }
+}

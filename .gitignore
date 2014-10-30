@@ -1,3 +1,5 @@
+ingestion/node_modules
+api/node_modules
 node_modules
 site/css/.sass-cache/
 README
