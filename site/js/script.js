@@ -116,7 +116,6 @@ var UI = {
 			);
 		});
 
-		// fill in api here
 		function request (data, callback) {
 			var response = data;
 
