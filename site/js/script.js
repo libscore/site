@@ -133,7 +133,6 @@ var UI = {
 			switch (response) {
 				case "domain":
 					UI.requestTarget = "domain";
-					/*
 					$.ajax({
 						url: apiServer + apiSitesPath + '/' + data,
 						contentType: "application/json",
@@ -144,15 +143,14 @@ var UI = {
 							console.log(res);
 							var matches = [];
 							// Convert API response into format that this website is setup for
-							res.results.forEach(function(lib){
-								matches.push([lib.library, 'jquery/jquery', lib.count]);
+							res.libraries.forEach(function(lib){
+								matches.push([lib, 'jquery/jquery', '?']);
 							});
 							callback({
 								matches: matches
 							});
 						}
 					});
-					*/
 
 					apiResponse = {
 						matches: [ [ "jQuery", "jquery/jquery", 9999 ], [ "Hogan", "jack/hogan", 3180 ], [ "Modernizr", "html5/Modernizr", 1739 ], [ "$.fn.velocity", "julianshapiro/velocity", 804 ], [ "$.fn.zipzap", null, 773 ] ]
