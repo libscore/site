@@ -1,4 +1,4 @@
 libscore
 ========
 
-Open source library stats.
+Libscore.com
