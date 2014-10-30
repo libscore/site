@@ -1,4 +1,2 @@
 libscore
 ========
-
-Libscore.com
