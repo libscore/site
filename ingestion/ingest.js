@@ -65,6 +65,16 @@ var ingest = function (dumpFilePath, db) {
       //callback(result);
     });
     //console.log(libraryUsageArray);
+
+
+    // Log the crawl
+    var crawlsCollection = db.collection('crawls');
+
+    crawlsCollection.insert({crawlTime: crawlTime, status: 'success'}, function(err, result) {
+      console.log("Crawl Logged");
+    });
+
+
   });
 
 
