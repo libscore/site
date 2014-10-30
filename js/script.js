@@ -128,29 +128,58 @@ var UI = {
 			var apiResponse;
 			var apiServer = 'http://libscore.jsonresume.org';
 			var apiLibrariesPath = '/v1/libraries';
+			var apiSitesPath = '/v1/sites';
 
 			switch (response) {
 				case "domain":
 					UI.requestTarget = "domain";
+					/*
+					$.ajax({
+						url: apiServer + apiSitesPath + '/' + data,
+						contentType: "application/json",
+						type: 'GET',
+						dataType: 'json',
+						success: function (res) {
+							res = JSON.parse(res); // TODO - Why is jQuery not turning this into an obj for me
+							console.log(res);
+							var matches = [];
+							// Convert API response into format that this website is setup for
+							res.results.forEach(function(lib){
+								matches.push([lib.library, 'jquery/jquery', lib.count]);
+							});
+							callback({
+								matches: matches
+							});
+						}
+					});
+					*/
 
 					apiResponse = {
 						matches: [ [ "jQuery", "jquery/jquery", 9999 ], [ "Hogan", "jack/hogan", 3180 ], [ "Modernizr", "html5/Modernizr", 1739 ], [ "$.fn.velocity", "julianshapiro/velocity", 804 ], [ "$.fn.zipzap", null, 773 ] ]
 					};
+					break;
 
 				case "*":
 					UI.requestTarget = "libs";
 					$.ajax({
 						url: apiServer + apiLibrariesPath,
 						contentType: "application/json",
+						type: 'GET',
+						dataType: 'json',
 						success: function (res) {
+							res = JSON.parse(res); // TODO - Why is jQuery not turning this into an obj for me
+							console.log(res);
 							var matches = [];
 							// Convert API response into format that this website is setup for
 							res.results.forEach(function(lib){
-								matches.push([lib.library, 'jquery/jquery', lib.rank]);
+								matches.push([lib.library, 'jquery/jquery', lib.count]);
 							});
-							callback({matches: matches});
+							callback({
+								matches: matches
+							});
 						}
 					});
+					break;
 					/*
 					apiResponse = {
 						matches: [ [ "jQuery", "jquery/jquery", 9999 ], [ "Hogan", "jack/hogan", 3180 ], [ "Modernizr", "html5/Modernizr", 1739 ], [ "$.fn.velocity", "julianshapiro/velocity", 804 ], [ "$.fn.zipzap", null, 773 ] ]
@@ -159,9 +188,28 @@ var UI = {
 				case "*.*":
 					UI.requestTarget = "sites";
 
+					$.ajax({
+						url: apiServer + apiSitesPath,
+						contentType: "application/json",
+						type: 'GET',
+						dataType: 'json',
+						success: function (res) {
+							res = JSON.parse(res); // TODO - Why is jQuery not turning this into an obj for me
+							console.log(res);
+							var matches = [];
+							// Convert API response into format that this website is setup for
+							res.results.forEach(function(site){
+								matches.push([site.url, site.rank]);
+							});
+							callback({
+								matches: matches
+							});
+						}
+					});
 					apiResponse = {
 						matches: [ [ "msn.com", 1 ], [ "yahoo.com", 2 ], [ "tumblr.com", 3 ], [ "bbc.co.uk", 4 ], [ "mozilla.com", 5 ], [ "stripe.com", 6 ], [ "buzzfeed.com", 7 ], [ "ebay.com", 8 ] ]
 					};
+					break;
 
 				default:
 					UI.requestTarget = "lookup";
