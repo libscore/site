@@ -14,6 +14,7 @@ var $body = $("body"),
 	$header_hr = $("#header-hr"),
 	$main = $("main"),
 	$dataCols = $("#data-cols tr"),
+	$data = $(".data"),
 	$about = $("#about"),
 	$field_subscribe = $("#field--subscribe"),
 	$field_search = $("#field--search"),
@@ -72,12 +73,19 @@ var UI = {
 			{ elements: $bigCount, properties: "transition.fadeOut", options: { duration: 575 } },
 		]);
 	},
+	error: function() {
+		Velocity.RunSequence([
+			{ elements: $data, properties: "transition.vanishTopOut", options: { sequenceQueue: false, duration: 725 } },
+			{ elements: $field_search, properties: "callout.shake", options: { sequenceQueue: false, duration: 375 } },
+			{ elements: $error, properties: { opacity: 1 }, options: { sequenceQueue: false, duration: 200, easing: "linear" } },
+			{ elements: $error, properties: "reverse", options: { duration: 150 } },
+		]);
+	},
 	query: function(el_target) {
 		var $target = $(el_target),
 			$symbols = $target.parent().find(".field-input-symbols"),
 			$field_label = $target.parent().parent().find(".field-label"),
-			$subscribeFields = $("#field--subscribe, #legend--subscribe"),
-			$data = $("#data--" + el_target.id);
+			$subscribeFields = $("#field--subscribe, #legend--subscribe");
 
 		var target = el_target.id,
 			data = $target.val(),
@@ -116,124 +124,48 @@ var UI = {
 			);
 		});
 
-		function request (data, callback) {
-			var response = data;
+		function request (query, callback) {
+			function ajax(url) {
+				$.ajax({
+					url: url + "&callback=?",
+					type: "GET",
+					contentType: "application/json",
+					dataType: "json",
+					success: function (response) {
+						var responseParsed = JSON.parse(response);
 
-			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(response)) {
-				response = "domain";
-			} else {
-				response = data;
-			}
-			var apiResponse;
-			var apiServer = 'http://libscore.jsonresume.org';
-			var apiLibrariesPath = '/v1/libraries';
-			var apiSitesPath = '/v1/sites';
-
-			switch (response) {
-				case "domain":
-					UI.requestTarget = "domain";
-					$.ajax({
-						url: apiServer + apiSitesPath + '/' + data,
-						contentType: "application/json",
-						type: 'GET',
-						dataType: 'json',
-						success: function (res) {
-							res = JSON.parse(res); // TODO - Why is jQuery not turning this into an obj for me
-							console.log(res);
-							var matches = [];
-							// Convert API response into format that this website is setup for
-							res.libraries.forEach(function(lib){
-								matches.push([lib, 'jquery/jquery', '?']);
-							});
-							callback({
-								matches: matches
-							});
+						if (response && responseParsed.meta) {
+							callback(JSON.parse(response));
+						} else {
+							UI.error();
 						}
-					});
+					},
+					error: UI.error
+				});
+			}
 
-					apiResponse = {
-						matches: [ [ "jQuery", "jquery/jquery", 9999 ], [ "Hogan", "jack/hogan", 3180 ], [ "Modernizr", "html5/Modernizr", 1739 ], [ "$.fn.velocity", "julianshapiro/velocity", 804 ], [ "$.fn.zipzap", null, 773 ] ]
-					};
+			var API = {
+					hostname: "http://api.libscore.com/v1/",
+					librariesPath: "libraries/",
+					sitesPath: "sites/"
+				};
+
+			switch (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query) ? "site" : query) {
+				case "site":
+					UI.requestTarget = "site";
+					ajax(API.hostname + API.sitesPath + query + "/?");
 					break;
-
 				case "*":
 					UI.requestTarget = "libs";
-					$.ajax({
-						url: apiServer + apiLibrariesPath,
-						contentType: "application/json",
-						type: 'GET',
-						dataType: 'json',
-						success: function (res) {
-							res = JSON.parse(res); // TODO - Why is jQuery not turning this into an obj for me
-							console.log(res);
-							var matches = [];
-							// Convert API response into format that this website is setup for
-							res.results.forEach(function(lib){
-								matches.push([lib.library, 'jquery/jquery', lib.count]);
-							});
-							callback({
-								matches: matches
-							});
-						}
-					});
+					ajax(API.hostname + API.librariesPath + "?limit=500");
 					break;
-					/*
-					apiResponse = {
-						matches: [ [ "jQuery", "jquery/jquery", 9999 ], [ "Hogan", "jack/hogan", 3180 ], [ "Modernizr", "html5/Modernizr", 1739 ], [ "$.fn.velocity", "julianshapiro/velocity", 804 ], [ "$.fn.zipzap", null, 773 ] ]
-					};
-					*/
 				case "*.*":
 					UI.requestTarget = "sites";
-
-					$.ajax({
-						url: apiServer + apiSitesPath,
-						contentType: "application/json",
-						type: 'GET',
-						dataType: 'json',
-						success: function (res) {
-							res = JSON.parse(res); // TODO - Why is jQuery not turning this into an obj for me
-							console.log(res);
-							var matches = [];
-							// Convert API response into format that this website is setup for
-							res.results.forEach(function(site){
-								matches.push([site.url, site.rank]);
-							});
-							callback({
-								matches: matches
-							});
-						}
-					});
-					apiResponse = {
-						matches: [ [ "msn.com", 1 ], [ "yahoo.com", 2 ], [ "tumblr.com", 3 ], [ "bbc.co.uk", 4 ], [ "mozilla.com", 5 ], [ "stripe.com", 6 ], [ "buzzfeed.com", 7 ], [ "ebay.com", 8 ] ]
-					};
+					ajax(API.hostname + API.sitesPath + "?limit=500");
 					break;
-
 				default:
-					UI.requestTarget = "lookup";
-
-					$.ajax({
-						url: apiServer + apiLibrariesPath + '/' + data,
-						contentType: "application/json",
-						type: 'GET',
-						dataType: 'json',
-						success: function (res) {
-							res = JSON.parse(res); // TODO - Why is jQuery not turning this into an obj for me
-							console.log(res);
-							var matches = [];
-							// Convert API response into format that this website is setup for
-							res.sites.forEach(function(site){
-								matches.push([site.url, site.rank]);
-							});
-							callback({
-								score: Math.round(10000 * Math.random()),
-								matches: matches
-							});
-						}
-					});
-					apiResponse = {
-						score: Math.round(10000 * Math.random()),
-						matches: [ [ "msn.com", 4 ], [ "yahoo.com", 6 ], [ "tumblr.com", 18 ], [ "bbc.co.uk", 22 ], [ "mozilla.com", 26 ], [ "stripe.com", 182 ], [ "buzzfeed.com", 1301 ], [ "ebay.com", 14030 ] ]
-					};
+					UI.requestTarget = "lib";
+					ajax(API.hostname + API.librariesPath + query + "?");
 			}
 		}
 
@@ -241,104 +173,77 @@ var UI = {
 			$subscribe[0].submit();
 			$target.val("Check your email.");
 		} else {	
-			// request() has to make an async call so it has a callback now
+			function prettifyName (name) {
+				var truncated = false;
+
+				if (name.length > 18) {
+					truncated = true;
+					name = name.slice(0, 15);
+				}
+
+				name = name.replace(/\./g, "<span class='text-blue'>.</span>");
+
+				return name + (truncated ? "..." : "");
+			}
+
 			request(data, function(response) {
-				if (response) {
-					var $html = "";
+				var $html = "";
+				var $columns;
 
-					response.matches.forEach(function(match) {
-						$html += "<tr>";
+				(response.results || response.sites || response.libraries).forEach(function(match) {
+					var $matchData;
+					switch (UI.requestTarget) {
+						case "site":
+							$columns = "<td>lib</td><td>sites</td>";
+							$matchData = "<td><span data-query='" + match + "'>" + prettifyName(match) + "</td>";
+							// waiting for thomas to put in counts
+							$matchData += "<td>" + match.count + "</td>";
+							break;
 
-						match.forEach(function(matchData, i) {
-							switch (UI.requestTarget) {
-								case "domain":
-									$dataCols.html("<td>lib</td><td>count</td>");
+						case "libs":
+							$columns = "<td>lib (<a href='http://api.libscore.com/libraries.txt' class='text-grey'>download full list</a>)</td><td>sites</td>";
+							$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "hacks.moz.org/libscore/#helplinks") + "'>" + prettifyName(match.library) + " <span class='text-faded'>" + (match.github ? "⇗" : "?") + "</span></a>";
+							$matchData += "<td>" + match.count + "</td>";
+							break;
 
-									switch (i) {
-										case 0:
-											matchData = "<a href='http://" + (match[i+1] ? ("github.com/" + match[i+1]) : "hacks.moz.org/libscore/#helplinks") + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + "</a>  <span class='text-faded'>" + (match[i+1] ? "⇗" : "?") + "</span>";
-											break;
+						case "sites":
+							$columns = "<td>site</td><td>rank</td>";
+							$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</td>";
+							$matchData += "<td><span class='text-green-dark'>#</span>" + match.rank + "</td>";
+							break;
 
-										case 1:
-											return true;
-									}
-									break;
-
-								case "libs":
-									$dataCols.html("<td>lib (<a href='dump.txt' class='text-grey'>download full list</a>)</td><td>count</td>");
-
-									switch (i) {
-										case 0:
-											matchData = "<a href='http://" + (match[i+1] ? ("github.com/" + match[i+1]) : "hacks.moz.org/libscore/#helplinks") + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + "  <span class='text-faded'>" + (match[i+1] ? "⇗" : "?") + "</span></a>";
-											break;
-
-										case 1:
-											return true;
-									}
-									break;
-
-								case "sites":
-									$dataCols.html("<td>site</td><td>rank</td>");
-
-									switch (i) {
-										case 0:
-											matchData = "<span data-query='" + matchData + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + "</span><span class='text-grey'>...</span>";
-											break;
-
-										case 1:
-											matchData = "<span class='text-green-dark'>#</span>" + matchData;
-											break;
-									}
-									break;
-
-								case "lookup":
-									// also pop open an alert when 'get badge' is clicked telling people to subscribe since badge code is about to change
-									$dataCols.html("<td>" + response.matches.length + " sites (<a href='http://status.io/blah/' class='text-grey'>get badge</a>)</td><td>rank</td>");
-
-									switch (i) {
-										case 0:
-											matchData = "<a href='http://" + matchData + "'>" + matchData.replace(/\./g, "<span class='text-blue'>.</span>") + " <span class='text-faded'>⇗</span></a>";
-											break;
-
-										case 1:
-											matchData = "<span class='text-green-dark'>#</span>" + matchData;
-											break;
-									}
-									break;
-							}
-
-							$html += "<td>" + matchData + "</td>";
-						});
-
-						$html += "</tr>";
-					});
-					
-					$data.find("table").eq(1).remove();
-					$data.append("<table>" + $html + "</table>");
-
-					if (UI.requestTarget === "lookup") {
-						$bigCount.html(response.score.toString());
-						UI.showCount();
-					} else {
-						UI.hideCount();
+						case "lib":
+							// waiting on scripts lookup
+							// also pop open an alert when 'get badge' is clicked telling people to subscribe
+							$columns = "<td>" + response.count + " sites (<a href='http://status.io/libscore/' class='text-grey'>get badge</a>)</td><td>rank</td>";
+							$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + " <span class='text-faded'>⇗</span></a></td>";
+							$matchData += "<td><span class='text-green-dark'>#</span>" + match.rank + "</td>";
+							break;
 					}
 
-					Velocity(
-						$data,
-						"transition.vanishTopIn",
-						{ 
-							duration: 475,
-							complete: function() {
-								$data.parent().css("height", $data.outerHeight() + "px");
-							}
-						});
+					$html += "<tr>" + $matchData + "</tr>";
+				});
+				
+				$dataCols.html($columns);
+				$data.find("table").eq(1).remove();
+				$data.append("<table>" + $html + "</table>");
+
+				if (UI.requestTarget === "lib") {
+					$bigCount.html(response.count.toString());
+					UI.showCount();
 				} else {
-					Velocity.RunSequence([
-						{ elements: $field_search, properties: "callout.shake", options: { duration: 375 } },
-						{ elements: $error, properties: { opacity: 1 }, options: { sequenceQueue: false,  duration: 200, easing: "linear" } },
-						{ elements: $error, properties: "reverse", options: { duration: 150 } },
-					]);
+					UI.hideCount();
 				}
+
+				Velocity(
+					$data,
+					"transition.vanishTopIn",
+					{ 
+						duration: 475,
+						complete: function() {
+							$data.parent().css("height", $data.outerHeight() + "px");
+						}
+					});
 			});
 		}
 	},
