@@ -29,29 +29,43 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
     getMostRecentCrawl(function(crawl) {
 
-      var collection = db.collection('usage');
+      var usageCollection = db.collection('usage');
+      var sitesCollection = db.collection('sites');
+
       var mostRecentCrawlTime = crawl.crawlTime;
       // Find some documents
-      collection.find({library: library}, {limit: limit, skip: skip, sort: [['crawlTime', 'desc']]}).toArray(function(err, libraries) {
+      usageCollection.find({library: library}, {limit: limit, skip: skip, sort: [['crawlTime', 'desc']]}).toArray(function(err, libraries) {
         history = _.map(libraries, function (lib) {
           return {
             crawlTime: lib.crawlTime,
             count: lib.count
           };
         });
-        // TODO - Fix this all when we agree on API
-        var lib = libraries[0];
-        res.send({
-          count: lib.count,
-          sites: [],
-          history: history,
-          meta: {
-            crawl: {
-              crawlTime: mostRecentCrawlTime
-            }
-          }
-        });
 
+        var lib = libraries[0];
+
+        console.log(mostRecentCrawlTime);
+        // TODO - Fix this all when we agree on API
+        sitesCollection.find({libraries: library, crawlTime: mostRecentCrawlTime}, {limit: 20}).toArray(function(err, sites) {
+          sites = _.map(sites, function (site) {
+            console.log(site);
+            return {
+              url: site.url,
+              rank: site.rank,
+              resource: 'http://' + req.headers.host + '/v1/sites/' + site.url
+            }
+          });
+          res.send({
+            count: lib.count,
+            sites: sites,
+            history: history,
+            meta: {
+              crawl: {
+                crawlTime: mostRecentCrawlTime
+              }
+            }
+          });
+        });
       });      
     });
   });
@@ -89,6 +103,71 @@ MongoClient.connect(MONGO_URL, function(err, db) {
     });
   });
 
+  app.get('/v1/sites/:site', function(req, res){
+
+    // Query parameters
+    var skip = req.query.skip || 0;
+    var limit = req.query.limit || 100;
+    var site = req.params.site;
+
+    getMostRecentCrawl(function(crawl) {
+
+      var sitesCollection = db.collection('sites');
+      var mostRecentCrawlTime = crawl.crawlTime;
+
+      // Find some documents
+      sitesCollection.find({url: site, crawlTime: mostRecentCrawlTime}, {limit: 1, skip: skip, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
+        
+        var site = sites[0];
+        console.log(site);
+        res.send({
+          url: site.url,
+          rank: site.rank,
+          libraries: site.libraries,
+          total: site.total,
+          meta: {
+            crawl: {
+              crawlTime: mostRecentCrawlTime
+            }
+          }
+        });
+
+      });      
+    });
+  });
+
+  app.get('/v1/sites', function(req, res){
+
+    // Query parameters
+    var skip = req.query.skip || 0;
+    var limit = req.query.limit || 100;
+    getMostRecentCrawl(function(crawl) {
+
+      var sitesCollection = db.collection('sites');
+      var mostRecentCrawlTime = crawl.crawlTime;
+
+      // Find some documents
+      sitesCollection.find({crawlTime: mostRecentCrawlTime}, {limit: limit, skip: skip, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
+        sites = _.map(sites, function (site) {
+          return {
+            url: site.url,
+            rank: site.rank,
+            resource: 'http://' + req.headers.host + '/v1/sites/' + site.url
+          };
+        });
+
+        res.send({
+          results: sites,
+          meta: {
+            crawl: {
+              crawlTime: mostRecentCrawlTime
+            }
+          }
+        });
+
+      });      
+    });
+  });
 
 
   // Get the most crawl and store the details in cache for 30 minutes at a time

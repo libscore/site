@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^0.9.0",
     "line-reader": "^0.2.4",
     "lodash": "^2.4.1",
     "mongodb": "^1.4.19"
