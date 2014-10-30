@@ -1,8 +1,12 @@
 var express = require('express');
-var app = express();
 var MongoClient = require('mongodb').MongoClient;
 var _ = require('lodash');
 var NodeCache = require( "node-cache" );
+var cors = require('cors');
+
+var app = express();
+app.use(cors());
+
 
 // Config variables
 var MONGO_URL = 'mongodb://localhost:27017/libscore';

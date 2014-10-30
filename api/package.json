@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.5.0",
     "express": "^4.10.1",
     "lodash": "^2.4.1",
     "mongodb": "^1.4.19",
