@@ -82,7 +82,7 @@ body {
 		font-size: 80vh;
 	}
 
-	#body-bigScore {
+	#body-bigCount {
 		position: absolute;
 		left: 50%; bottom: -16vw; transform: translateX(-50%);
 
@@ -90,13 +90,14 @@ body {
 		@extend .text-green;
 
 		&:after {
-			content: "Score";
+			content: "Site Count";
 
 			position: absolute;
-			top: 4vw;
+			top: 3.5vw;
 			right: 1.75vw;
 
-			font-size: 1.35vw;
+			text-transform: uppercase;
+			font-size: 1.05vw;
 			letter-spacing: 0.025vw;
 		}
 	}
@@ -394,7 +395,7 @@ footer {
     Start
 *************/
 
-main, #body-flare, #body-bigScore, #header-logo o span, #about, footer {
+main, #body-flare, #body-bigCount, #header-logo o span, #about, footer {
 	display: none;
 }
 

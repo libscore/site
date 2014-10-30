@@ -4,7 +4,7 @@
 
 var $body = $("body"),
 	$body_flare = $("#body-flare"),
-	$bigScore = $("#body-bigScore"),
+	$bigCount = $("#body-bigCount"),
 	$error = $("#body-error"),
 	$header_code = $("#header-code"),
 	$header_code_object = $("#header-code-object"),
@@ -60,16 +60,16 @@ var UI = {
 		showingAbout: false,
 		requestTarget: null,
 	},
-	showScore: function() {
+	showCount: function() {
 		Velocity.RunSequence([
-			{ elements: $bigScore, properties: "transition.fadeIn", options: { duration: 35 } },
-			{ elements: $bigScore, properties: "callout.flicker.text" },
-			{ elements: $bigScore, properties: { opacity: 0.15 }, options: { duration: 1250 } }
+			{ elements: $bigCount, properties: "transition.fadeIn", options: { duration: 35 } },
+			{ elements: $bigCount, properties: "callout.flicker.text" },
+			{ elements: $bigCount, properties: { opacity: 0.15 }, options: { duration: 1250 } }
 		]);
 	},
-	hideScore: function() {
+	hideCount: function() {
 		Velocity.RunSequence([
-			{ elements: $bigScore, properties: "transition.fadeOut", options: { duration: 575 } },
+			{ elements: $bigCount, properties: "transition.fadeOut", options: { duration: 575 } },
 		]);
 	},
 	query: function(el_target) {
@@ -173,7 +173,7 @@ var UI = {
 					match.forEach(function(matchData, i) {
 						switch (UI.requestTarget) {
 							case "domain":
-								$dataCols.html("<td>lib</td><td>score</td>");
+								$dataCols.html("<td>lib</td><td>count</td>");
 
 								switch (i) {
 									case 0:
@@ -182,15 +182,11 @@ var UI = {
 
 									case 1:
 										return true;
-
-									case 2:
-										matchData = "<span class='text-green-dark'>#</span>" + matchData;
-										break;
 								}
 								break;
 
 							case "libs":
-								$dataCols.html("<td>lib (<a href='dump.txt' class='text-grey'>download full list</a>)</td><td>score</td>");
+								$dataCols.html("<td>lib (<a href='dump.txt' class='text-grey'>download full list</a>)</td><td>count</td>");
 
 								switch (i) {
 									case 0:
@@ -199,10 +195,6 @@ var UI = {
 
 									case 1:
 										return true;
-
-									case 2:
-										matchData = "<span class='text-green-dark'>#</span>" + matchData;
-										break;
 								}
 								break;
 
@@ -246,10 +238,10 @@ var UI = {
 				$data.append("<table>" + $html + "</table>");
 
 				if (UI.requestTarget === "lookup") {
-					$bigScore.html(response.score.toString());
-					UI.showScore();
+					$bigCount.html(response.score.toString());
+					UI.showCount();
 				} else {
-					UI.hideScore();
+					UI.hideCount();
 				}
 
 				Velocity(
@@ -328,7 +320,7 @@ $("#header-code-property")
 
 Velocity.hook($main, "translateX", "-50%");
 Velocity.hook($footer, "translateX", "-50%");
-Velocity.hook($bigScore, "translateX", "-50%");
+Velocity.hook($bigCount, "translateX", "-50%");
 
 Velocity.RunSequence([
 	{ elements: $footer, properties: "transition.vanishBottomIn", options: { delay: 265, duration: 700 } },
