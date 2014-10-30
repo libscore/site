@@ -214,6 +214,25 @@ var UI = {
 				default:
 					UI.requestTarget = "lookup";
 
+					$.ajax({
+						url: apiServer + apiLibrariesPath + '/' + data,
+						contentType: "application/json",
+						type: 'GET',
+						dataType: 'json',
+						success: function (res) {
+							res = JSON.parse(res); // TODO - Why is jQuery not turning this into an obj for me
+							console.log(res);
+							var matches = [];
+							// Convert API response into format that this website is setup for
+							res.sites.forEach(function(site){
+								matches.push([site.url, site.rank]);
+							});
+							callback({
+								score: Math.round(10000 * Math.random()),
+								matches: matches
+							});
+						}
+					});
 					apiResponse = {
 						score: Math.round(10000 * Math.random()),
 						matches: [ [ "msn.com", 4 ], [ "yahoo.com", 6 ], [ "tumblr.com", 18 ], [ "bbc.co.uk", 22 ], [ "mozilla.com", 26 ], [ "stripe.com", 182 ], [ "buzzfeed.com", 1301 ], [ "ebay.com", 14030 ] ]
