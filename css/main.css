@@ -22,7 +22,7 @@
 .text-blue-dark, a:active, [data-query]:active, #header #header-code #header-code-property:active {
   color: #3874a3; }
 
-.text-green, body #body-bigScore, .data td:nth-child(even) {
+.text-green, body #body-bigCount, .data td:nth-child(even) {
   color: #90ffb2; }
 
 .text-green-dark, .field div.field-input-container input.field-input:focus {
@@ -59,18 +59,19 @@ body {
     color: #091418;
     text-align: center;
     font-size: 80vh; }
-  body #body-bigScore {
+  body #body-bigCount {
     position: absolute;
     left: 50%;
     bottom: -16vw;
     transform: translateX(-50%);
     font-size: 40vw; }
-    body #body-bigScore:after {
-      content: "Score";
+    body #body-bigCount:after {
+      content: "Site Count";
       position: absolute;
-      top: 4vw;
+      top: 3.5vw;
       right: 1.75vw;
-      font-size: 1.35vw;
+      text-transform: uppercase;
+      font-size: 1.05vw;
       letter-spacing: 0.025vw; }
 
 a, a:visited {
@@ -235,7 +236,7 @@ footer {
 /*************
     Start
 *************/
-main, #body-flare, #body-bigScore, #header-logo o span, #about, footer {
+main, #body-flare, #body-bigCount, #header-logo o span, #about, footer {
   display: none; }
 
 #body-error, #header-code, #header-logo, #header-hr {
