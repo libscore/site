@@ -65,7 +65,7 @@ var UI = {
 		Velocity.RunSequence([
 			{ elements: $bigCount, properties: "transition.fadeIn", options: { duration: 35 } },
 			{ elements: $bigCount, properties: "callout.flicker.text" },
-			{ elements: $bigCount, properties: { opacity: 0.15 }, options: { duration: 1250 } }
+			{ elements: $bigCount, properties: { opacity: 0.1 }, options: { duration: 1000 } }
 		]);
 	},
 	hideCount: function() {
@@ -195,20 +195,20 @@ var UI = {
 					switch (UI.requestTarget) {
 						case "site":
 							$columns = "<td>lib</td><td>sites</td>";
-							$matchData = "<td><span data-query='" + match + "'>" + prettifyName(match) + "</td>";
+							$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "hacks.moz.org/libscore/#helplinks") + "'>" + prettifyName(match) + " <span class='text-blue'>" + (match.github ? "⇗" : "?") + "</span></a>";
 							// waiting for thomas to put in counts
 							$matchData += "<td>" + match.count + "</td>";
 							break;
 
 						case "libs":
 							$columns = "<td>lib (<a href='http://api.libscore.com/libraries.txt' class='text-grey'>download full list</a>)</td><td>sites</td>";
-							$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "hacks.moz.org/libscore/#helplinks") + "'>" + prettifyName(match.library) + " <span class='text-faded'>" + (match.github ? "⇗" : "?") + "</span></a>";
+							$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "hacks.moz.org/libscore/#helplinks") + "'>" + prettifyName(match.library) + " <span class='text-blue'>" + (match.github ? "⇗" : "?") + "</span></a>";
 							$matchData += "<td>" + match.count + "</td>";
 							break;
 
 						case "sites":
 							$columns = "<td>site</td><td>rank</td>";
-							$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</td>";
+							$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>→</span></td>";
 							$matchData += "<td><span class='text-green-dark'>#</span>" + match.rank + "</td>";
 							break;
 
@@ -216,7 +216,7 @@ var UI = {
 							// waiting on scripts lookup
 							// also pop open an alert when 'get badge' is clicked telling people to subscribe
 							$columns = "<td>" + response.count + " sites (<a href='http://status.io/libscore/' class='text-grey'>get badge</a>)</td><td>rank</td>";
-							$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + " <span class='text-faded'>⇗</span></a></td>";
+							$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⇗</span></a></td>";
 							$matchData += "<td><span class='text-green-dark'>#</span>" + match.rank + "</td>";
 							break;
 					}
