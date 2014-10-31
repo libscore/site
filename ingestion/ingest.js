@@ -27,13 +27,12 @@ var ingest = function (dumpFilePath, db) {
     //console.log('Finished', crawlData.length);
     async.eachLimit(crawlData, 20, function(site, callback){
       rankCounter++;
-
       var siteSnapshot = {
         crawlTime: crawlTime,
         url: site.url,
-        rank: rankCounter,
-        total: site.libs.window.desktop.length,
-        libraries: site.libs.window.desktop // Add more here
+        rank: site.rank,
+        total: site.data.libs.desktop.length,
+        libraries: site.data.libs.desktop // Add more here
       };
       sitesCollection.insert(siteSnapshot, function(err, result) {
         console.log('Logged site');
@@ -48,7 +47,7 @@ var ingest = function (dumpFilePath, db) {
       // 2) Calculate aggregate library usage
 
       _.each(crawlData, function(site){
-        _.each(site.libs.window.desktop, function (lib) {
+        _.each(site.data.libs.desktop, function (lib) {
           if(typeof libraryUsage[lib] === 'undefined') {
             libraryUsage[lib] = 1;
           } else {
