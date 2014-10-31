@@ -30,7 +30,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
     // Query parameters
     var skip = req.query.skip || 0;
-    var limit = req.query.limit || 100;
+    var limit = req.query.limit || 500;
     var library = req.params.library;
 
     getMostRecentCrawl(function(crawl) {
