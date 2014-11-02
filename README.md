@@ -1,7 +1,3 @@
-libscore
-========
-
-
 ### API Server
 
 The API server is run with node on port 3000, nginx uses a forward proxy to map it to port 80
