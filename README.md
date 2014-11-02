@@ -7,4 +7,4 @@ To help us locate the Github page for a JavaScript library, see [this thread](ht
 
 While the maintainers of Libsore do not have the time to answer your technical questions, we always make time to fix bugs. If you've spotted something, please file an [issue](https://github.com/julianshapiro/libscore/issues).
 
-Thank Libscore's sponsors on Twitter: @[Stripe](twitter.com/stripe) and @[DigitalOcean](twitter.com/digitalocean).
+Thank Libscore's sponsors on Twitter: @[Stripe](https://twitter.com/stripe) and @[DigitalOcean](https://twitter.com/digitalocean).
