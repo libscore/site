@@ -158,7 +158,7 @@ var ingest = function (dumpFilePath, db) {
         scripts: scripts
       };
       sitesCollection.insert(siteSnapshot, function(err, result) {
-        console.log('Logged site');
+        console.log('Logged site', rankCounter);
         callback();
       
       });
