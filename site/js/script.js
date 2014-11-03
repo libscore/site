@@ -236,9 +236,9 @@ var UI = {
 				var prettified = name;
 				var truncated = false;
 
-				if (name.length > 21) {
+				if (name.length > 20) {
 					truncated = true;
-					prettified = prettified.slice(0, 19);
+					prettified = prettified.slice(0, 18);
 				}
 
 				prettified = prettified.replace(/\./g, "<span class='text-blue'>.</span>");
@@ -268,40 +268,40 @@ var UI = {
 
 					switch (UI.requestTarget) {
 						case "site":
-							$columns = "<td>lib</td><td>sites</td>";
+							$columns = "<td>lib</td><td>site count</td>";
 							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.name, match.type) + " <span class='text-blue'>" + (match.github ? "⇗" : "?") + "</span></a>";
-							$matchData += "<td>" + match.count + "</td>";
-							break;
-
-						case "libs":
-							$columns = "<td>lib (<a href='//api.libscore.com/libraries.txt' class='text-grey'>download full list</a>)</td><td>site count</td>";
-							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.library) + " <span class='text-blue'>" + (match.github ? "⇗" : "?") + "</span></a>";
-							$matchData += "<td>" + match.count + "</td>";
-							break;
+							$matchData += "<td>" + numeral(match.count).format("0,0") + "</td>";
+							break
 
 						case "sites":
 							$columns = "<td>site</td><td>site rank</td>";
 							$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>→</span></td>";
-							$matchData += "<td><span class='text-green-dark'>#</span>" + match.rank + "</td>";
+							$matchData += "<td><span class='text-green-dark'>#</span>" + numeral(match.rank).format("0,0") + "</td>";
 							break;
 
 						case "lib":
 							// also pop open an alert when 'get badge' is clicked telling people to subscribe
 							$columns = "<td>" + response.count + " sites (<a href='//status.io/libscore/' class='text-grey'>get badge</a>)</td><td>site rank</td>";
 							$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⇗</span></a></td>";
-							$matchData += "<td><span class='text-green-dark'>#</span>" + match.rank + "</td>";
+							$matchData += "<td><span class='text-green-dark'>#</span>" + numeral(match.rank).format("0,0") + "</td>";
+							break;
+
+						case "libs":
+							$columns = "<td>lib (<a href='//api.libscore.com/libraries.txt' class='text-grey'>download full list</a>)</td><td>site count</td>";
+							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.library) + " <span class='text-blue'>" + (match.github ? "⇗" : "?") + "</span></a>";
+							$matchData += "<td>" + numeral(match.count).format("0,0") + "</td>";
 							break;
 
 						case "script":
 							$columns = "<td>" + response.count + " sites</td><td>site rank</td>";
 							$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⇗</span></a></td>";
-							$matchData += "<td><span class='text-green-dark'>#</span>" + match.rank + "</td>";
+							$matchData += "<td><span class='text-green-dark'>#</span>" + numeral(match.rank).format("0,0") + "</td>";
 							break;
 
 						case "scripts":
 							$columns = "<td>script</td><td>site count</td>";
 							$matchData = "<td><a href='//" + match.script + "'>" + prettifyName(match.script) + "</a></td>";
-							$matchData += "<td>" + match.count + "</td>";
+							$matchData += "<td>" + numeral(match.count).format("0,0") + "</td>";
 							break;
 					}
 

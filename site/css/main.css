@@ -67,7 +67,7 @@ body {
     left: 50%;
     bottom: -16vw;
     transform: translateX(-50%);
-    font-size: 40vw; }
+    font-size: 38vw; }
     body #body-bigCount:after {
       content: "Site Count";
       position: absolute;
