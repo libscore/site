@@ -16,12 +16,17 @@ var hiddenVariables = [
 	"GcustomimageSearch", "GpatentSearch", "GSearchControl", "GsearcherOptions", "GdrawOptions", "GimageSearch",
 	/* Google Misc. */
 	"CreativeToolset", "CreativeToolsetProxy", "ExpandableAdSlotFactory", "DhtmlExpandableIframeFactory", "GPT_jstiming", "GA_jstiming", "ToolbarApi",
+	/* Keywords */
+	"Fx", "Try", "Chain", "Selectors", "Class", "Form", "Window", "Events", "Elements", "Options", "Type", "Toggle", "Position", "Browser", "Asset", "Field", "Insertion", "Color", "Request", "Tips", "Group", "Effect", "Native", "Builder", "Control", "Locale", "Table",
+	/* GSAP */
+	"Ease", "Strong", "Power4", "Quint", "Power3", "Quart", "Power2", "Cubic", "Quad", "Power1", "Linear", "Power0", "Back", "BackOut", "BackIn", "BackInOut", "SlowMo", "BounceOut", "BounceIn", "SteppedEase", "BounceInOut", "Bounce", "CircOut", "CircIn", "CircInOut",
+	"CSSPlugin", "Circ", "ElasticOut", "ElasticIn", "ElasticInOut", "Elastic", "ExpoOut", "ExpoIn", "ExpoInOut", "Expo", "SineOut", "RoughEase", "SineIn", "Sine", "SineInOut", "EaseLookup",
 	/* Temporary */
 	"IframeBase", "Iframe", "IFrame", "IframeProxy", "IframeWindow"
 ];
 
-/* Google misc., Drupal Webform, ClickTale, Baidu, Misc. */
-var hiddenVariableGroups = /^(Goog_.+|G(A|S)_google.+|WebForm_.+|WR[A-z]{1,2}|ClickTale[A-z]+|BAIDU_[A-z]+|Sys\$[A-z].+|[A-Z][0-9]{1,2}|[A-z]$)/;
+/* Google misc., Drupal Webform, ClickTale, Baidu, Wordpress, Misc. */
+var hiddenVariableGroups = /^(Goog_.+|G(A|S)_google.+|WebForm_.+|WR[A-z]{1,2}|ClickTale[A-z]+|BAIDU_[A-z]+|\$(\.fn)?\.wpcf7[A-z].+|Sys\$[A-z].+|[A-Z][0-9]{1,2}|[A-z]$)/;
 
 /***************
     Elements
@@ -182,7 +187,7 @@ var UI = {
 			}
 
 			var API = {
-					hostname: "http://104.131.144.189/v1/",
+					hostname: "http://api.libscore.com/v1/",
 					librariesPath: "libraries/",
 					sitesPath: "sites/",
 					scriptsPath: "scripts/"
@@ -218,7 +223,7 @@ var UI = {
 					break;
 				case "*":
 					UI.requestTarget = "libs";
-					ajax(API.hostname + API.librariesPath + "?limit=1000");
+					ajax(API.hostname + API.librariesPath + "?limit=1250");
 					break;
 				default:
 					UI.requestTarget = "lib";
@@ -241,7 +246,7 @@ var UI = {
 					prettified = prettified.slice(0, 18);
 				}
 
-				prettified = prettified.replace(/\./g, "<span class='text-blue'>.</span>");
+				prettified = prettified.replace(/\./g, "<span class='accent'>.</span>");
 
 				if (truncated) {
 					prettified = "<span title='" + name + "'>" + prettified + "…</span>";
@@ -310,7 +315,7 @@ var UI = {
 				
 				$dataCols.html($columns);
 				$data.find("table").eq(1).remove();
-				$data.append("<table>" + ($html || "<tr><td>no matches</td><td>0</td></tr>") + "</table>");
+				$data.append("<table>" + ($html || "<tr><td>no libraries</td><td>0</td></tr>") + "<tr class='data_more'><td>See the <a href='https://github.com/julianshapiro/libscore'>API</a> for more.</td><td></td></tr></table>");
 
 				if (UI.requestTarget === "lib") {
 					$bigCount.html(response.count.toString());
@@ -327,6 +332,7 @@ var UI = {
 
 							if ($data[0].scrollHeight > $data.parent()[0].scrollHeight) {
 								Velocity($data_scroll, "transition.fadeIn", 850);
+								$data.find(".data_more").css("display", "table-row");
 							}
 						}
 				});

@@ -67,7 +67,8 @@ body {
     left: 50%;
     bottom: -16vw;
     transform: translateX(-50%);
-    font-size: 38vw; }
+    font-size: 38vw;
+    letter-spacing: -1vw; }
     body #body-bigCount:after {
       content: "Site Count";
       position: absolute;
@@ -198,6 +199,10 @@ a, [data-query] {
     letter-spacing: 0.05rem;
     font-family: "Avenir Light"; }
 
+.data_more td {
+  padding-top: 0.15rem;
+  color: white !important; }
+
 .dataScroll {
   background: #191f29;
   position: absolute;
@@ -243,7 +248,7 @@ footer {
 
 #field--search-help {
   position: absolute;
-  bottom: 0.1rem;
+  bottom: 0.05rem;
   right: -1.9rem;
   color: #b5b5b5;
   font-size: 7px; }
@@ -251,7 +256,7 @@ footer {
 /*************
     Start
 *************/
-main, #body-flare, #body-bigCount, #header-logo o span, .dataScroll, #about, footer {
+main, #body-flare, #body-bigCount, #header-logo o span, .data_more, .dataScroll, #about, footer {
   display: none; }
 
 #body-error, #header-code, #header-logo, #header-hr {
