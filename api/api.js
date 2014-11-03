@@ -52,7 +52,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
         console.log(mostRecentCrawlTime);
         // TODO - Fix this all when we agree on API
-        sitesCollection.find({'libraries.name': lib.library, crawlTime: mostRecentCrawlTime}, {limit: 20, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
+        sitesCollection.find({'libraries.name': lib.library, crawlTime: mostRecentCrawlTime}, {limit: limit, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
           sites = _.map(sites, function (site) {
             console.log(site);
             return {
@@ -134,7 +134,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
         var script = scripts[0];
         console.log(script);
         // TODO - Fix this all when we agree on API
-        sitesCollection.find({'scripts.name': script.script, crawlTime: mostRecentCrawlTime}, {limit: 20, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
+        sitesCollection.find({'scripts.name': script.script, crawlTime: mostRecentCrawlTime}, {limit: limit, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
           sites = _.map(sites, function (site) {
             console.log(site);
             return {
@@ -195,7 +195,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
     // Query parameters
     var skip = req.query.skip || 0;
-    var limit = req.query.limit || 100;
+    var limit = req.query.limit || 500;
     var site = req.params.site;
 
     getMostRecentCrawl(function(crawl) {
