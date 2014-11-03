@@ -3,7 +3,7 @@ Libscore.com
 
 To learn about Libscore, read the [full overview](https://medium.com/p/be93165fa497).
 
-For Libscore's API documentation, see [this](API.md) document.
+For Libscore's API documentation, see [this document](API.md).
 
 To help us locate the Github page for a JavaScript library, see [this thread](https://github.com/julianshapiro/libscore/issues/1).
 
