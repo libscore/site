@@ -80,7 +80,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
     // Query parameters
     var skip = req.query.skip || 0;
-    var limit = req.query.limit || 100;
+    var limit = req.query.limit || 500;
     getMostRecentCrawl(function(crawl) {
 
       var libraryUsageCollection = db.collection('libraryUsage');
@@ -162,7 +162,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
     // Query parameters
     var skip = req.query.skip || 0;
-    var limit = req.query.limit || 100;
+    var limit = req.query.limit || 500;
     getMostRecentCrawl(function(crawl) {
 
       var scriptUsageCollection = db.collection('scriptUsage');
@@ -229,7 +229,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
     // Query parameters
     var skip = req.query.skip || 0;
-    var limit = req.query.limit || 100;
+    var limit = req.query.limit || 500;
     getMostRecentCrawl(function(crawl) {
 
       var sitesCollection = db.collection('sites');
