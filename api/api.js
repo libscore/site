@@ -35,12 +35,12 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
     getMostRecentCrawl(function(crawl) {
 
-      var usageCollection = db.collection('usage');
+      var libraryUsageCollection = db.collection('libraryUsage');
       var sitesCollection = db.collection('sites');
 
       var mostRecentCrawlTime = crawl.crawlTime;
       // Find some documents
-      usageCollection.find({library: library}, {limit: limit, skip: skip, sort: [['crawlTime', 'desc']]}).toArray(function(err, libraries) {
+      libraryUsageCollection.find({library: library}, {limit: limit, skip: skip, sort: [['crawlTime', 'desc']]}).toArray(function(err, libraries) {
         history = _.map(libraries, function (lib) {
           return {
             crawlTime: lib.crawlTime,
@@ -52,7 +52,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
         console.log(mostRecentCrawlTime);
         // TODO - Fix this all when we agree on API
-        sitesCollection.find({libraries: library, crawlTime: mostRecentCrawlTime}, {limit: 20}).toArray(function(err, sites) {
+        sitesCollection.find({'libraries.name': library.library, crawlTime: mostRecentCrawlTime}, {limit: 20, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
           sites = _.map(sites, function (site) {
             console.log(site);
             return {
@@ -83,11 +83,11 @@ MongoClient.connect(MONGO_URL, function(err, db) {
     var limit = req.query.limit || 100;
     getMostRecentCrawl(function(crawl) {
 
-      var collection = db.collection('usage');
+      var libraryUsageCollection = db.collection('libraryUsage');
       var mostRecentCrawlTime = crawl.crawlTime;
 
       // Find some documents
-      collection.find({crawlTime: mostRecentCrawlTime}, {limit: limit, skip: skip, sort: [['count', 'desc']]}).toArray(function(err, libraries) {
+      libraryUsageCollection.find({crawlTime: mostRecentCrawlTime}, {limit: limit, skip: skip, sort: [['count', 'desc']]}).toArray(function(err, libraries) {
         libraries = _.map(libraries, function (lib) {
           return {
             library: lib.library,
@@ -98,6 +98,88 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
         res.send({
           results: libraries,
+          meta: {
+            crawl: {
+              crawlTime: mostRecentCrawlTime
+            }
+          }
+        });
+
+      });      
+    });
+  });
+
+  app.get('/v1/scripts/:script', function(req, res){
+
+    // Query parameters
+    var skip = req.query.skip || 0;
+    var limit = req.query.limit || 500;
+    var script = req.params.script;
+
+    getMostRecentCrawl(function(crawl) {
+
+      var scriptUsageCollection = db.collection('scriptUsage');
+      var sitesCollection = db.collection('sites');
+
+      var mostRecentCrawlTime = crawl.crawlTime;
+      // Find some documents
+      scriptUsageCollection.find({script: script}, {limit: limit, skip: skip, sort: [['crawlTime', 'desc']]}).toArray(function(err, scripts) {
+        history = _.map(scripts, function (script) {
+          return {
+            crawlTime: script.crawlTime,
+            count: script.count
+          };
+        });
+
+        var script = scripts[0];
+        console.log(script);
+        // TODO - Fix this all when we agree on API
+        sitesCollection.find({'scripts.name': script.script, crawlTime: mostRecentCrawlTime}, {limit: 20, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
+          sites = _.map(sites, function (site) {
+            console.log(site);
+            return {
+              url: site.url,
+              rank: site.rank,
+              resource: 'http://' + req.headers.host + '/v1/sites/' + site.url
+            }
+          });
+          res.send({
+            count: script.count,
+            sites: sites,
+            history: history,
+            meta: {
+              crawl: {
+                crawlTime: mostRecentCrawlTime
+              }
+            }
+          });
+        });
+      });      
+    });
+  });
+
+  app.get('/v1/scripts', function(req, res){
+
+    // Query parameters
+    var skip = req.query.skip || 0;
+    var limit = req.query.limit || 100;
+    getMostRecentCrawl(function(crawl) {
+
+      var scriptUsageCollection = db.collection('scriptUsage');
+      var mostRecentCrawlTime = crawl.crawlTime;
+
+      // Find some documents
+      scriptUsageCollection.find({crawlTime: mostRecentCrawlTime}, {limit: limit, skip: skip, sort: [['count', 'desc']]}).toArray(function(err, scripts) {
+        scripts = _.map(scripts, function (script) {
+          return {
+            script: script.script,
+            count: script.count,
+            resource: 'http://' + req.headers.host + '/v1/scripts/' + script.script
+          };
+        });
+
+        res.send({
+          results: scripts,
           meta: {
             crawl: {
               crawlTime: mostRecentCrawlTime
@@ -130,6 +212,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
           url: site.url,
           rank: site.rank,
           libraries: site.libraries,
+          scripts: site.scripts,
           total: site.total,
           meta: {
             crawl: {
@@ -184,7 +267,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
         // Change this to .findOne, internet down couldn't remember syntax
         collection.find({}, {limit: 1, sort: [['crawlTime', 'desc']]}).toArray(function(err, crawls) {
           var recentCrawl = crawls[0];
-          localCache.set('recentCrawl', recentCrawl, 1800, function (err, success) {
+          localCache.set('recentCrawl', recentCrawl, 10, function (err, success) {
             console.log(arguments);
             callback(recentCrawl);
           });
