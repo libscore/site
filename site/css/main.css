@@ -31,19 +31,22 @@
 .text-red {
   color: #ff274d; }
 
+::-webkit-scrollbar {
+  display: none; }
+
 body {
   cursor: default;
   overflow: hidden;
-  background: -webkit-radial-gradient(circle, #191f29, #050b18);
+  background: radial-gradient(circle, #191f29, #050b18);
   color: #f3f3f3;
   text-align: center;
   font-family: "Avenir Light";
-  font-size: 0.90rem; }
+  font-size: 1rem; }
   body main {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
-    width: 9.8rem; }
+    margin-left: -5.75rem;
+    width: 11.5rem; }
   body #body-flare {
     position: fixed;
     left: 0;
@@ -64,7 +67,7 @@ body {
     left: 50%;
     bottom: -16vw;
     transform: translateX(-50%);
-    font-size: 40vw; }
+    font-size: 38vw; }
     body #body-bigCount:after {
       content: "Site Count";
       position: absolute;
@@ -78,19 +81,22 @@ a, a:visited {
   text-decoration: none; }
 
 a, [data-query] {
+  display: inline-block;
   cursor: pointer; }
+  a .accent, [data-query] .accent {
+    pointer-events: none; }
 
 #header {
-  padding-top: 1.65rem;
+  padding-top: 1.25rem;
   font-family: "Avenir Black";
   text-transform: uppercase;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   letter-spacing: 0.025rem; }
   #header #header-code {
-    margin: 0rem auto -0.35rem auto;
-    width: 10.65rem;
+    margin: 0rem auto -0.3rem auto;
+    width: 11.65rem;
     text-align: right;
-    font-size: 0.35rem;
+    font-size: 0.45rem;
     font-family: "Source Code Pro";
     text-transform: none; }
     #header #header-code #header-code-property {
@@ -111,70 +117,68 @@ a, [data-query] {
         background: #f4f4f4;
         border-radius: 1rem; }
   #header #header-hr {
-    margin: -0.15rem auto 0rem auto;
+    margin: -0.125rem auto 0rem auto;
     height: 0.3rem;
-    width: 10.65rem;
+    width: 11.5rem;
     background: #d9f245; }
 
 #description, #about {
-  margin: 0.85rem 0rem 0.5rem 0rem;
+  margin: 0.9rem 0rem 0.25rem 0rem;
   letter-spacing: 0.035rem;
-  line-height: 1.035rem; }
-  #description p, #about p {
-    margin-top: 0rem; }
+  line-height: 1.15rem; }
 
 #about {
-  font-size: 0.825rem; }
+  margin-top: 1.05rem;
+  font-size: 0.9rem; }
 
-.field, .field {
+.field {
   margin-top: 1.65rem; }
-  .field span.field-label, .field span.field-label {
+  .field span.field-label {
     display: inline-block;
     position: relative;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     letter-spacing: 0.075rem; }
-  .field div.field-input-container, .field div.field-input-container {
+  .field div.field-input-container {
     position: static;
     width: 100%;
     margin: 0 auto; }
-    .field div.field-input-container input.field-input, .field div.field-input-container input.field-input {
-      transition: color 550ms;
+    .field div.field-input-container input.field-input {
       opacity: 0.85;
       background: transparent;
       border: none;
       letter-spacing: 0.03rem;
       text-align: center;
       font-size: 0.8rem; }
-      .field div.field-input-container input.field-input:focus, .field div.field-input-container input.field-input:focus {
+      .field div.field-input-container input.field-input:focus {
         outline: none;
         color: #caf400; }
-      .field div.field-input-container input.field-input::selection, .field div.field-input-container input.field-input::selection {
+      .field div.field-input-container input.field-input::selection {
         background: #c0d230; }
-    .field div.field-input-container .field-input-symbols, .field div.field-input-container .field-input-symbols {
+    .field div.field-input-container .field-input-symbols {
       position: absolute;
       left: 45%;
       color: #e8ff92;
-      font-size: 0.85rem; }
+      font-size: 0.90rem; }
 
 .legend, .data {
-  margin: 0.3rem auto 0rem auto;
+  margin: 0.65rem auto 0rem auto;
   opacity: 0.65;
   font-family: "Source Code Pro";
-  font-size: 0.575rem;
+  font-size: 0.625rem;
   text-align: left;
-  line-height: 0.7rem; }
-  .legend tr:nth-child(1) td, .data tr:nth-child(1) td {
-    padding-top: 0.5rem; }
+  line-height: 0.625rem; }
   .legend td, .data td {
     width: 100%;
     white-space: nowrap; }
     .legend td:nth-child(even), .data td:nth-child(even) {
-      text-align: right; }
+      text-align: right;
+      letter-spacing: 0.025rem; }
 
 .legend {
-  transition: opacity 135ms; }
+  transition: opacity 135ms;
+  margin-bottom: 0.4rem; }
   .legend:hover {
     opacity: 1; }
 
@@ -184,11 +188,24 @@ a, [data-query] {
   position: absolute;
   max-height: 18.5rem;
   line-height: 0.75rem; }
-  .data #data-cols {
+@-moz-document url-prefix() {
+  .data {
+    /* This is to space out the Firefox scrollbar. */
+    padding-right: 0.65rem; } }
+  .data .data-cols {
     opacity: 0.725;
-    margin-bottom: -0.175rem;
+    margin-bottom: 0.35rem;
     letter-spacing: 0.05rem;
     font-family: "Avenir Light"; }
+
+.dataScroll {
+  background: #191f29;
+  position: absolute;
+  bottom: -0.7rem;
+  right: -0.1rem;
+  color: rgba(255, 255, 255, 0.775);
+  font-size: 0.6rem;
+  letter-spacing: 0.05rem; }
 
 footer {
   position: fixed;
@@ -196,11 +213,12 @@ footer {
   left: 50%;
   transform: translateX(-50%);
   color: #858585;
-  font-size: 0.4rem; }
+  font-size: 9px;
+  line-height: 0.75rem; }
   footer .footer-text {
     opacity: 0.475;
     text-transform: uppercase;
-    letter-spacing: 0.04rem;
+    letter-spacing: 0.05rem;
     word-spacing: -0.075rem; }
   footer .footer-text--divider {
     padding: 0rem 0.10rem; }
@@ -210,13 +228,13 @@ footer {
 **************/
 #legend--search-charts {
   opacity: 0.85;
-  margin-top: -0.3rem; }
+  margin-top: 0.05rem; }
   #legend--search-charts td {
     width: 10rem;
-    letter-spacing: 0.025rem;
     font-size: 0.75rem;
     font-family: "Avenir Light";
-    color: #ddeb4c; }
+    color: #ddeb4c;
+    letter-spacing: 0.025rem; }
     #legend--search-charts td:nth-child(odd) {
       padding-right: 0.6rem;
       text-align: right; }
@@ -225,17 +243,15 @@ footer {
 
 #field--search-help {
   position: absolute;
-  right: -0.925rem;
-  top: -0.02rem;
+  bottom: 0.1rem;
+  right: -1.9rem;
   color: #b5b5b5;
-  font-size: 0.4rem; }
-  #field--search-help:hover {
-    border-bottom: 1px solid #3874a3; }
+  font-size: 7px; }
 
 /*************
     Start
 *************/
-main, #body-flare, #body-bigCount, #header-logo o span, #about, footer {
+main, #body-flare, #body-bigCount, #header-logo o span, .dataScroll, #about, footer {
   display: none; }
 
 #body-error, #header-code, #header-logo, #header-hr {

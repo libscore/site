@@ -1,4 +1,29 @@
 /***************
+     Vars
+***************/
+
+var hiddenVariables = [
+	/* jQueryUI ($.ui) */
+	"$.fn.autocomplete", "$.fn.tooltip", "$.fn.tabs", "$.widget", "$.fn.button", "$.fn.mouse", "$.fn.menu", "$.position",
+	"$.fn._focus", "$.fn._show", "$.fn._hide", "$.fn._addClass", "$.fn._removeClass", "$.fn._toggleClass", "$.fn.__toggle",
+	"$.fn.selectable", "$.fn.progressbar", "$.fn.buttonset", "$.effects", "$.fn.effect", "$.fn.draggable", "$.fn.droppable",
+	"$.fn.datepicker", "$.datepicker", "$.fn.dialog", "$.fn.slider", "$.fn.sortable", "$.fn.resizable",
+	"$.fn.accordion", "$.fn.scrollParent", "$.fn.uniqueId", "$.fn.removeUniqueId", "$.fn.focus",
+	"$.fn.disableSelection", "$.fn.enableSelection", "$.fn.zIndex", "$.fn.toggleClass", "$.fn.switchClass",
+	"$.fn.cssUnit", "$.data", "$.focusable", "$.tabbable", "$.Widget", "$.fn.propAttr",
+	/* Google Search (GSearch) */
+	"GSearchForm", "GwebSearch", "GcustomwebSearch", "GbookSearch", "GblogSearch", "GvideoSearch", "GnewsSearch", "GlocalSearch",
+	"GcustomimageSearch", "GpatentSearch", "GSearchControl", "GsearcherOptions", "GdrawOptions", "GimageSearch",
+	/* Google Misc. */
+	"CreativeToolset", "CreativeToolsetProxy", "ExpandableAdSlotFactory", "DhtmlExpandableIframeFactory", "GPT_jstiming", "GA_jstiming", "ToolbarApi",
+	/* Temporary */
+	"IframeBase", "Iframe", "IFrame", "IframeProxy", "IframeWindow"
+];
+
+/* Google misc., Drupal Webform, ClickTale, Baidu, Misc. */
+var hiddenVariableGroups = /^(Goog_.+|G(A|S)_google.+|WebForm_.+|WR[A-z]{1,2}|ClickTale[A-z]+|BAIDU_[A-z]+|Sys\$[A-z].+|[A-Z][0-9]{1,2}|[A-z]$)/;
+
+/***************
     Elements
 ***************/
 
@@ -13,8 +38,9 @@ var $body = $("body"),
 	$header_logo_o = $("#header-logo o"),
 	$header_hr = $("#header-hr"),
 	$main = $("main"),
-	$dataCols = $("#data-cols tr"),
+	$dataCols = $(".data-cols tr"),
 	$data = $(".data"),
+	$data_scroll = $(".dataScroll"),
 	$about = $("#about"),
 	$field_subscribe = $("#field--subscribe"),
 	$field_search = $("#field--search"),
@@ -25,32 +51,36 @@ var $body = $("body"),
     Global
 **************/
 
-$body.on("click", function(event) {
-	var target = event.target;
+$body
+	.on("click", function(event) {
+		var target = event.target;
 
-	if (target.href) {
-		event.preventDefault();
-		window.open(target.href)
-	}
-
-	if (target.getAttribute("data-query")) {
-		var query = $(target).attr("data-query");
-
-		for (var i = 0; i < query.length; i++) {
-			(function(j) {
-				setTimeout(function() {
-					$search.val(query.slice(0, j + 1));
-
-					if (j === query.length - 1) {
-						setTimeout(function() {
-							UI.query($search[0]);
-						}, 300);
-					}
-				}, j * (18 - Math.min(12, query.length)) * 4);
-			})(i);
+		if (target.href) {
+			event.preventDefault();
+			window.open(target.href)
 		}
-	}
-});
+
+		if (target.getAttribute("data-query")) {
+			var query = $(target).attr("data-query");
+
+			for (var i = 0; i < query.length; i++) {
+				(function(j) {
+					setTimeout(function() {
+						$search.val(query.slice(0, j + 1));
+
+						if (j === query.length - 1) {
+							setTimeout(function() {
+								UI.query($search[0]);
+							}, 300);
+						}
+					}, j * (18 - Math.min(12, query.length)) * 4);
+				})(i);
+			}
+		}
+	})
+	.on("mousewheel", function(event) {
+	    $data[0].scrollTop -= event.wheelDeltaY / 7.5;
+	});
 
 /**************
       UI
@@ -77,8 +107,8 @@ var UI = {
 		Velocity.RunSequence([
 			{ elements: $data, properties: "transition.vanishTopOut", options: { sequenceQueue: false, duration: 725 } },
 			{ elements: $field_search, properties: "callout.shake", options: { sequenceQueue: false, duration: 375 } },
-			{ elements: $error, properties: { opacity: 1 }, options: { sequenceQueue: false, duration: 200, easing: "linear" } },
-			{ elements: $error, properties: "reverse", options: { duration: 150 } },
+			{ elements: $error, properties: { opacity: 1 }, options: { sequenceQueue: false, duration: 250, easing: "linear" } },
+			{ elements: $error, properties: "reverse", options: { duration: 200 } },
 		]);
 	},
 	query: function(el_target) {
@@ -126,6 +156,8 @@ var UI = {
 
 		function request (query, callback) {
 			function ajax(url) {
+				$body.css("cursor", "wait");
+
 				$.ajax({
 					url: url + "&callback=?",
 					type: "GET",
@@ -139,85 +171,137 @@ var UI = {
 						} else {
 							UI.error();
 						}
+
+						$body.css("cursor", "default");
 					},
-					error: UI.error
+					error: function() {
+						UI.error();
+						$body.css("cursor", "default");
+					}
 				});
 			}
 
 			var API = {
-					hostname: "http://api.libscore.com/v1/",
+					hostname: "http://104.131.144.189/v1/",
 					librariesPath: "libraries/",
-					sitesPath: "sites/"
-				};
+					sitesPath: "sites/",
+					scriptsPath: "scripts/"
+				},
+				queryNormalized;
 
-			switch (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query) ? "site" : query) {
+			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
+				queryNormalized = "site";
+				query = query.toLowerCase();
+			} else if (/^script:[-A-z0-9]+/.test(query)) {
+				queryNormalized = "script";
+				query = query.replace(/^script:/, "").toLowerCase();
+			} else {
+				queryNormalized = query;
+			}
+
+			switch (queryNormalized) {
 				case "site":
 					UI.requestTarget = "site";
 					ajax(API.hostname + API.sitesPath + query + "/?");
-					break;
-				case "*":
-					UI.requestTarget = "libs";
-					ajax(API.hostname + API.librariesPath + "?limit=500");
 					break;
 				case "*.*":
 					UI.requestTarget = "sites";
 					ajax(API.hostname + API.sitesPath + "?limit=500");
 					break;
+				case "script":
+					UI.requestTarget = "script";
+					ajax(API.hostname + API.scriptsPath + query + "/?limit=500");
+					break;
+				case "script:*":
+					UI.requestTarget = "scripts";
+					ajax(API.hostname + API.scriptsPath + "?limit=1000");
+					break;
+				case "*":
+					UI.requestTarget = "libs";
+					ajax(API.hostname + API.librariesPath + "?limit=1000");
+					break;
 				default:
 					UI.requestTarget = "lib";
-					ajax(API.hostname + API.librariesPath + query + "?");
+					ajax(API.hostname + API.librariesPath + query + "?limit=500");
 			}
 		}
 
 		if (target === "subscribe") {
-			$subscribe[0].submit();
-			$target.val("Check your email.");
+			setTimeout(function() {
+				$field_subscribe[0].submit();
+				$target.val("Check your email.");
+			}, 625);
 		} else {	
-			function prettifyName (name) {
+			function prettifyName (name, type) {
+				var prettified = name;
 				var truncated = false;
 
-				if (name.length > 18) {
+				if (name.length > 20) {
 					truncated = true;
-					name = name.slice(0, 15);
+					prettified = prettified.slice(0, 18);
 				}
 
-				name = name.replace(/\./g, "<span class='text-blue'>.</span>");
+				prettified = prettified.replace(/\./g, "<span class='text-blue'>.</span>");
 
-				return name + (truncated ? "..." : "");
+				if (truncated) {
+					prettified = "<span title='" + name + "'>" + prettified + "…</span>";
+				}
+
+				if (type === "mobile") {
+					prettified += " <span title='Appears on the mobile version of this site.' class='text-grey'>[m]</span>";
+				}
+
+				return prettified;
 			}
 
 			request(data, function(response) {
 				var $html = "";
 				var $columns;
+				var matches = (response.results || response.sites || response.libraries);
 
-				(response.results || response.sites || response.libraries).forEach(function(match) {
+				matches.forEach(function(match) {
 					var $matchData;
+
+					if (hiddenVariables.indexOf((match.library || match.name)) !== -1 || hiddenVariableGroups.test((match.library || match.name))) {
+						return;
+					}
+
 					switch (UI.requestTarget) {
 						case "site":
-							$columns = "<td>lib</td><td>sites</td>";
-							$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "hacks.moz.org/libscore/#helplinks") + "'>" + prettifyName(match) + " <span class='text-blue'>" + (match.github ? "⇗" : "?") + "</span></a>";
-							// waiting for thomas to put in counts
-							$matchData += "<td>" + match.count + "</td>";
-							break;
-
-						case "libs":
-							$columns = "<td>lib (<a href='http://api.libscore.com/libraries.txt' class='text-grey'>download full list</a>)</td><td>sites</td>";
-							$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "hacks.moz.org/libscore/#helplinks") + "'>" + prettifyName(match.library) + " <span class='text-blue'>" + (match.github ? "⇗" : "?") + "</span></a>";
-							$matchData += "<td>" + match.count + "</td>";
-							break;
+							$columns = "<td>lib</td><td>site count</td>";
+							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.name, match.type) + " <span class='text-blue'>" + (match.github ? "⇗" : "?") + "</span></a>";
+							$matchData += "<td>" + numeral(match.count).format("0,0") + "</td>";
+							break
 
 						case "sites":
-							$columns = "<td>site</td><td>rank</td>";
+							$columns = "<td>site</td><td>site rank</td>";
 							$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>→</span></td>";
-							$matchData += "<td><span class='text-green-dark'>#</span>" + match.rank + "</td>";
+							$matchData += "<td><span class='text-green-dark'>#</span>" + numeral(match.rank).format("0,0") + "</td>";
 							break;
 
 						case "lib":
-							// waiting on scripts lookup
 							// also pop open an alert when 'get badge' is clicked telling people to subscribe
-							$columns = "<td>" + response.count + " sites (<a href='http://status.io/libscore/' class='text-grey'>get badge</a>)</td><td>rank</td>";
-							$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⇗</span></a></td>";
-							$matchData += "<td><span class='text-green-dark'>#</span>" + match.rank + "</td>";
+							$columns = "<td>" + response.count + " sites (<a href='//status.io/libscore/' class='text-grey'>get badge</a>)</td><td>site rank</td>";
+							$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⇗</span></a></td>";
+							$matchData += "<td><span class='text-green-dark'>#</span>" + numeral(match.rank).format("0,0") + "</td>";
+							break;
+
+						case "libs":
+							$columns = "<td>lib (<a href='//api.libscore.com/libraries.txt' class='text-grey'>download full list</a>)</td><td>site count</td>";
+							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.library) + " <span class='text-blue'>" + (match.github ? "⇗" : "?") + "</span></a>";
+							$matchData += "<td>" + numeral(match.count).format("0,0") + "</td>";
+							break;
+
+						case "script":
+							$columns = "<td>" + response.count + " sites</td><td>site rank</td>";
+							$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⇗</span></a></td>";
+							$matchData += "<td><span class='text-green-dark'>#</span>" + numeral(match.rank).format("0,0") + "</td>";
+							break;
+
+						case "scripts":
+							$columns = "<td>script</td><td>site count</td>";
+							$matchData = "<td><a href='//" + match.script + "'>" + prettifyName(match.script) + "</a></td>";
+							$matchData += "<td>" + numeral(match.count).format("0,0") + "</td>";
 							break;
 					}
 
@@ -226,7 +310,7 @@ var UI = {
 				
 				$dataCols.html($columns);
 				$data.find("table").eq(1).remove();
-				$data.append("<table>" + $html + "</table>");
+				$data.append("<table>" + ($html || "<tr><td>no matches</td><td>0</td></tr>") + "</table>");
 
 				if (UI.requestTarget === "lib") {
 					$bigCount.html(response.count.toString());
@@ -235,15 +319,17 @@ var UI = {
 					UI.hideCount();
 				}
 
-				Velocity(
-					$data,
-					"transition.vanishTopIn",
-					{ 
+				$data_scroll.css("opacity", 0);
+				Velocity($data, "transition.vanishTopIn", { 
 						duration: 475,
 						complete: function() {
 							$data.parent().css("height", $data.outerHeight() + "px");
+
+							if ($data[0].scrollHeight > $data.parent()[0].scrollHeight) {
+								Velocity($data_scroll, "transition.fadeIn", 850);
+							}
 						}
-					});
+				});
 			});
 		}
 	},
@@ -303,7 +389,6 @@ $("#header-code-property")
      Init
 **************/
 
-Velocity.hook($main, "translateX", "-50%");
 Velocity.hook($footer, "translateX", "-50%");
 Velocity.hook($bigCount, "translateX", "-50%");
 
