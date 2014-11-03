@@ -1,7 +1,7 @@
 Libscore.com
 ===========
 
-To learnabout Libscore, read the [full overview](https://medium.com/p/be93165fa497).
+To learn about Libscore, read the [full overview](https://medium.com/p/be93165fa497).
 
 For Libscore's API documentation, see [this](API.md) document.
 
