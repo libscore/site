@@ -35,13 +35,13 @@
 				It detects modules loaded via RequireJS, jQuery plugins, window variables produced by non-jQuery libraries, and external scripts<span>.</span>
 			</p>
 			<p>
-				Libscore was created by <a href="http://twitter.com/shapiro">Julian Shapiro</a>. <a href="http://twitter.com/neutralthoughts">Thomas Davis</a> built the API<span>.</span>
+				Read the <a href="https://medium.com/@Shapiro/be93165fa497">full overview</a><span>.</span>
+			</p>
+			<p>
+				Libscore was created by <a href="http://twitter.com/shapiro">Julian Shapiro</a> and <a href="http://twitter.com/neutralthoughts">Thomas Davis</a><span>.</span>
 			</p>
 			<p>
 				It's sponsored by <a href="http://stripe.com">Stripe</a> and <a href="http://digitalocean.com">Digital Ocean</a><span>.</span>
-			</p>
-			<p>
-				Learn more <a href="http://hacks.mozilla.org/libscore/#usage">here</a><span>.</span>
 			</p>
 		</div>
 
@@ -52,7 +52,7 @@
 		<form 
 			id="field--subscribe"
 			class="field hint--right"
-			data-hint="Get emailed a data update every two months."
+			data-hint="Receive a monthly data update."
 			action="//libscore.us9.list-manage.com/subscribe/post?u=30c0d4c5d64d5d9fcf7b76792&amp;id=69666fd115" method="post" name="mc-embedded-subscribe-form"
 			target="_blank"
 			novalidate
@@ -82,6 +82,9 @@
 				<td>
 					<span class="legend--search-option" data-query="*.*">Top Sites</span>
 				</td>
+				<td>
+					&nbsp;&nbsp;<span class="legend--search-option" data-query="script:*">Top Scripts</span>
+				</td>
 				<!-- top rising, top falling -->
 			</tr>
 		</table>
@@ -89,7 +92,7 @@
 		<div id="field--search" class="field">
 			<span class="field-label">
 				Se<o>a</o>rch
-				<a id="field--search-help" class="hint" data-hint="Click to learn how Libscore's search works." href="http://hacks.mozilla.org/libscore/#usage">(?)</a>
+				<a id="field--search-help" class="hint" data-hint="Learn how Libscore's search works." href="https://medium.com/@Shapiro/be93165fa497#Howtosearch">(Help)</a>
 			</span>
 			<div class="field-input-container">
 				<div class="field-input-symbols"></div>
@@ -98,46 +101,51 @@
 		</div>
 		<table id="legend--search" class="legend">
 			<tr>
-				<td>global:</td>
+				<td>global</td>
 				<td class="hint--right" data-hint="Find sites with a global variable (case sensitive).">
-					<span class="legend--search-option" data-query="jQuery">jQuery</span>,
-					<span class="legend--search-option" data-query="Modernizr">Modernizr</span>
+					<span class="legend--search-option" data-query="Modernizr">Modernizr</span>,
+					<span class="legend--search-option" data-query="jQuery">jQuery</span>
 				</td>
 			</tr>
 			<tr>
-				<td>jquery:</td>
+				<td>jquery</td>
 				<td class="hint--right" data-hint="Find sites with a jQuery plugin (case sensitive).">
-					<span class="legend--search-option" data-query="$.Velocity">$<span class="accent">.</span>Velocity</span>,
-					<span class="legend--search-option" data-query="$.fn.ui">$<span class="accent">.</span>fn<span class="accent">.</span>ui</span>
+					<span class="legend--search-option" data-query="$.fn.velocity">$<span class="accent">.</span>fn<span class="accent">.</span>velocity</span>,
+					<span class="legend--search-option" data-query="$.ui">$<span class="accent">.</span>ui</span>
 				</td>
 			</tr>
 			<tr>
-				<td>script:</td>
+				<td>script</td>
 				<td class="hint--right" data-hint="Find sites with an external script.">
-					<span class="legend--search-option" data-query="s.adroll.com">script<span class="accent">:</span>s<span class="accent">.</span>adroll<span class="accent">.</span>com</span>
+					<span class="legend--search-option" data-query="script:s.adroll.com">script<span class="accent">:</span>s<span class="accent">.</span>adroll<span class="accent">.</span>com</span>
 				</td>
 			</tr>
 			<tr>
-				<td>domain:</td>
-				<td class="hint--right" data-hint="Find all libraries on a site.">
+				<td>domain</td>
+				<td class="hint--right" data-hint="Retrieve all libraries on a site.">
 					<span class="legend--search-option" data-query="tumblr.com">tumblr<span class="accent">.</span>com</span>,
 					<span class="legend--search-option" data-query="do.co">do<span class="accent">.</span>co</span>
 				</td>
 			</tr>
 		</table>
 		<!-- delta trends -->
-		<div>
+		<div id="data--search-container">
 			<div id="data--search" class="data">
-				<table id="data-cols"><tr></tr></table>
+				<table class="data-cols"><tr></tr></table>
+			</div>
+			<div class="dataScroll">
+				scroll ↓
 			</div>
 		</div>
 	</main>
 	<footer>
-		<!-- <a class="footer-text" href="http://twitter.com/shapiro">julian shapiro</a>
-		<span class="footer-text--divider">+</span> -->
 		<a class="footer-text" href="http://stripe.com/blog/libscore">stripe</a>
 		<span class="footer-text--divider">+</span>
 		<a class="footer-text" href="http://digitalocean.com/blog/libscore">digital ocean</a>
+		<br />
+		<a class="footer-text" href="http://twitter.com/shapiro">julian shapiro</a>
+		<span class="footer-text--divider">+</span>
+		<a class="footer-text" href="http://twitter.com/neutralthoughts">thomas davis</a>
 	</footer>
 	<script src="js/cash.min.js"></script>
 	<script src="js/velocity.min.js"></script>
