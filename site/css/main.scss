@@ -44,21 +44,25 @@
 	color: #ff274d;
 }
 
+::-webkit-scrollbar { 
+    display: none; 
+}
+
 body {
 	cursor: default;
 	overflow: hidden;
 
-	background: -webkit-radial-gradient(circle, rgb(25, 31, 41), rgb(5, 11, 24));
+	background: radial-gradient(circle, rgb(25, 31, 41), rgb(5, 11, 24));
 
 	color: #f3f3f3;
 	text-align: center;
 	font-family: "Avenir Light";
-	font-size: 0.90rem;
+	font-size: 1rem;
 
 	main {
 		position: absolute;
-		left: 50%; transform: translateX(-50%);
-		width: 9.8rem;
+		left: 50%; margin-left: -5.75rem;
+		width: 11.5rem;
 	}
 
 	#body-flare {
@@ -109,7 +113,12 @@ a, a:visited {
 }
 
 a, [data-query] {
+	display: inline-block;
 	cursor: pointer;
+
+	.accent {
+		pointer-events: none;
+	}
 
 	&:hover, .accent {
 		@extend .text-blue;
@@ -121,19 +130,19 @@ a, [data-query] {
 }
 
 #header {
-	padding-top: 1.65rem;
+	padding-top: 1.25rem;
 
 	font-family: "Avenir Black";
 	text-transform: uppercase;
-	font-size: 2.2rem;
+	font-size: 2.4rem;
 	letter-spacing: 0.025rem;
 
 	#header-code {
-		margin: 0rem auto -0.35rem auto;
-		width: 10.65rem;
+		margin: 0rem auto -0.3rem auto;
+		width: 11.65rem;
 
 		text-align: right;
-		font-size: 0.35rem;
+		font-size: 0.45rem;
 		font-family: "Source Code Pro";
 		text-transform: none;
 
@@ -176,34 +185,31 @@ a, [data-query] {
 	}
 
 	#header-hr {
-		margin: -0.15rem auto 0rem auto;
+		margin: -0.125rem auto 0rem auto;
 		height: 0.3rem;
-		width: 10.65rem;
+		width: 11.5rem;
 
 		background: #d9f245;
 	}
 }
 
 #description, #about {
-	margin: 0.85rem 0rem 0.5rem 0rem;
+	margin: 0.9rem 0rem 0.25rem 0rem;
 
 	letter-spacing: 0.035rem;
-	line-height: 1.035rem;
+	line-height: 1.15rem;
 
 	span {
 		@extend .text-grey;
 	}
-
-	p {
-		margin-top: 0rem;
-	}
 }
 
 #about {
-	font-size: 0.825rem;
+	margin-top: 1.05rem;
+	font-size: 0.9rem;
 }
 
-.field, .field {
+.field {
 	margin-top: 1.65rem;
 
 	span.field-label {
@@ -212,7 +218,7 @@ a, [data-query] {
 		margin-bottom: 0.5rem;
 
 		text-transform: uppercase;
-		font-size: 0.6rem;
+		font-size: 0.65rem;
 		letter-spacing: 0.075rem;
 	}
 
@@ -222,7 +228,6 @@ a, [data-query] {
 		margin: 0 auto;
 
 		input.field-input {
-			transition: color 550ms;
 			opacity: 0.85;
 			background: transparent;
 			border: none;
@@ -249,42 +254,41 @@ a, [data-query] {
 			left: 45%;
 
 			color: #e8ff92;
-			font-size: 0.85rem;
+			font-size: 0.90rem;
 		}
 	}
 }
 
 .legend, .data {
-	margin: 0.3rem auto 0rem auto;
+	margin: 0.65rem auto 0rem auto;
 
 	opacity: 0.65;
 
 	font-family: "Source Code Pro";
-	font-size: 0.575rem;
+	font-size: 0.625rem;
 	text-align: left;
-	line-height: 0.7rem;
-
-	tr:nth-child(1) td {
-		padding-top: 0.5rem;
-	}
+	line-height: 0.625rem;
 
 	td {
 		width: 100%;
 
 		white-space: nowrap;
 
-		&:nth-child(even) {
-			text-align: right;
-		}
-
 		&:nth-child(odd) {
 			@extend .text-grey;
+		}
+
+		&:nth-child(even) {
+			text-align: right;
+			letter-spacing: 0.025rem;
 		}
 	}
 }
 
 .legend {
 	transition: opacity 135ms;
+
+	margin-bottom: 0.4rem;
 
 	&:hover {
 		opacity: 1;
@@ -297,6 +301,10 @@ a, [data-query] {
 
 	position: absolute;
 	max-height: 18.5rem;
+	@-moz-document url-prefix() {
+		/* This is to space out the Firefox scrollbar. */
+		padding-right: 0.65rem;
+	}
 
 	line-height: 0.75rem;
 
@@ -310,14 +318,25 @@ a, [data-query] {
 		}
 	}
 
-	#data-cols {
+	.data-cols {
 		opacity: 0.725;
 
-		margin-bottom: -0.175rem;
+		margin-bottom: 0.35rem;
 
 		letter-spacing: 0.05rem;
 		font-family: "Avenir Light";
 	}
+}
+
+.dataScroll {
+	background: rgb(25, 31, 41);
+	position: absolute;
+	bottom: -0.7rem;
+	right: -0.1rem;
+
+	color: rgba(255, 255, 255, 0.775);
+	font-size: 0.6rem;
+	letter-spacing: 0.05rem;
 }
 
 footer {
@@ -326,13 +345,15 @@ footer {
 	left: 50%; transform: translateX(-50%);
 
 	color: #858585;
-	font-size: 0.4rem;
+	font-size: 9px;
+	line-height: 0.75rem;
 
 	.footer-text {
-		@extend .text-yellow;
 		opacity: 0.475;
+
+		@extend .text-yellow;
 		text-transform: uppercase;
-		letter-spacing: 0.04rem;
+		letter-spacing: 0.05rem;
 		word-spacing: -0.075rem;
 	}
 
@@ -354,15 +375,15 @@ footer {
 #legend--search-charts {
 	opacity: 0.85;
 
-	margin-top: -0.3rem;
+	margin-top: 0.05rem;
 
 	td {
 		width: 10rem;
 
-		letter-spacing: 0.025rem;
 		font-size: 0.75rem;
 		font-family: "Avenir Light";
 		color: #ddeb4c;
+		letter-spacing: 0.025rem;
 
 		&:nth-child(odd) {
 			padding-right: 0.6rem;
@@ -378,14 +399,13 @@ footer {
 
 #field--search-help {
 	position: absolute;
-	right: -0.925rem; top: -0.02rem;
+	bottom: 0.1rem; right: -1.9rem;
 
 	color: #b5b5b5;
-	font-size: 0.4rem;
+	font-size: 7px;
 
 	&:hover {
 		@extend .text-blue;
-		border-bottom: 1px solid #3874a3;
 	}
 }
 
@@ -393,7 +413,7 @@ footer {
     Start
 *************/
 
-main, #body-flare, #body-bigCount, #header-logo o span, #about, footer {
+main, #body-flare, #body-bigCount, #header-logo o span, .dataScroll, #about, footer {
 	display: none;
 }
 
