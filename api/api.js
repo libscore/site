@@ -52,7 +52,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
         console.log(mostRecentCrawlTime);
         // TODO - Fix this all when we agree on API
-        sitesCollection.find({'libraries.name': library.library, crawlTime: mostRecentCrawlTime}, {limit: 20, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
+        sitesCollection.find({'libraries.name': lib.library, crawlTime: mostRecentCrawlTime}, {limit: 20, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
           sites = _.map(sites, function (site) {
             console.log(site);
             return {
