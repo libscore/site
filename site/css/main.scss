@@ -92,6 +92,7 @@ body {
 
 		font-size: 38vw;
 		@extend .text-green;
+		letter-spacing: -1vw;
 
 		&:after {
 			content: "Site Count";
@@ -328,6 +329,11 @@ a, [data-query] {
 	}
 }
 
+.data_more td {
+	padding-top: 0.15rem;
+	color: white !important;
+}
+
 .dataScroll {
 	background: rgb(25, 31, 41);
 	position: absolute;
@@ -399,7 +405,7 @@ footer {
 
 #field--search-help {
 	position: absolute;
-	bottom: 0.1rem; right: -1.9rem;
+	bottom: 0.05rem; right: -2rem;
 
 	color: #b5b5b5;
 	font-size: 7px;
@@ -413,7 +419,7 @@ footer {
     Start
 *************/
 
-main, #body-flare, #body-bigCount, #header-logo o span, .dataScroll, #about, footer {
+main, #body-flare, #body-bigCount, #header-logo o span, .data_more, .dataScroll, #about, footer {
 	display: none;
 }
 
