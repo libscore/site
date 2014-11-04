@@ -61,12 +61,12 @@ MongoClient.connect(MONGO_URL, function(err, db) {
               resource: 'http://' + req.headers.host + '/v1/sites/' + site.url
             }
           });
-          sites = _.uniq(sites, function (site){ return site.url });
 
           res.send({
             count: lib.count,
             sites: sites,
             history: history,
+            github: null,
             meta: {
               crawl: {
                 crawlTime: mostRecentCrawlTime
@@ -145,7 +145,6 @@ MongoClient.connect(MONGO_URL, function(err, db) {
               resource: 'http://' + req.headers.host + '/v1/sites/' + site.url
             }
           });
-          sites = _.uniq(sites, function (site){ return site.url });
 
           res.send({
             count: script.count,
