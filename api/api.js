@@ -66,7 +66,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
             count: lib.count,
             sites: sites,
             history: history,
-            github: null,
+            github: '',
             meta: {
               crawl: {
                 crawlTime: mostRecentCrawlTime
@@ -94,6 +94,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
           return {
             library: lib.library,
             count: lib.count,
+            github: '',
             resource: 'http://' + req.headers.host + '/v1/libraries/' + lib.library
           };
         });
