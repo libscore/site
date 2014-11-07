@@ -254,10 +254,13 @@ MongoClient.connect(MONGO_URL, function(err, db) {
         
         var site = sites[0];
         console.log(site);
+        var desktop = _.filter(site.libraries, function(lib){ return lib.type === 'desktop'; });
+        var mobile = _.filter(site.libraries, function(lib){ return lib.type === 'mobile'; });
+        var libs = desktop.concat(mobile);
         res.send({
           url: site.url,
           rank: site.rank,
-          libraries: site.libraries,
+          libraries: libs,
           scripts: site.scripts,
           total: site.total,
           meta: {
