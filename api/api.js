@@ -306,7 +306,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
 
   app.get('/DUMP.txt', function(req, res){
-    res.sendfile('DUMP.txt', {root: __dirname+"../../"})
+    res.sendfile('DUMP.txt', {root: __dirname+"../../../"})
   });
 
   // Get the most crawl and store the details in cache for 30 minutes at a time
