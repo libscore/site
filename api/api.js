@@ -77,7 +77,46 @@ MongoClient.connect(MONGO_URL, function(err, db) {
       });      
     });
   });
+  app.get('/v1/badge/:library', function(req, res){
 
+    // Query parameters
+    var skip = req.query.skip || 0;
+    var limit = req.query.limit || 500;
+    var library = req.params.library;
+
+    getMostRecentCrawl(function(crawl) {
+
+      var libraryUsageCollection = db.collection('libraryUsage');
+      var sitesCollection = db.collection('sites');
+
+      var mostRecentCrawlTime = crawl.crawlTime;
+      // Find some documents
+      libraryUsageCollection.find({library: library}, {limit: limit, skip: skip, sort: [['crawlTime', 'desc']]}).toArray(function(err, libraries) {
+        history = _.map(libraries, function (lib) {
+          return {
+            crawlTime: lib.crawlTime,
+            count: lib.count
+          };
+        });
+
+        var lib = libraries[0];
+
+        console.log(mostRecentCrawlTime);
+        // TODO - Fix this all when we agree on API
+        sitesCollection.find({'libraries.name': lib.library, crawlTime: mostRecentCrawlTime}, {limit: limit, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
+          sites = _.map(sites, function (site) {
+            console.log(site);
+            return {
+              url: site.url,
+              rank: site.rank,
+              resource: 'http://' + req.headers.host + '/v1/sites/' + site.url
+            }
+          });
+          res.redirect(301, 'http://img.shields.io/badge/libscore-' + lib.count + '-green.svg')
+        });
+      });      
+    });
+  });
   app.get('/v1/libraries', function(req, res){
 
     // Query parameters
