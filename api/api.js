@@ -305,7 +305,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
   });
 
 
-  app.get('/DUMP.txt', function(req, res){
+  app.get('/libraries.txt', function(req, res){
     res.sendfile('DUMP.txt', {root: __dirname+"../../../"})
   });
 
