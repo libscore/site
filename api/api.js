@@ -3,8 +3,10 @@ var MongoClient = require('mongodb').MongoClient;
 var _ = require('lodash');
 var NodeCache = require( "node-cache" );
 var cors = require('cors');
-
+var fs = require('fs');
 var app = express();
+
+
 
 // CORS
 app.use(cors());
@@ -77,7 +79,8 @@ MongoClient.connect(MONGO_URL, function(err, db) {
       });      
     });
   });
-  app.get('/v1/badge/:library', function(req, res){
+  // TODO - THIS IS REPEATED CODE AND ugly
+  app.get('/badge/:library', function(req, res){
 
     // Query parameters
     var skip = req.query.skip || 0;
@@ -112,7 +115,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
               resource: 'http://' + req.headers.host + '/v1/sites/' + site.url
             }
           });
-          res.redirect(301, 'http://img.shields.io/badge/libscore-' + lib.count + '-green.svg')
+          res.redirect(301, 'http://img.shields.io/badge/libscore-' + lib.count + '-brightgreen.svg?style=flat-square')
         });
       });      
     });
@@ -301,6 +304,10 @@ MongoClient.connect(MONGO_URL, function(err, db) {
     });
   });
 
+
+  app.get('/DUMP.txt', function(req, res){
+    res.sendfile('DUMP.txt', {root: __dirname+"../../"})
+  });
 
   // Get the most crawl and store the details in cache for 30 minutes at a time
   var getMostRecentCrawl = function (callback) {
