@@ -80,7 +80,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
     });
   });
   // TODO - THIS IS REPEATED CODE AND ugly
-  app.get('/v1/libraries/:library.svg', function(req, res){
+  app.get('/badge/:library.svg', function(req, res){
 
     // Query parameters
     var skip = req.query.skip || 0;
