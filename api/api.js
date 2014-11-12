@@ -257,11 +257,14 @@ MongoClient.connect(MONGO_URL, function(err, db) {
         var desktop = _.filter(site.libraries, function(lib){ return lib.type === 'desktop'; });
         var mobile = _.filter(site.libraries, function(lib){ return lib.type === 'mobile'; });
         var libs = desktop.concat(mobile);
+        var scriptsDesktop = _.filter(site.scripts, function(script){ return script.type === 'desktop'; });
+        var scriptsMobile = _.filter(site.scripts, function(script){ return script.type === 'mobile'; });
+        var scripts = scriptsDesktop.concat(scriptsMobile);
         res.send({
           url: site.url,
           rank: site.rank,
           libraries: libs,
-          scripts: site.scripts,
+          scripts: scripts,
           total: site.total,
           meta: {
             crawl: {
