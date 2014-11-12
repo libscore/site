@@ -1,5 +1,5 @@
 /****************
-    Template
+     Fonts
 ****************/
 
 @font-face {
@@ -8,121 +8,86 @@
 }
 
 @font-face {
+    font-family: "Avenir Medium";
+    src: url(../font/Avenir_Medium.ttf);
+}
+
+@font-face {
     font-family: "Avenir Light";
     src: url(../font/Avenir_Light.ttf);
 }
 
-.text-faded {
-	opacity: 0.65;
-}
-
-.text-grey {
-	color: #b9b9b9;
-}
-
-.text-yellow {
-	color: #d9f245;
-}
+/****************
+     Colors
+****************/
 
 .text-blue {
-	color: #5bb7ff;
+	color: #0b8fb2;
 }
-
 .text-blue-dark {
-	color: #3874a3;
+	color: #235364;
+}
+.background-blue {
+	background-color: #0b8fb2;
 }
 
 .text-green {
-	color: #90ffb2;
+	color: #29bd66;
+}
+.background-green {
+	background-color: #29bd66;
 }
 
-.text-green-dark {
-	color: #5aa074;
+.text-grey {
+	color: #5a5a5a;
 }
 
 .text-red {
-	color: #ff274d;
+	color: #d51407;
 }
+.background-red {
+	background-color: #d51407;
+}
+
+/********************
+    Normalization
+********************/
 
 ::-webkit-scrollbar { 
     display: none; 
 }
 
-body {
-	cursor: default;
-	overflow: hidden;
+* {
+	box-sizing: border-box;
+}
 
-	background: radial-gradient(circle, rgb(25, 31, 41), rgb(5, 11, 24));
+::selection {
+	background: #000;
+	color: #fff;
+}
 
-	color: #f3f3f3;
-	text-align: center;
-	font-family: "Avenir Light";
-	font-size: 1rem;
+/*****************
+    Elements
+*****************/
 
-	main {
-		position: absolute;
-		left: 50%; margin-left: -5.75rem;
-		width: 11.5rem;
-	}
+b {
+	font-weight: normal;
+	font-family: "Avenir Medium";
+}
 
-	#body-flare {
-		position: fixed;
-		left: 0; top: 0;
-		width: 100%;
-	}
-
-	#body-error {
-		z-index: -1;
-
-		position: fixed;
-		width: 100%;
-		height: 100%;
-		padding-top: 10vh;
-
-		background: #ff1718;
-
-		color: rgb(9, 20, 24);
-		text-align: center;
-		font-size: 80vh;
-	}
-
-	#body-bigCount {
-		position: absolute;
-		left: 50%; bottom: -16vw; transform: translateX(-50%);
-
-		font-size: 38vw;
-		@extend .text-green;
-		letter-spacing: -1vw;
-
-		&:after {
-			content: "Site Count";
-
-			position: absolute;
-			top: 3.5vw;
-			right: 1.75vw;
-
-			text-transform: uppercase;
-			font-size: 1.05vw;
-			letter-spacing: 0.025vw;
-		}
-	}
+strong {
+	font-weight: normal;
+	font-family: "Avenir Black";
 }
 
 a, a:visited {
-	text-decoration: none;
-	@extend .text-yellow;
-}
-
-a, [data-query] {
-	display: inline-block;
 	cursor: pointer;
+	color: inherit;
 
-	.accent {
-		pointer-events: none;
-	}
+	text-decoration: none;
 
-	&:hover, .accent {
-		@extend .text-blue;
+	&:hover {
+		@extend .text-blue-dark;
 	}
 
 	&:active {
@@ -130,28 +95,117 @@ a, [data-query] {
 	}
 }
 
+[data-query] {
+	display: inline-block;
+
+	transition: background-color 75ms;
+	cursor: pointer;
+	border-bottom: 1px dotted #2e2e2e;
+
+	&:hover {
+		@extend .background-green;
+	}
+}
+
+input {
+	transition: background-color 400ms;
+	width: 14.35rem;
+	padding: 0.425rem 0.45rem 0.3rem 0.425rem;
+
+	border: 1px solid black;
+	border-radius: 1px;
+
+	font-family: "Avenir Medium";
+	color: #000;
+	font-size: 0.8rem;
+	word-spacing: -0.05rem;
+
+	&:focus, &:hover {
+		outline: none;
+		@extend .background-green;
+	}
+}
+
+/*****************
+      Body
+*****************/
+
+body {
+	cursor: default;
+	overflow: hidden;
+
+	height: 100%;
+
+	border-top: 3px solid white;
+	background: #fff;
+
+	color: #000;
+	font-family: "Avenir Light";
+
+	main {
+		position: absolute;
+		left: 50%; margin-left: -15rem;
+		width: 32rem;
+	}
+}
+
+#body-bigError {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+
+	font-family: "Verdana";
+	color: red;
+	font-size: 80vh;
+	text-align: center;
+}
+
+#body-bigCount {
+	position: absolute;
+	left: 50%; bottom: -12vw; transform: translateX(-50%);
+
+	font-size: 33vw;
+	@extend .text-green;
+
+	&:after {
+		content: "Site Count";
+
+		position: absolute;
+		top: 3.5vw;
+		right: 1.75vw;
+
+		text-transform: uppercase;
+		font-size: 1.05vw;
+		letter-spacing: 0.025vw;
+	}
+}
+
 #header {
-	padding-top: 1.25rem;
+	margin: 0.45rem auto -0.25rem auto;
+
+	width: 30.25rem;
 
 	font-family: "Avenir Black";
 	text-transform: uppercase;
-	font-size: 2.4rem;
-	letter-spacing: 0.025rem;
+	font-size: 2.825rem;
 
 	#header-code {
-		margin: 0rem auto -0.3rem auto;
+		position: relative;
+		top: 0.525rem;
+		right: -1.9rem;
+
 		width: 11.65rem;
 
+		font-family: "Avenir Medium";
 		text-align: right;
-		font-size: 0.45rem;
-		font-family: "Source Code Pro";
+		font-size: 0.65rem;
 		text-transform: none;
+		letter-spacing: 0.03rem;
 
 		#header-code-property {
 			display: inline-block;
 			cursor: pointer;
-
-			@extend .text-yellow;
 
 			&:hover {
 				@extend .text-blue;
@@ -164,265 +218,217 @@ a, [data-query] {
 	}
 
 	#header-logo {
-		text-shadow: 0px 0px 0px rgba(225, 245, 225, 0.50);
-
-		o {
-			display: inline;
-			position: relative;
-			text-shadow: 0px 0px 0px rgba(55,143,254, 0.65);
-
-			span {
-				left: 0.12rem;
-				bottom: 0.80rem;
-				position: absolute;
-
-				width: 1.4rem;
-				height: 1.4rem;
-
-				background: #f4f4f4;
-				border-radius: 1rem;
-			}
-		}
-	}
-
-	#header-hr {
-		margin: -0.125rem auto 0rem auto;
-		height: 0.3rem;
-		width: 11.5rem;
-
-		background: #d9f245;
+		text-shadow: 0px 0px 0px rgba(125, 125, 125, 1);
 	}
 }
 
-#description, #about {
-	margin: 0.9rem 0rem 0.25rem 0rem;
+#slogan {
+	background: white;
 
-	letter-spacing: 0.035rem;
-	line-height: 1.15rem;
-
-	span {
-		@extend .text-grey;
-	}
+	font-size: 1rem;
+	line-height: 1.35rem;
+	letter-spacing: 0.015rem;
+	font-family: "Avenir Medium";
 }
 
-#about {
-	margin-top: 1.05rem;
-	font-size: 0.9rem;
+.sectionHeader {
+	margin: 1.3rem 0rem 0.65rem 0.05rem;
+
+	font-family: "Avenir Black";
+	font-size: 0.75rem;
+	letter-spacing: 0.05rem;
+	text-transform: uppercase;
 }
 
-.field {
-	margin-top: 1.65rem;
-
-	span.field-label {
-		display: inline-block;
-		position: relative;
-		margin-bottom: 0.5rem;
-
-		text-transform: uppercase;
-		font-size: 0.65rem;
-		letter-spacing: 0.075rem;
-	}
-
-	div.field-input-container {
-		position: static;
-		width: 100%;
-		margin: 0 auto;
-
-		input.field-input {
-			opacity: 0.85;
-			background: transparent;
-			border: none;
-
-			@extend .text-yellow;
-			letter-spacing: 0.03rem;
-			text-align: center;
-			font-size: 0.8rem;
-
-			&:focus {
-				outline: none;
-
-				@extend .text-green-dark;
-				color: #caf400;
-			}
-
-			&::selection {
-				background: #c0d230;
-			}
-		}
-
-		.field-input-symbols {
-			position: absolute;
-			left: 45%;
-
-			color: #e8ff92;
-			font-size: 0.90rem;
-		}
-	}
-}
-
-.legend, .data {
-	margin: 0.65rem auto 0rem auto;
-
-	opacity: 0.65;
-
-	font-family: "Source Code Pro";
+#query {
+	text-transform: uppercase;
 	font-size: 0.625rem;
-	text-align: left;
-	line-height: 0.625rem;
+	letter-spacing: 0.05rem;
 
-	td {
-		width: 100%;
+	#query_or {
+		margin: 0rem 0.3rem;
+	}
 
-		white-space: nowrap;
+	[data-query] {
+		margin-right: 0.115rem;
+		padding: 0.4rem 0.6rem 0.25rem 0.6rem;
 
-		&:nth-child(odd) {
-			@extend .text-grey;
-		}
+		background: black;
 
-		&:nth-child(even) {
-			text-align: right;
-			letter-spacing: 0.025rem;
+		line-height: 1.1rem;
+		color: white;
+		font-family: "Avenir Black";
+
+		&:hover {
+			@extend .background-green;
 		}
 	}
 }
 
-.legend {
-	transition: opacity 135ms;
+#search_ {
+	display: inline-block;
+	position: static;
+	margin-bottom: 0.125rem;
 
-	margin-bottom: 0.4rem;
+	#searchSymbols {
+		position: absolute;
+		margin-top: 0.2rem;
+		left: 6rem;
 
-	&:hover {
-		opacity: 1;
+		font-size: 1.10rem;
 	}
 }
 
-.data {
-	display: none;
-	overflow-y: scroll;
+#data {
+	position: relative;
+	margin-top: 1.175rem;
 
-	position: absolute;
-	max-height: 18.5rem;
+	font-size: 0.8rem;
+
 	@-moz-document url-prefix() {
 		/* This is to space out the Firefox scrollbar. */
 		padding-right: 0.65rem;
 	}
 
-	line-height: 0.75rem;
+	#data_cols div {
+		position: absolute;
 
-	td {
-		&:nth-child(odd) {
-			@extend .text-yellow;
-		}
+		font-family: "Avenir Black";
+		letter-spacing: 0.05rem;
+		text-transform: uppercase;
 
 		&:nth-child(even) {
-			@extend .text-green;
+			right: 0;
+		}
+
+		a {
+			display: inline-block;
+			position: relative;
+			top: -0.175rem;
+			left: 0.05rem;
+			padding: 0.2rem;
+
+			background: black;
+
+			color: white;
+			font-size: 7px;
+
+			&:hover {
+				@extend .background-blue;
+			}
 		}
 	}
 
-	.data-cols {
-		opacity: 0.725;
+	table {
+		margin-top: 1.65rem;
+		position: absolute;
+		display: block;
+		overflow-y: scroll;
 
-		margin-bottom: 0.35rem;
+		clear: both;
+		max-height: 17rem;
 
-		letter-spacing: 0.05rem;
-		font-family: "Avenir Light";
+		line-height: 1.175rem;
+		font-family: "Avenir Medium";
+
+		td {
+			width: 100%;
+
+			&:nth-child(odd) {
+				letter-spacing: 0.03rem;
+			}
+
+			&:nth-child(even) {
+				letter-spacing: 0.02rem;
+				text-align: right;
+			}
+
+			[data-query] {
+				border: none;
+			}
+		}
+
+		#data_more td {
+			padding-top: 0.3rem;
+
+			font-family: "Avenir Black";
+
+			a {
+				border-bottom: 1px dotted black;
+			}
+		}
 	}
-}
 
-.data_more td {
-	padding-top: 0.15rem;
-	color: white !important;
-}
+	.accent {
+		pointer-events: none;
 
-.dataScroll {
-	background: rgb(25, 31, 41);
-	position: absolute;
-	bottom: -0.7rem;
-	right: -0.1rem;
+		@extend .text-grey;
+	}
 
-	color: rgba(255, 255, 255, 0.775);
-	font-size: 0.6rem;
-	letter-spacing: 0.05rem;
+	#data_scroll {
+		z-index: 1;
+		position: absolute;
+		left: 50%; margin-left: -0.9rem;
+		top: 16rem;
+
+		color: rgb(55, 55, 55);
+		font-size: 1.8rem;
+	}
 }
 
 footer {
 	position: fixed;
-	bottom: 0.5rem;
+	bottom: 0rem;
 	left: 50%; transform: translateX(-50%);
+	padding: 0.4rem 0rem 0.6rem 0rem;
+	width: 100%;
 
-	color: #858585;
-	font-size: 9px;
-	line-height: 0.75rem;
+	text-align: center;
+	font-family: "Avenir Black";
+	font-size: 0.6rem;
+
+	img {
+		width: 100px;
+		margin-bottom: -0.2rem;
+	}
+
+	#stripe {
+		position: relative;
+		margin-bottom: -0.3rem;
+		width: 38px;
+	}
 
 	.footer-text {
-		opacity: 0.475;
-
-		@extend .text-yellow;
 		text-transform: uppercase;
-		letter-spacing: 0.05rem;
+		letter-spacing: 0.015rem;
 		word-spacing: -0.075rem;
 	}
 
 	.footer-text--divider {
-		padding: 0rem 0.10rem;
-
-		@extend .text-blue;
+		@extend .text-grey;
 	}
 }
 
-/**************
-    Custom
-**************/
+#subscribe_ {
+	position: fixed !important;
+	top: 2rem;
+	right: 2.2rem;
 
-#legend--subscribe tr td {
-	@extend .text-grey;
-}
+	background: black;
 
-#legend--search-charts {
-	opacity: 0.85;
-
-	margin-top: 0.05rem;
-
-	td {
-		width: 10rem;
-
-		font-size: 0.75rem;
-		font-family: "Avenir Light";
-		color: #ddeb4c;
-		letter-spacing: 0.025rem;
-
-		&:nth-child(odd) {
-			padding-right: 0.6rem;
-
-			text-align: right;
-		}
-
-		&:nth-child(even) {
-			text-align: left;
-		}
+	#subscribe {
+		width: 13.75rem;
 	}
 }
 
-#field--search-help {
-	position: absolute;
-	bottom: 0.05rem; right: -2rem;
+/***************
+    Initial
+***************/
 
-	color: #b5b5b5;
-	font-size: 7px;
-
-	&:hover {
-		@extend .text-blue;
-	}
-}
-
-/*************
-    Start
-*************/
-
-main, #body-flare, #body-bigCount, #header-logo o span, .data_more, .dataScroll, #about, footer {
-	display: none;
-}
-
-#body-error, #header-code, #header-logo, #header-hr {
+#header-code, #header-logo, #subscribe {
 	opacity: 0;
+}
+
+#body-bigError, #body-bigCount, main, .data_more, #data_scroll, footer, #subscribe_ {
+	display: none;
 }
