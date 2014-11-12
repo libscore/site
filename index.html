@@ -7,79 +7,90 @@
 	<link href="css/main.css" rel="stylesheet">
 </head>
 <body>
-	<div id="body-bigCount"></div>
+	<!-- <div id="body-bigCount"></div> -->
 	<div id="body-bigError">X</div>
 
-	<header id="header">
-		<div id="header-code">
-			<span id="header-code-object">window.</span><span id="header-code-property">closure()</span>
-		</div>
-		<div id="header-logo">
-			Libsc<o>o<span></span></o>re
-		</div>
-	</header>
-	
-	<main>
-		<div class="sectionHeader">
-			Overview
-		</div>
-		<div id="slogan">
-			Libscore scans the top <strong>million</strong> sites on the web to collect stats on <strong>JavaScript library</strong> usage. Explore this month's data below.
-		</div>
+	<section id="results">
 
-		<div id="sectionHeader--search" class="sectionHeader">
-			Se<o>a</o>rch
-		</div>
-		<div id="query">
-			<div id="search_">
-				<div id="searchSymbols"></div>
-				<input id="search" class="field-input" type="text" value="" />
+	</section>
+
+
+
+	<div id="searchWrap">
+
+		<header id="header">
+			<div id="header-code">
+				<span id="header-code-object">window.</span><span id="header-code-property">closure()</span>
 			</div>
-			<span id="query_or">or</span>
-			<span data-query="*">Top Libs</span>
-			<span data-query="script:*">Top Scripts</span>
-			<span data-query="*.*">Top Sites</span>
-			<!-- top rising, top falling -->
-		</div>
-		<p>
-			In the search box above, enter the <strong>variable</strong> that a JavaScript library exposes itself under, e.g. <b data-query>jQuery</b>, <b data-query>Modernizr</b>, <b data-query>$.ui</b>, or <b data-query>$.fn.fancybox</b>.
-		</p>
-		<p>
-			You can also search for sites containing an external script by prefixing a query with <i>script:</i>, e.g. <b data-query>script:stats.wp.com</b> or <b data-query>script:use.typekit.net</b>.
-		</p>
-		<p>
-			Alternatively, you can retrieve all libraries used on a site by querying for its domain name, e.g. <b data-query>stripe.com</b> or <b data-query>digitalocean.com</b>.
-		</p>
+			<div id="header-logo">
+				Libsc<o>o<span></span></o>re
+			</div>
+		</header>
+		
+		<main>
+			<div id="slogan">
+				Libscore scans the top <strong>million</strong> sites on the web<br> to collect stats on <strong>JavaScript library</strong> usage. 
+			</div>
 
-		<div id="data">
-			<div id="data_scroll">↓</div>
-			<div id="data_cols"></div>
-			<table></table>
-		</div>
-	</main>
+			<div id="subSlogan">
+				Explore this month's <a href="#">javascript variables</a>, <a href="#">external scripts</a>, or <a href="#">domains</a>
+			</div>
 
-	<footer>
-		<a class="footer-text" href="http://twitter.com/shapiro">julian shapiro</a>
-		<span class="footer-text--divider">+</span>
-		<a class="footer-text" href="http://twitter.com/neutralthoughts">thomas davis</a>
-		<span class="footer-text--divider">+</span>
-		<img id="stripe" src="images/stripe.png" />
-		<span class="footer-text--divider">+</span>
-		<img id="digitealocean" src="images/digitalocean.png" />
-	</footer>
+			<div id="query">
+				<div id="search_">
+					<div id="searchSymbols"></div>
+					<input id="search" class="field-input" type="text" value="" />
+				</div>
+				<!-- <span id="query_or">or</span> -->
+				<div id="queryButtons">
+					<span><p data-query="*">Top Libs</p></span>
+					<span><p data-query="script:*">Top Scripts</p></span>
+					<span><p data-query="*.*">Top Sites</p></span>
+				</div>
+				<!-- top rising, top falling -->
+			</div>
+			<!-- <div id="howTo">
+				<p>
+					In the search box above, enter the <strong>variable</strong> that a JavaScript library exposes itself under, e.g. <b data-query>jQuery</b>, <b data-query>Modernizr</b>, <b data-query>$.ui</b>, or <b data-query>$.fn.fancybox</b>.
+				</p>
+				<p>
+					You can also search for sites containing an external script by prefixing a query with <i>script:</i>, e.g. <b data-query>script:stats.wp.com</b> or <b data-query>script:use.typekit.net</b>.
+				</p>
+				<p>
+					Alternatively, you can retrieve all libraries used on a site by querying for its domain name, e.g. <b data-query>stripe.com</b> or <b data-query>digitalocean.com</b>.
+				</p>
+			</div> -->
 
-	<form 
-		id="subscribe_"
-		class="field hint--right"
-		action="//libscore.us9.list-manage.com/subscribe/post?u=30c0d4c5d64d5d9fcf7b76792&amp;id=69666fd115" method="post" name="mc-embedded-subscribe-form"
-		target="_blank"
-		novalidate
-	>
-		<input id="subscribe" name="EMAIL" class="field-input" type="text" value="Get alerted when data is updated!" />
-		<div style="position: absolute; left: -5000px;">
-			<input type="text" name="b_30c0d4c5d64d5d9fcf7b76792_69666fd115" tabindex="-1" value="">
-		</div>
-	</form>
+			<div id="data">
+				<div id="data_scroll">↓</div>
+				<div id="data_cols"></div>
+				<table></table>
+			</div>
+		</main>
+
+		<footer>
+			<a class="footer-text" href="http://twitter.com/shapiro">julian shapiro</a>
+			<span class="footer-text--divider">+</span>
+			<a class="footer-text" href="http://twitter.com/neutralthoughts">thomas davis</a>
+			<span class="footer-text--divider">+</span>
+			<img id="stripe" src="images/stripe.png" />
+			<span class="footer-text--divider">+</span>
+			<img id="digitealocean" src="images/digitalocean.png" />
+		</footer>
+
+		<form 
+			id="subscribe_"
+			class="field hint--right"
+			action="//libscore.us9.list-manage.com/subscribe/post?u=30c0d4c5d64d5d9fcf7b76792&amp;id=69666fd115" method="post" name="mc-embedded-subscribe-form"
+			target="_blank"
+			novalidate
+		>
+			<input id="subscribe" name="EMAIL" class="field-input" type="text" placeholder="Get alerted when data is updated!" />
+			<div style="position: absolute; left: -5000px;">
+				<input type="text" name="b_30c0d4c5d64d5d9fcf7b76792_69666fd115" tabindex="-1" value="">
+			</div>
+		</form>
+	</div>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/velocity.min.js"></script>

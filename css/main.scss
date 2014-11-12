@@ -97,10 +97,8 @@ a, a:visited {
 
 [data-query] {
 	display: inline-block;
-
 	transition: background-color 75ms;
 	cursor: pointer;
-	border-bottom: 1px dotted #2e2e2e;
 
 	&:hover {
 		@extend .background-green;
@@ -108,22 +106,35 @@ a, a:visited {
 }
 
 input {
-	transition: background-color 400ms;
-	width: 14.35rem;
-	padding: 0.425rem 0.45rem 0.3rem 0.425rem;
+	transition: all 400ms;
+	width: 100%;
+	padding: 18px 20px 14px 20px;
+	border: 1px solid #E0E0E0;
+	border-radius: 2px;
+	color: #4D4D4D;
+	font-size: 19px;
 
-	border: 1px solid black;
-	border-radius: 1px;
-
-	font-family: "Avenir Medium";
-	color: #000;
-	font-size: 0.8rem;
-	word-spacing: -0.05rem;
+	&:focus {
+		border-color: #d5d5d5;
+	}
 
 	&:focus, &:hover {
 		outline: none;
-		@extend .background-green;
+		//@extend .background-green;
 	}
+}
+
+::-webkit-input-placeholder {
+   color: #D2D2D2;
+}
+:-moz-placeholder { 
+   color: #D2D2D2;  
+}
+::-moz-placeholder {  
+   color: #D2D2D2;  
+}
+:-ms-input-placeholder {  
+   color: #D2D2D2;  
 }
 
 /*****************
@@ -141,12 +152,6 @@ body {
 
 	color: #000;
 	font-family: "Avenir Light";
-
-	main {
-		position: absolute;
-		left: 50%; margin-left: -15rem;
-		width: 32rem;
-	}
 }
 
 #body-bigError {
@@ -181,27 +186,29 @@ body {
 	}
 }
 
+#searchWrap {
+	width: 533px;
+	margin: 0 auto;
+}
+
 #header {
-	margin: 0.45rem auto -0.25rem auto;
-
-	width: 30.25rem;
-
 	font-family: "Avenir Black";
 	text-transform: uppercase;
-	font-size: 2.825rem;
+	margin-top: 115px;
+	position: relative;
+	display: block;
+	text-align: center;
 
 	#header-code {
-		position: relative;
-		top: 0.525rem;
-		right: -1.9rem;
-
-		width: 11.65rem;
-
-		font-family: "Avenir Medium";
+		position: absolute;
+		top: -4px;
+		width: 100%;
 		text-align: right;
-		font-size: 0.65rem;
+		font-family: "Avenir Medium";
+		font-size: 9px;
+		letter-spacing: 1.6px;
 		text-transform: none;
-		letter-spacing: 0.03rem;
+		right: 125px;
 
 		#header-code-property {
 			display: inline-block;
@@ -218,17 +225,32 @@ body {
 	}
 
 	#header-logo {
-		text-shadow: 0px 0px 0px rgba(125, 125, 125, 1);
+		font-size: 60px;
+		@extend .text-green;
+		margin-bottom: 15px;
 	}
 }
 
 #slogan {
-	background: white;
+	text-align: center;
+	font-size: 24px;
+	margin-bottom: 26px;
+	line-height: 1.4;
 
-	font-size: 1rem;
-	line-height: 1.35rem;
-	letter-spacing: 0.015rem;
-	font-family: "Avenir Medium";
+	strong {
+		font-family: "Avenir Medium";
+	}
+}
+
+#subSlogan {
+	font-size: 16px;
+	text-align: center;
+	margin-bottom: 27px;
+
+	a {
+		border-bottom: 1px dotted black;
+		padding: 0 0 2px 0;
+	}
 }
 
 .sectionHeader {
@@ -245,45 +267,84 @@ body {
 	font-size: 0.625rem;
 	letter-spacing: 0.05rem;
 
-	#query_or {
-		margin: 0rem 0.3rem;
-	}
+	// #query_or {
+	// 	margin: 0rem 0.3rem;
+	// }
 
 	[data-query] {
-		margin-right: 0.115rem;
-		padding: 0.4rem 0.6rem 0.25rem 0.6rem;
-
-		background: black;
-
-		line-height: 1.1rem;
-		color: white;
-		font-family: "Avenir Black";
+		
 
 		&:hover {
-			@extend .background-green;
+			background: none;
+		}
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+
+	#queryButtons {
+		margin-top: 15px;
+		float: left;
+		width: 100%;
+		padding: 0 130px;
+
+		span {
+			border-radius: 3px;
+			line-height: 1.1rem;
+			color: black;
+			font-family: "Avenir Black";
+			width: 33.33%;
+			float: left;
+			text-align: center;
+		}
+
+		p {
+			padding: 0 2px 1px 2px;
+			margin: 0;
+			border-bottom: 1px dotted #BBB;
+			display: inline;
 		}
 	}
 }
 
 #search_ {
-	display: inline-block;
-	position: static;
-	margin-bottom: 0.125rem;
+	position: relative;
 
 	#searchSymbols {
 		position: absolute;
-		margin-top: 0.2rem;
-		left: 6rem;
+		margin-top: 16px;
+		right: 16px;
+		font-size: 19px;
+		color: #79bd95;
+		z-index: 10;
+	}
+}
 
-		font-size: 1.10rem;
+#howTo {
+	margin-top: 100px;
+
+	p {
+		margin-bottom: 30px;
+
+		b {
+			transition: all 150ms;
+
+			&:hover {
+				background: rgba(1,1,1,.06);
+			}
+		}
+		
 	}
 }
 
 #data {
 	position: relative;
-	margin-top: 1.175rem;
-
-	font-size: 0.8rem;
+	margin-top: 50px;
+	font-size: 13px;
+	float: left;
+	width: 100%;
+	display: none;
 
 	@-moz-document url-prefix() {
 		/* This is to space out the Firefox scrollbar. */
@@ -411,13 +472,16 @@ footer {
 
 #subscribe_ {
 	position: fixed !important;
-	top: 2rem;
-	right: 2.2rem;
-
-	background: black;
+	top: 25px;
+	right: 25px;
+	width: 210px;
 
 	#subscribe {
-		width: 13.75rem;
+		width: 100%;
+		font-size: 12px;
+		font-family: "Avenir Light";
+		padding: 10px 10px 9px 10px;
+		color: #6F6F6F;
 	}
 }
 
@@ -429,6 +493,6 @@ footer {
 	opacity: 0;
 }
 
-#body-bigError, #body-bigCount, main, .data_more, #data_scroll, footer, #subscribe_ {
+#body-bigError, #body-bigCount, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, footer, #subscribe_ {
 	display: none;
 }
