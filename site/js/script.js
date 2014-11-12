@@ -47,6 +47,8 @@ var $html = $("html"),
 	$header_logo = $("#header-logo"),
 	$header_logo_o = $("#header-logo o"),
 	$main = $("main"),
+	$slogan = $("#slogan"),
+	$subSlogan = $("#subSlogan"),
 	$data = $("#data"),
 	$data_table = $("#data table"),
 	$data_cols = $("#data_cols"),
@@ -56,6 +58,7 @@ var $html = $("html"),
 	$search_ = $("#search_"),
 	$search = $("#search"),
 	$searchSymbols = $("#searchSymbols"),
+	$queryButtons = $("#queryButtons span"),
 	$footer = $("footer"),
 	$subscribe_ = $("#subscribe_"),
 	$subscribe = $("#subscribe");
@@ -153,14 +156,14 @@ var UI = {
 		var data = $search.val();
 
 		$.Velocity.RunSequence([
-			{ elements: $search, properties: { scaleX: [ 0, "easeOutQuad" ], opacity: 0 }, options: { sequenceQueue: false, duration: 225 } },
+			{ elements: $search, properties: { opacity: .4 }, options: { sequenceQueue: false, duration: 225 } },
 			{ elements: $body, properties: { borderColor: "#3dd46d" }, options: { duration: 400, sequenceQueue: false } },
 			{ elements: $sectionHeader_search, properties: { opacity: 0.45 }, options: { duration: 300, sequenceQueue: false } },
 			{ elements: $sectionHeader_search.find("o"), properties: "callout.flicker", options: { delay: 300 } }
 		]);
 
 		(function indicator () {
-			var symbols = [ "△", "▱", "▽", "◯" ];
+			var symbols = [ "□","◅","◇","○" ];
 
 			symbols.forEach(function(symbol, index) {
 				$.Velocity($searchSymbols, "reverse");
@@ -168,8 +171,8 @@ var UI = {
 					$searchSymbols,
 					{ 
 						opacity: [ 0, "easeInOutsine" ], 
-						color: "#79ffd6",
-						scale: 1.5 - index/20
+						color: "#29BD66",
+						scale: 1.4 - index/20
 					}, 
 					{ 
 						duration: 225,
@@ -197,7 +200,7 @@ var UI = {
 
 		function request (query, callback) {
 			var API = {
-					hostname: "//api.libscore.com/v1/",
+					hostname: "http://107.170.240.125/v1/",
 					librariesPath: "libraries/",
 					sitesPath: "sites/",
 					scriptsPath: "scripts/"
@@ -356,13 +359,13 @@ var UI = {
 						break;
 
 					case "lib":
-						$columns = "<div><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://api.libscore.com/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div>site rank</div>";
+						$columns = "<div><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⬈</span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "libs":
-						$columns = "<div>library <a href='https://api.libscore.com/libraries.txt'>Download list</a></div><div>site count</div>";
+						$columns = "<div>library <a href='https://107.170.240.125/libraries.txt'>Download list</a></div><div>site count</div>";
 						$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.library) + " <span class='text-blue'>" + (match.github ? "⬈" : "<span class='hint' data-hint='Click to help track down this library.'>?</span>") + "</span></a>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
@@ -464,20 +467,25 @@ $.Velocity.hook($bigCount, "translateX", "-50%");
 $(window).load(function() {
 	$.Velocity.RunSequence([
 		{ elements: $footer, properties: "transition.vanishBottomIn", options: { delay: 265, duration: 700 } },
-		{ elements: $main, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
-		{ elements: $body, properties: { borderColor: [ "#000", "#fff" ] }, options: { duration: 1300, sequenceQueue: false } },
-		{ elements: $header_logo, properties: { opacity: [ 1, 0.1 ] }, options: { delay: 300, duration: 425, sequenceQueue: false } },
-		{ elements: $("#query [data-query]"), properties: "callout.pulse", options: { delay: 150, duration: 350, stagger: 85, sequenceQueue: false } },
+		// { elements: $main, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
+		// { elements: $body, properties: { borderColor: [ "#000", "#fff" ] }, options: { duration: 1300, sequenceQueue: false } },
+		{ elements: $header_logo, properties: { opacity: [ 1, 0.1 ] }, options: { duration: 425, sequenceQueue: false } },
+		{ elements: $slogan, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
+		{ elements: $subSlogan, properties: "transition.clipBottomIn", options: { delay: 365, duration: 625, sequenceQueue: false } },
+
+		{ elements: $search_, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
+		{ elements: $queryButtons, properties: "transition.clipBottomIn", options: { delay: 365, duration: 625,stagger: 185, sequenceQueue: false } },
+		//{ elements: $("#query [data-query]"), properties: { opacity: [ 1, 0.1 ] }, options: { delay: 350, duration: 350, stagger: 85, sequenceQueue: false } },
 		{ elements: $header_logo_o, properties: { opacity: [ 0.6, 1 ] }, options: { sequenceQueue: false, duration: 500, loop: 2 } },
-		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 1250, begin: 
+		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 500, begin: 
 			function() {
 					var hash = window.location.hash.slice(1);
 
 					if (hash) {
-						$search.val(hash);
+						$search.attr("placeholder", hash);
 						UI.query();
 					} else {
-						$search.val("variable (case sensitive) or domain...");
+						$search.attr("placeholder", "variable (case sensitive) or domain...");
 					}
 
 					[ "location()", "hash()", "map()", "<a href='//medium.com/@Shapiro/be93165fa497'>About</a>" ].forEach(function(val, i) {
@@ -506,6 +514,6 @@ $(window).load(function() {
 			}
 			}
 		},
-		{ elements: $header_logo_o, properties: { opacity: 0.7, color: "#0f1523" }, options: { duration: 2000, loop: true } }
+		{ elements: $header_logo_o, properties: { opacity: 0.9, color: "#24A85A" }, options: { duration: 2000, loop: true } }
 	]);
 });
