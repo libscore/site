@@ -173,18 +173,19 @@ var UI = {
 					{ 
 						opacity: [ 0, "easeInOutsine" ], 
 						color: "#29BD66",
-						scale: 1.4 - index/20
+						scale: 2 - index/20
 					}, 
 					{ 
-						duration: 225,
+						duration: 300,
 						easing: "linear",
 						begin: function() { 
 							$searchSymbols.html(symbol);
 						},
 						complete: function() {
 							if (UI.loading === false) {
+
 								$search
-									.velocity({ scaleX: [ "100%", "easeInOutCirc" ], opacity: [ 1, "linear" ] }, { sequenceQueue: false, duration: 225 });
+									.velocity({ scaleX: [ "100%", "easeInOutCirc" ], opacity: [ 1, "linear" ] }, { sequenceQueue: false, duration: 350 });
 
 								$.Velocity.RunSequence([
 									{ elements: $body, properties: { borderColor: "#000" }, options: { queue: false } },
@@ -199,6 +200,10 @@ var UI = {
 			});
 		})();
 
+		$("#header-logo").on("click", function (){
+			$("body").removeClass("results");
+		});
+
 		function request (query, callback) {
 			var API = {
 					hostname: "http://107.170.240.125/v1/",
@@ -211,6 +216,7 @@ var UI = {
 			function ajax(url) {
 				UI.loading = true;
 				$html.css("cursor", "wait");
+				$("body").addClass("results");
 
 				$.ajax({
 					url: API.hostname + url,
@@ -218,7 +224,7 @@ var UI = {
 					complete: function() {
 						UI.loading = false;
 						$html.css("cursor", "default");
-						$("body").addClass("results");
+						
 					},
 					success: function (response) {
 						if (response && response.meta) {

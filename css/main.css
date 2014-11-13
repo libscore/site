@@ -19,16 +19,16 @@
 .text-blue, #header #header-code #header-code-property:hover {
   color: #0b8fb2; }
 
-.text-blue-dark, a:hover, a:visited:hover, a:active, a:visited:active, #header #header-code #header-code-property:active {
+.text-blue-dark, #header #header-code #header-code-property:active {
   color: #235364; }
 
 .background-blue {
   background-color: #0b8fb2; }
 
-.text-green, #body-bigCount, #header #header-logo, #data #data_cols div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
+.text-green, #body-bigCount, #data #data_cols div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
   color: #29bd66; }
 
-.background-green, [data-query]:hover {
+.background-green {
   background-color: #29bd66; }
 
 .text-grey, #data .accent {
@@ -140,23 +140,24 @@ body {
 #searchWrap {
   width: 570px;
   position: absolute;
-  margin-left: -275px;
+  margin-left: -285px;
   left: 50%;
   z-index: 10; }
 
 .results {
-  background: #FAFAFA; }
+  background: #F7F7F7; }
   .results #searchWrap {
     position: absolute;
     left: 0;
     top: 0;
     width: 400px;
     height: 100%;
-    border-right: 1px solid #f1f1f1;
+    border-right: 1px solid #ECECEC;
     padding: 34px;
     margin-left: 0;
     background-color: white;
-    transition: all 300ms; }
+    transition: all 300ms;
+    z-index: 13; }
   .results footer {
     margin-left: 200px; }
   .results input {
@@ -167,9 +168,12 @@ body {
     .results #header #header-code {
       right: 78px; }
     .results #header #header-logo {
-      font-size: 36px; }
+      font-size: 36px;
+      cursor: pointer; }
   .results #slogan {
     font-size: 17px; }
+    .results #slogan br {
+      display: none; }
   .results #query {
     padding: 0; }
     .results #query #queryButtons {
@@ -177,6 +181,12 @@ body {
   .results #howTo {
     margin: 80px 0;
     padding-top: 40px; }
+    .results #howTo p {
+      padding: 0; }
+  .results #data {
+    bottom: 0;
+    top: 50px;
+    z-index: 12; }
 
 #header {
   font-family: "Avenir Black";
@@ -200,7 +210,10 @@ body {
       cursor: pointer; }
   #header #header-logo {
     font-size: 60px;
+    color: #3A3A3A;
     margin-bottom: 15px; }
+    #header #header-logo o {
+      color: #6fd99a; }
 
 #slogan {
   text-align: center;
@@ -234,7 +247,7 @@ body {
   text-transform: uppercase;
   font-size: 10px;
   letter-spacing: .8px;
-  padding: 0 27px; }
+  padding: 0; }
   #query [data-query]:hover {
     background: none; }
   #query [data-query]:last-child {
@@ -258,25 +271,26 @@ body {
       border-bottom: 1px dotted #BBB;
       display: inline; }
 
-#search_ {
-  position: relative; }
-  #search_ #searchSymbols {
-    position: absolute;
-    margin-top: 16px;
-    right: 16px;
-    font-size: 19px;
-    color: #79bd95;
-    z-index: 10; }
+#searchSymbols {
+  position: fixed;
+  margin-top: -156px;
+  margin-right: -240px;
+  right: 50%;
+  top: 50%;
+  font-size: 159px;
+  color: #79bd95;
+  z-index: 15; }
 
 #howTo {
   margin-top: 200px;
   padding: 33px 0;
   border-radius: 3px;
   border-top: 1px solid #F1F1F1;
-  margin: 125px 33px 0; }
+  margin: 125px 0 0; }
   #howTo p {
     margin-bottom: 30px;
-    margin-top: 0; }
+    margin-top: 0;
+    padding: 0 33px; }
     #howTo p b {
       transition: all 150ms; }
       #howTo p b:hover {
@@ -286,8 +300,14 @@ body {
 
 #data {
   font-size: 13px;
-  margin-top: 50px;
+  top: auto;
   z-index: -1;
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 250ms;
   @-moz-document url-prefix() {
     /* This is to space out the Firefox scrollbar. */
     padding-right: 0.65rem; }
@@ -315,7 +335,6 @@ body {
       #data #data_cols div a:hover {
         border-color: #c7c7c7; }
   #data table {
-    margin-top: 33px;
     position: absolute;
     display: block;
     overflow-y: scroll;
@@ -324,11 +343,13 @@ body {
     width: 100%;
     right: 0;
     padding: 0 100px 0 0;
-    bottom: 112px;
+    bottom: 150px;
     top: 50px;
     padding-left: 500px; }
+    #data table tbody {
+      display: table;
+      width: 100%; }
     #data table td {
-      width: 100%;
       padding: 15px 0 11px 0;
       transition: all 75ms; }
       #data table td:nth-child(odd) {
@@ -343,7 +364,7 @@ body {
       border-bottom: 1px solid #EFEFEF;
       transition: all 75ms; }
       #data table tr:hover {
-        background-color: #F7F7F7; }
+        background-color: #f2f2f2; }
         #data table tr:hover td {
           padding: 15px 13px 11px 13px; }
     #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
@@ -355,7 +376,7 @@ body {
       display: inline-block;
       top: -2px;
       position: relative; }
-    #data table .text-green, #data table #body-bigCount, #data table #header #header-logo, #header #data table #header-logo, #data table #data_cols div, #data #data_cols table div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
+    #data table .text-green, #data table #body-bigCount, #data table #data_cols div, #data #data_cols table div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
       font-size: 22px;
       position: relative;
       top: 1px; }
@@ -376,7 +397,7 @@ body {
     position: absolute;
     left: 50%;
     margin-left: 200px;
-    bottom: 62px;
+    bottom: 100px;
     color: #373737;
     font-size: 27px; }
 
@@ -430,3 +451,123 @@ footer {
 
 #body-bigError, #body-bigCount, #howTo, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, footer, #subscribe_ {
   display: none; }
+
+/***************
+  Media Queries
+***************/
+@media screen and (max-height: 850px) {
+  #howTo {
+    margin-top: 100px; }
+
+  #header {
+    margin-top: 90px; } }
+@media screen and (max-height: 735px) {
+  #howTo {
+    margin-top: 70px; }
+
+  #header {
+    margin-top: 70px; } }
+@media screen and (max-width: 1200px) {
+  #data table {
+    font-size: 22px;
+    padding: 0 50px 0 450px; }
+  #data #data_cols div {
+    left: 450px; }
+    #data #data_cols div:nth-child(even) {
+      right: 50px; } }
+@media screen and (max-width: 1050px) {
+  #data #data_cols div {
+    font-size: 16px; }
+  #data table {
+    font-size: 18px;
+    top: 30px;
+    padding: 0 30px 0 430px; }
+    #data table tr:hover td {
+      padding: 10px 9px 7px 10px; }
+    #data table td {
+      padding: 10px 0 7px 0;
+      word-break: break-all; }
+      #data table td:nth-child(even) {
+        width: 25%;
+        font-size: 16px; }
+      #data table td:nth-child(odd) {
+        width: 75%; }
+      #data table td .text-green, #data table td #body-bigCount, #data table td #data_cols div, #data #data_cols table td div, #data table td .text-blue, #data table td #header #header-code #header-code-property:hover, #data table #header #header-code td #header-code-property:hover, #header #header-code #data table td #header-code-property:hover {
+        font-size: 18px; }
+  #data #data_cols div {
+    left: 430px; }
+    #data #data_cols div:nth-child(even) {
+      right: 30px; }
+
+  .results #data {
+    top: 45px; } }
+@media screen and (max-width: 850px) {
+  .results {
+    overflow-y: scroll; }
+    .results #searchWrap {
+      width: 100%;
+      position: relative;
+      width: auto;
+      height: auto;
+      border: 0;
+      padding: 15px 34px 36px 34px; }
+    .results footer {
+      background-color: #F7F7F7;
+      margin-left: 0;
+      padding: 13px;
+      z-index: 15; }
+    .results #query #queryButtons {
+      display: none; }
+    .results #header {
+      margin-top: 0; }
+    .results #howTo {
+      display: none !important; }
+    .results #slogan {
+      max-width: 461px;
+      margin: 0 auto 26px auto; }
+    .results #data {
+      top: 20px;
+      position: relative; }
+
+  #data {
+    z-index: 10; }
+    #data table {
+      padding: 0 35px 0 35px;
+      top: 30px;
+      position: relative; }
+    #data #data_cols div {
+      left: 35px; }
+      #data #data_cols div:nth-child(even) {
+        right: 33px; }
+
+  #searchSymbols {
+    margin-top: -156px;
+    margin-right: -50px;
+    right: 50%;
+    top: 50%; } }
+@media screen and (max-width: 650px) {
+  #searchWrap {
+    width: 100%;
+    margin-left: 0;
+    left: 0;
+    padding: 0 40px; }
+
+  #slogan {
+    font-size: 19px; }
+    #slogan br {
+      display: none; }
+
+  #query #queryButtons {
+    padding: 0 80px; } }
+@media screen and (max-width: 500px) {
+  #searchWrap {
+    padding: 0 28px; }
+
+  #query #queryButtons {
+    padding: 0 40px; }
+
+  #howTo p {
+    padding: 0; } }
+@media screen and (max-width: 420px) {
+  #query #queryButtons {
+    padding: 0; } }
