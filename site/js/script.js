@@ -59,6 +59,7 @@ var $html = $("html"),
 	$search = $("#search"),
 	$searchSymbols = $("#searchSymbols"),
 	$queryButtons = $("#queryButtons span"),
+	$howTo = $("#howTo"),
 	$footer = $("footer"),
 	$subscribe_ = $("#subscribe_"),
 	$subscribe = $("#subscribe");
@@ -217,6 +218,7 @@ var UI = {
 					complete: function() {
 						UI.loading = false;
 						$html.css("cursor", "default");
+						$("body").addClass("results");
 					},
 					success: function (response) {
 						if (response && response.meta) {
@@ -467,15 +469,11 @@ $.Velocity.hook($bigCount, "translateX", "-50%");
 $(window).load(function() {
 	$.Velocity.RunSequence([
 		{ elements: $footer, properties: "transition.vanishBottomIn", options: { delay: 265, duration: 700 } },
-		// { elements: $main, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
-		// { elements: $body, properties: { borderColor: [ "#000", "#fff" ] }, options: { duration: 1300, sequenceQueue: false } },
 		{ elements: $header_logo, properties: { opacity: [ 1, 0.1 ] }, options: { duration: 425, sequenceQueue: false } },
 		{ elements: $slogan, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
-		{ elements: $subSlogan, properties: "transition.clipBottomIn", options: { delay: 365, duration: 625, sequenceQueue: false } },
-
 		{ elements: $search_, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
-		{ elements: $queryButtons, properties: "transition.clipBottomIn", options: { delay: 365, duration: 625,stagger: 185, sequenceQueue: false } },
-		//{ elements: $("#query [data-query]"), properties: { opacity: [ 1, 0.1 ] }, options: { delay: 350, duration: 350, stagger: 85, sequenceQueue: false } },
+		{ elements: $queryButtons, properties: "transition.clipBottomIn", options: { delay: 365, duration: 625, stagger: 185, sequenceQueue: false } },
+		{ elements: $howTo, properties: "transition.clipBottomIn", options: { delay: 665, duration: 625, sequenceQueue: false } },
 		{ elements: $header_logo_o, properties: { opacity: [ 0.6, 1 ] }, options: { sequenceQueue: false, duration: 500, loop: 2 } },
 		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 500, begin: 
 			function() {

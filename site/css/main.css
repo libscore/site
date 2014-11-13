@@ -22,16 +22,16 @@
 .text-blue-dark, a:hover, a:visited:hover, a:active, a:visited:active, #header #header-code #header-code-property:active {
   color: #235364; }
 
-.background-blue, #data #data_cols div a:hover {
+.background-blue {
   background-color: #0b8fb2; }
 
-.text-green, #body-bigCount, #header #header-logo {
+.text-green, #body-bigCount, #header #header-logo, #data #data_cols div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
   color: #29bd66; }
 
 .background-green, [data-query]:hover {
   background-color: #29bd66; }
 
-.text-grey, #data .accent, footer .footer-text--divider {
+.text-grey, #data .accent {
   color: #5a5a5a; }
 
 .text-red {
@@ -75,7 +75,7 @@ a, a:visited {
   cursor: pointer; }
 
 input {
-  transition: all 400ms;
+  transition: border 400ms;
   width: 100%;
   padding: 18px 20px 14px 20px;
   border: 1px solid #E0E0E0;
@@ -109,7 +109,8 @@ body {
   border-top: 3px solid white;
   background: #fff;
   color: #000;
-  font-family: "Avenir Light"; }
+  font-family: "Avenir Light";
+  transition: all 300ms; }
 
 #body-bigError {
   position: fixed;
@@ -137,8 +138,45 @@ body {
     letter-spacing: 0.025vw; }
 
 #searchWrap {
-  width: 533px;
-  margin: 0 auto; }
+  width: 570px;
+  position: absolute;
+  margin-left: -275px;
+  left: 50%;
+  z-index: 10; }
+
+.results {
+  background: #FAFAFA; }
+  .results #searchWrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 400px;
+    height: 100%;
+    border-right: 1px solid #f1f1f1;
+    padding: 34px;
+    margin-left: 0;
+    background-color: white;
+    transition: all 300ms; }
+  .results footer {
+    margin-left: 200px; }
+  .results input {
+    font-size: 17px; }
+  .results #header {
+    margin-top: 25px;
+    margin-bottom: 20px; }
+    .results #header #header-code {
+      right: 78px; }
+    .results #header #header-logo {
+      font-size: 36px; }
+  .results #slogan {
+    font-size: 17px; }
+  .results #query {
+    padding: 0; }
+    .results #query #queryButtons {
+      padding: 0 20px; }
+  .results #howTo {
+    margin: 80px 0;
+    padding-top: 40px; }
 
 #header {
   font-family: "Avenir Black";
@@ -156,7 +194,7 @@ body {
     font-size: 9px;
     letter-spacing: 1.6px;
     text-transform: none;
-    right: 125px; }
+    right: 140px; }
     #header #header-code #header-code-property {
       display: inline-block;
       cursor: pointer; }
@@ -166,19 +204,24 @@ body {
 
 #slogan {
   text-align: center;
-  font-size: 24px;
-  margin-bottom: 26px;
+  font-size: 21px;
+  margin-bottom: 30px;
   line-height: 1.4; }
   #slogan strong {
     font-family: "Avenir Medium"; }
 
 #subSlogan {
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
-  margin-bottom: 27px; }
+  margin-top: 127px; }
   #subSlogan a {
     border-bottom: 1px dotted black;
     padding: 0 0 2px 0; }
+  #subSlogan span {
+    font-family: "Avenir Medium";
+    display: block;
+    margin-bottom: 8px;
+    font-size: 17px; }
 
 .sectionHeader {
   margin: 1.3rem 0rem 0.65rem 0.05rem;
@@ -189,8 +232,9 @@ body {
 
 #query {
   text-transform: uppercase;
-  font-size: 0.625rem;
-  letter-spacing: 0.05rem; }
+  font-size: 10px;
+  letter-spacing: .8px;
+  padding: 0 27px; }
   #query [data-query]:hover {
     background: none; }
   #query [data-query]:last-child {
@@ -225,62 +269,104 @@ body {
     z-index: 10; }
 
 #howTo {
-  margin-top: 100px; }
+  margin-top: 200px;
+  padding: 33px 0;
+  border-radius: 3px;
+  border-top: 1px solid #F1F1F1;
+  margin: 125px 33px 0; }
   #howTo p {
-    margin-bottom: 30px; }
+    margin-bottom: 30px;
+    margin-top: 0; }
     #howTo p b {
       transition: all 150ms; }
       #howTo p b:hover {
         background: rgba(1, 1, 1, 0.06); }
+    #howTo p:last-child {
+      margin-bottom: 0; }
 
 #data {
-  position: relative;
-  margin-top: 50px;
   font-size: 13px;
-  float: left;
-  width: 100%;
-  display: none;
+  margin-top: 50px;
+  z-index: -1;
   @-moz-document url-prefix() {
     /* This is to space out the Firefox scrollbar. */
     padding-right: 0.65rem; }
  }
   #data #data_cols div {
     position: absolute;
+    left: 500px;
     font-family: "Avenir Black";
     letter-spacing: 0.05rem;
-    text-transform: uppercase; }
+    text-transform: uppercase;
+    font-size: 18px; }
     #data #data_cols div:nth-child(even) {
-      right: 0; }
+      right: 100px;
+      left: auto; }
     #data #data_cols div a {
       display: inline-block;
       position: relative;
-      top: -0.175rem;
-      left: 0.05rem;
-      padding: 0.2rem;
-      background: black;
-      color: white;
-      font-size: 7px; }
+      top: -3px;
+      left: 3px;
+      padding: 5px 8px;
+      color: #9D9D9D;
+      font-size: 7px;
+      border-radius: 14px;
+      border: 1px solid #E0E0E0; }
+      #data #data_cols div a:hover {
+        border-color: #c7c7c7; }
   #data table {
-    margin-top: 1.65rem;
+    margin-top: 33px;
     position: absolute;
     display: block;
     overflow-y: scroll;
     clear: both;
-    max-height: 17rem;
-    line-height: 1.175rem;
-    font-family: "Avenir Medium"; }
+    font-size: 26px;
+    width: 100%;
+    right: 0;
+    padding: 0 100px 0 0;
+    bottom: 112px;
+    top: 50px;
+    padding-left: 500px; }
     #data table td {
-      width: 100%; }
+      width: 100%;
+      padding: 15px 0 11px 0;
+      transition: all 75ms; }
       #data table td:nth-child(odd) {
         letter-spacing: 0.03rem; }
       #data table td:nth-child(even) {
         letter-spacing: 0.02rem;
-        text-align: right; }
+        text-align: right;
+        font-size: 19px; }
       #data table td [data-query] {
         border: none; }
+    #data table tr {
+      border-bottom: 1px solid #EFEFEF;
+      transition: all 75ms; }
+      #data table tr:hover {
+        background-color: #F7F7F7; }
+        #data table tr:hover td {
+          padding: 15px 13px 11px 13px; }
+    #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
+      font-size: 15px;
+      padding: 2px;
+      line-height: 15px;
+      text-align: center;
+      border-radius: 13px;
+      display: inline-block;
+      top: -2px;
+      position: relative; }
+    #data table .text-green, #data table #body-bigCount, #data table #header #header-logo, #header #data table #header-logo, #data table #data_cols div, #data #data_cols table div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
+      font-size: 22px;
+      position: relative;
+      top: 1px; }
     #data table #data_more td {
       padding-top: 0.3rem;
-      font-family: "Avenir Black"; }
+      font-family: "Avenir Medium";
+      background: #EFEFEF;
+      padding: 14px 0;
+      font-size: 15px;
+      text-align: center;
+      color: #6C6C6C; }
       #data table #data_more td a {
         border-bottom: 1px dotted black; }
   #data .accent {
@@ -289,10 +375,10 @@ body {
     z-index: 1;
     position: absolute;
     left: 50%;
-    margin-left: -0.9rem;
-    top: 16rem;
+    margin-left: 200px;
+    bottom: 62px;
     color: #373737;
-    font-size: 1.8rem; }
+    font-size: 27px; }
 
 footer {
   position: fixed;
@@ -301,6 +387,7 @@ footer {
   transform: translateX(-50%);
   padding: 0.4rem 0rem 0.6rem 0rem;
   width: 100%;
+  transition: all 300ms;
   text-align: center;
   font-family: "Avenir Black";
   font-size: 0.6rem; }
@@ -315,6 +402,13 @@ footer {
     text-transform: uppercase;
     letter-spacing: 0.015rem;
     word-spacing: -0.075rem; }
+  footer .footer-text--divider {
+    color: #CBCBCB;
+    font-size: 18px;
+    margin-right: 5px;
+    position: relative;
+    display: inline-block;
+    vertical-align: top; }
 
 #subscribe_ {
   position: fixed !important;
@@ -334,5 +428,5 @@ footer {
 #header-code, #header-logo, #subscribe {
   opacity: 0; }
 
-#body-bigError, #body-bigCount, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, footer, #subscribe_ {
+#body-bigError, #body-bigCount, #howTo, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, footer, #subscribe_ {
   display: none; }

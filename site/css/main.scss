@@ -106,7 +106,7 @@ a, a:visited {
 }
 
 input {
-	transition: all 400ms;
+	transition: border 400ms;
 	width: 100%;
 	padding: 18px 20px 14px 20px;
 	border: 1px solid #E0E0E0;
@@ -120,7 +120,6 @@ input {
 
 	&:focus, &:hover {
 		outline: none;
-		//@extend .background-green;
 	}
 }
 
@@ -152,6 +151,7 @@ body {
 
 	color: #000;
 	font-family: "Avenir Light";
+	transition: all 300ms;
 }
 
 #body-bigError {
@@ -187,9 +187,70 @@ body {
 }
 
 #searchWrap {
-	width: 533px;
-	margin: 0 auto;
+	width: 570px;
+	position: absolute;
+	margin-left: -275px;
+	left: 50%;
+	z-index: 10;
 }
+
+.results {
+	background: #FAFAFA;
+
+	 #searchWrap {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 400px;
+		height: 100%;
+		border-right: 1px solid #f1f1f1;
+		padding: 34px;
+		margin-left: 0;
+		background-color: white;
+		transition: all 300ms;
+	}
+
+	footer {
+		margin-left: 200px;
+	}
+
+	input {
+		font-size: 17px;
+	}
+
+	#header {
+		margin-top: 25px;
+		margin-bottom: 20px;
+
+		#header-code {
+			right: 78px;
+		}
+
+		#header-logo {
+			font-size: 36px;
+		}
+	}
+
+	#slogan {
+		font-size: 17px; 
+	}
+
+	#query {
+		padding: 0;
+
+		#queryButtons {
+			padding: 0 20px;
+		}
+	}
+
+	#howTo {
+		margin: 80px 0;
+		padding-top: 40px;
+	}
+}
+
+
+
 
 #header {
 	font-family: "Avenir Black";
@@ -208,7 +269,7 @@ body {
 		font-size: 9px;
 		letter-spacing: 1.6px;
 		text-transform: none;
-		right: 125px;
+		right: 140px;
 
 		#header-code-property {
 			display: inline-block;
@@ -233,8 +294,8 @@ body {
 
 #slogan {
 	text-align: center;
-	font-size: 24px;
-	margin-bottom: 26px;
+	font-size: 21px;
+	margin-bottom: 30px;
 	line-height: 1.4;
 
 	strong {
@@ -243,13 +304,20 @@ body {
 }
 
 #subSlogan {
-	font-size: 16px;
+	font-size: 14px;
 	text-align: center;
-	margin-bottom: 27px;
+	margin-top: 127px;
 
 	a {
 		border-bottom: 1px dotted black;
 		padding: 0 0 2px 0;
+	}
+
+	span {
+		font-family: "Avenir Medium";
+		display: block;
+		margin-bottom: 8px;
+		font-size: 17px;
 	}
 }
 
@@ -264,12 +332,9 @@ body {
 
 #query {
 	text-transform: uppercase;
-	font-size: 0.625rem;
-	letter-spacing: 0.05rem;
-
-	// #query_or {
-	// 	margin: 0rem 0.3rem;
-	// }
+	font-size: 10px;
+	letter-spacing: .8px;
+	padding: 0 27px;
 
 	[data-query] {
 		
@@ -322,10 +387,15 @@ body {
 }
 
 #howTo {
-	margin-top: 100px;
+	margin-top: 200px;
+	padding: 33px 0;
+	border-radius: 3px;
+	border-top: 1px solid #F1F1F1;
+	margin: 125px 33px 0;
 
 	p {
 		margin-bottom: 30px;
+		margin-top: 0;
 
 		b {
 			transition: all 150ms;
@@ -334,17 +404,18 @@ body {
 				background: rgba(1,1,1,.06);
 			}
 		}
+
+		&:last-child {
+			margin-bottom: 0;
+		}
 		
 	}
 }
 
 #data {
-	position: relative;
-	margin-top: 50px;
 	font-size: 13px;
-	float: left;
-	width: 100%;
-	display: none;
+	margin-top: 50px;
+	z-index: -1;
 
 	@-moz-document url-prefix() {
 		/* This is to space out the Firefox scrollbar. */
@@ -353,47 +424,53 @@ body {
 
 	#data_cols div {
 		position: absolute;
-
+		left: 500px;
 		font-family: "Avenir Black";
 		letter-spacing: 0.05rem;
 		text-transform: uppercase;
+		@extend .text-green;
+		font-size: 18px;
 
 		&:nth-child(even) {
-			right: 0;
+			right: 100px;
+			left: auto;
 		}
 
 		a {
 			display: inline-block;
 			position: relative;
-			top: -0.175rem;
-			left: 0.05rem;
-			padding: 0.2rem;
-
-			background: black;
-
-			color: white;
+			top: -3px;
+			left: 3px;
+			padding: 5px 8px;
+			color: #9D9D9D;
 			font-size: 7px;
+			border-radius: 14px;
+			border: 1px solid #E0E0E0;
 
 			&:hover {
-				@extend .background-blue;
+				border-color: #c7c7c7;
 			}
 		}
 	}
 
 	table {
-		margin-top: 1.65rem;
+		margin-top: 33px;
 		position: absolute;
 		display: block;
 		overflow-y: scroll;
-
 		clear: both;
-		max-height: 17rem;
-
-		line-height: 1.175rem;
-		font-family: "Avenir Medium";
+		font-size: 26px;
+		width: 100%;
+		right: 0;
+		padding: 0 100px 0 0;
+		bottom: 112px;
+		top: 50px;
+		padding-left: 500px;
 
 		td {
 			width: 100%;
+			padding: 15px 0 11px 0;
+			transition: all 75ms;
 
 			&:nth-child(odd) {
 				letter-spacing: 0.03rem;
@@ -402,6 +479,7 @@ body {
 			&:nth-child(even) {
 				letter-spacing: 0.02rem;
 				text-align: right;
+				font-size: 19px;
 			}
 
 			[data-query] {
@@ -409,10 +487,45 @@ body {
 			}
 		}
 
+		tr {
+			border-bottom: 1px solid #EFEFEF;
+			transition: all 75ms;
+
+			&:hover {
+				background-color: #F7F7F7;
+
+				td {
+					padding: 15px 13px 11px 13px;
+				}
+			}
+		}
+
+		.text-blue {
+			font-size: 15px;
+			padding: 2px;
+			line-height: 15px;
+			text-align: center;
+			border-radius: 13px;
+			display: inline-block;
+			top: -2px;
+			position: relative;
+			@extend .text-green;
+		}
+
+		.text-green {
+			font-size: 22px;
+			position: relative;
+			top: 1px;
+		}
+
 		#data_more td {
 			padding-top: 0.3rem;
-
-			font-family: "Avenir Black";
+			font-family: "Avenir Medium";
+			background: #EFEFEF;
+			padding: 14px 0;
+			font-size: 15px;
+			text-align: center;
+			color: #6C6C6C;
 
 			a {
 				border-bottom: 1px dotted black;
@@ -429,11 +542,11 @@ body {
 	#data_scroll {
 		z-index: 1;
 		position: absolute;
-		left: 50%; margin-left: -0.9rem;
-		top: 16rem;
-
-		color: rgb(55, 55, 55);
-		font-size: 1.8rem;
+		left: 50%;
+		margin-left: 200px;
+		bottom: 62px;
+		color: #373737;
+		font-size: 27px;
 	}
 }
 
@@ -443,6 +556,7 @@ footer {
 	left: 50%; transform: translateX(-50%);
 	padding: 0.4rem 0rem 0.6rem 0rem;
 	width: 100%;
+	transition: all 300ms;
 
 	text-align: center;
 	font-family: "Avenir Black";
@@ -466,7 +580,12 @@ footer {
 	}
 
 	.footer-text--divider {
-		@extend .text-grey;
+		color: #CBCBCB;
+		font-size: 18px;
+		margin-right: 5px;
+		position: relative;
+		display: inline-block;
+		vertical-align: top;
 	}
 }
 
@@ -493,6 +612,6 @@ footer {
 	opacity: 0;
 }
 
-#body-bigError, #body-bigCount, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, footer, #subscribe_ {
+#body-bigError, #body-bigCount, #howTo, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, footer, #subscribe_ {
 	display: none;
 }

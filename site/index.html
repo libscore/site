@@ -29,27 +29,27 @@
 		
 		<main>
 			<div id="slogan">
-				Libscore scans the top <strong>million</strong> sites on the web<br> to collect stats on <strong>JavaScript library</strong> usage. 
-			</div>
-
-			<div id="subSlogan">
-				Explore this month's <a href="#">javascript variables</a>, <a href="#">external scripts</a>, or <a href="#">domains</a>
+				Libscore scans the top <strong>million</strong> sites on the web to collect stats on <strong>JavaScript library</strong> usage. Explore this month's data. 
 			</div>
 
 			<div id="query">
 				<div id="search_">
 					<div id="searchSymbols"></div>
-					<input id="search" class="field-input" type="text" value="" />
+					<input id="search" class="field-input" type="text" value="" placeholder="variable (case sensitive) or domain..." />
 				</div>
-				<!-- <span id="query_or">or</span> -->
 				<div id="queryButtons">
 					<span><p data-query="*">Top Libs</p></span>
 					<span><p data-query="script:*">Top Scripts</p></span>
 					<span><p data-query="*.*">Top Sites</p></span>
 				</div>
-				<!-- top rising, top falling -->
 			</div>
-			<!-- <div id="howTo">
+
+			<!-- <div id="subSlogan">
+				<span>Explore this month's</span> <a href="#">javascript variables</a>, <a href="#">external scripts</a>, or <a href="#">domains</a>
+			</div> -->
+
+
+			<div id="howTo">
 				<p>
 					In the search box above, enter the <strong>variable</strong> that a JavaScript library exposes itself under, e.g. <b data-query>jQuery</b>, <b data-query>Modernizr</b>, <b data-query>$.ui</b>, or <b data-query>$.fn.fancybox</b>.
 				</p>
@@ -59,24 +59,8 @@
 				<p>
 					Alternatively, you can retrieve all libraries used on a site by querying for its domain name, e.g. <b data-query>stripe.com</b> or <b data-query>digitalocean.com</b>.
 				</p>
-			</div> -->
-
-			<div id="data">
-				<div id="data_scroll">↓</div>
-				<div id="data_cols"></div>
-				<table></table>
 			</div>
 		</main>
-
-		<footer>
-			<a class="footer-text" href="http://twitter.com/shapiro">julian shapiro</a>
-			<span class="footer-text--divider">+</span>
-			<a class="footer-text" href="http://twitter.com/neutralthoughts">thomas davis</a>
-			<span class="footer-text--divider">+</span>
-			<img id="stripe" src="images/stripe.png" />
-			<span class="footer-text--divider">+</span>
-			<img id="digitealocean" src="images/digitalocean.png" />
-		</footer>
 
 		<form 
 			id="subscribe_"
@@ -91,6 +75,22 @@
 			</div>
 		</form>
 	</div>
+
+	<div id="data">
+		<div id="data_scroll">↓</div>
+		<div id="data_cols"></div>
+		<table></table>
+	</div>
+
+	<footer>
+		<a class="footer-text" href="http://twitter.com/shapiro">julian shapiro</a>
+		<span class="footer-text--divider">+</span>
+		<a class="footer-text" href="http://twitter.com/neutralthoughts">thomas davis</a>
+		<span class="footer-text--divider">+</span>
+		<img id="stripe" src="images/stripe.png" />
+		<span class="footer-text--divider">+</span>
+		<img id="digitealocean" src="images/digitalocean.png" />
+	</footer>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/velocity.min.js"></script>
