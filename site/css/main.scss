@@ -86,13 +86,13 @@ a, a:visited {
 
 	text-decoration: none;
 
-	&:hover {
-		@extend .text-blue-dark;
-	}
+	// &:hover {
+	// 	@extend .text-blue-dark;
+	// }
 
-	&:active {
-		@extend .text-blue-dark;
-	}
+	// &:active {
+	// 	@extend .text-blue-dark;
+	// }
 }
 
 [data-query] {
@@ -100,9 +100,9 @@ a, a:visited {
 	transition: background-color 75ms;
 	cursor: pointer;
 
-	&:hover {
-		@extend .background-green;
-	}
+	// &:hover {
+	// 	@extend .background-green;
+	// }
 }
 
 input {
@@ -189,13 +189,13 @@ body {
 #searchWrap {
 	width: 570px;
 	position: absolute;
-	margin-left: -275px;
+	margin-left: -285px;
 	left: 50%;
 	z-index: 10;
 }
 
 .results {
-	background: #FAFAFA;
+	background: #F7F7F7;
 
 	 #searchWrap {
 		position: absolute;
@@ -203,11 +203,12 @@ body {
 		top: 0;
 		width: 400px;
 		height: 100%;
-		border-right: 1px solid #f1f1f1;
+		border-right: 1px solid #ECECEC;
 		padding: 34px;
 		margin-left: 0;
 		background-color: white;
 		transition: all 300ms;
+		z-index: 13;
 	}
 
 	footer {
@@ -228,11 +229,16 @@ body {
 
 		#header-logo {
 			font-size: 36px;
+			cursor: pointer;
 		}
 	}
 
 	#slogan {
 		font-size: 17px; 
+
+		br {
+			display: none;
+		}
 	}
 
 	#query {
@@ -246,11 +252,18 @@ body {
 	#howTo {
 		margin: 80px 0;
 		padding-top: 40px;
+
+		p {
+			padding: 0;
+		}
+	}
+
+	#data {
+		bottom: 0;
+		top: 50px;
+		z-index: 12;
 	}
 }
-
-
-
 
 #header {
 	font-family: "Avenir Black";
@@ -287,8 +300,12 @@ body {
 
 	#header-logo {
 		font-size: 60px;
-		@extend .text-green;
+		color: #3A3A3A;
 		margin-bottom: 15px;
+
+		o {
+			color: #6fd99a
+		}
 	}
 }
 
@@ -334,7 +351,7 @@ body {
 	text-transform: uppercase;
 	font-size: 10px;
 	letter-spacing: .8px;
-	padding: 0 27px;
+	padding: 0;
 
 	[data-query] {
 		
@@ -373,29 +390,31 @@ body {
 	}
 }
 
-#search_ {
-	position: relative;
 
-	#searchSymbols {
-		position: absolute;
-		margin-top: 16px;
-		right: 16px;
-		font-size: 19px;
-		color: #79bd95;
-		z-index: 10;
-	}
+
+#searchSymbols {
+	position: fixed;
+	margin-top: -156px;
+	margin-right: -240px;
+	right: 50%;
+	top: 50%;
+	font-size: 159px;
+	color: #79bd95;
+	z-index: 15;
 }
+
 
 #howTo {
 	margin-top: 200px;
 	padding: 33px 0;
 	border-radius: 3px;
 	border-top: 1px solid #F1F1F1;
-	margin: 125px 33px 0;
+	margin: 125px 0 0;
 
 	p {
 		margin-bottom: 30px;
 		margin-top: 0;
+		padding: 0 33px;
 
 		b {
 			transition: all 150ms;
@@ -414,8 +433,14 @@ body {
 
 #data {
 	font-size: 13px;
-	margin-top: 50px;
+	top: auto;
 	z-index: -1;
+	position: absolute;
+	bottom: -100%;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	transition: all 250ms;
 
 	@-moz-document url-prefix() {
 		/* This is to space out the Firefox scrollbar. */
@@ -454,7 +479,6 @@ body {
 	}
 
 	table {
-		margin-top: 33px;
 		position: absolute;
 		display: block;
 		overflow-y: scroll;
@@ -463,12 +487,16 @@ body {
 		width: 100%;
 		right: 0;
 		padding: 0 100px 0 0;
-		bottom: 112px;
+		bottom: 150px;
 		top: 50px;
 		padding-left: 500px;
 
-		td {
+		tbody {
+			display: table;
 			width: 100%;
+		}
+
+		td {
 			padding: 15px 0 11px 0;
 			transition: all 75ms;
 
@@ -492,7 +520,7 @@ body {
 			transition: all 75ms;
 
 			&:hover {
-				background-color: #F7F7F7;
+				background-color: #f2f2f2;
 
 				td {
 					padding: 15px 13px 11px 13px;
@@ -544,7 +572,7 @@ body {
 		position: absolute;
 		left: 50%;
 		margin-left: 200px;
-		bottom: 62px;
+		bottom: 100px;
 		color: #373737;
 		font-size: 27px;
 	}
@@ -614,4 +642,228 @@ footer {
 
 #body-bigError, #body-bigCount, #howTo, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, footer, #subscribe_ {
 	display: none;
+}
+
+
+/***************
+  Media Queries
+***************/
+
+@media screen and ( max-height: 850px ){
+    #howTo {
+    	margin-top: 100px;
+    }
+
+    #header {
+    	margin-top: 90px;
+    }
+}
+
+@media screen and ( max-height: 735px ){
+    #howTo {
+    	margin-top: 70px;
+    }
+
+    #header {
+    	margin-top: 70px;
+    }
+}
+
+@media screen and ( max-width: 1200px ){
+	#data {
+		table {
+			font-size: 22px;
+			padding: 0 50px 0 450px;
+		}
+
+		#data_cols {
+			div {
+				left: 450px;
+
+				&:nth-child(even) {
+					right: 50px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and ( max-width: 1050px ){
+	#data {
+		#data_cols {
+			div {
+				font-size: 16px;
+			}
+		}
+
+		table {
+			font-size: 18px;
+			top: 30px;
+			padding: 0 30px 0 430px;
+
+			tr {
+				&:hover {
+					td {
+						padding: 10px 9px 7px 10px;
+					}
+				}
+			}
+
+			td {
+				padding: 10px 0 7px 0;
+				word-break: break-all;
+
+				&:nth-child(even) {
+					width: 25%;
+					font-size: 16px;
+				}
+
+				&:nth-child(odd) {
+					width: 75%;
+				}
+
+				.text-green {
+					font-size: 18px;
+				}
+			}
+		}
+
+		#data_cols {
+			div {
+				left: 430px;
+
+				&:nth-child(even) {
+					right: 30px;
+				}
+			}
+		}
+	}
+
+	.results {
+		#data {
+			top: 45px;
+		}
+	}
+}
+
+
+@media screen and ( max-width: 850px ){
+	.results {
+		overflow-y: scroll;
+
+		#searchWrap {
+			width: 100%;
+			position: relative;
+			width: auto;
+			height: auto;
+			border: 0;
+			padding: 15px 34px 36px 34px;
+		}
+
+		footer {
+			background-color: #F7F7F7;
+			margin-left: 0;
+			padding: 13px;
+			z-index: 15;
+		}
+
+		#query #queryButtons {
+			display: none;
+		}
+
+		#header {
+			margin-top: 0;
+		}
+
+		#howTo {
+			display: none!important;
+		}
+
+		#slogan {
+			max-width: 461px;
+			margin: 0 auto 26px auto;
+		}
+
+		#data {
+			top: 20px;
+			position: relative;
+		}
+	}
+
+	#data {
+		z-index: 10;
+
+		table {
+			padding: 0 35px 0 35px;
+			top: 30px;
+			position: relative;
+		}
+
+		#data_cols {
+			div {
+				left: 35px;
+
+				&:nth-child(even) {
+					right: 33px;
+				}
+			}
+		}
+	}
+
+	#searchSymbols {
+		margin-top: -156px;
+		margin-right: -50px;
+		right: 50%;
+		top: 50%;
+	}
+
+}
+
+@media screen and ( max-width: 650px ){
+    #searchWrap {
+			width: 100%;
+			margin-left: 0;
+			left: 0;
+			padding: 0 40px;
+		}
+
+		#slogan {
+			font-size: 19px;
+
+			br {
+				display: none;
+			}
+		}
+
+		#query {
+			#queryButtons {
+				padding: 0 80px;
+			}
+		}
+}
+
+@media screen and ( max-width: 500px ){
+	#searchWrap {
+		padding: 0 28px;
+	}
+
+	#query {
+		#queryButtons {
+			padding: 0 40px;
+		}
+	}
+
+	#howTo {
+		p {
+			padding: 0;
+		}
+	}
+}
+
+@media screen and ( max-width: 420px ){
+		#query {
+			#queryButtons {
+				padding: 0;
+			}
+		}
 }
