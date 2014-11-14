@@ -25,7 +25,7 @@
 .background-blue {
   background-color: #0b8fb2; }
 
-.text-green, #body-bigCount, #data #data_cols div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
+.text-green, #body-bigCount, #query #queryButtons span:hover p, #data #data_cols div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
   color: #29bd66; }
 
 .background-green {
@@ -50,8 +50,7 @@
   box-sizing: border-box; }
 
 ::selection {
-  background: #000;
-  color: #fff; }
+  background: #E4E4E4; }
 
 /*****************
     Elements
@@ -110,7 +109,12 @@ body {
   background: #fff;
   color: #000;
   font-family: "Avenir Light";
-  transition: all 300ms; }
+  transition: all 300ms;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
 
 #body-bigError {
   position: fixed;
@@ -143,50 +147,6 @@ body {
   margin-left: -285px;
   left: 50%;
   z-index: 10; }
-
-.results {
-  background: #F7F7F7; }
-  .results #searchWrap {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 400px;
-    height: 100%;
-    border-right: 1px solid #ECECEC;
-    padding: 34px;
-    margin-left: 0;
-    background-color: white;
-    transition: all 300ms;
-    z-index: 13; }
-  .results footer {
-    margin-left: 200px; }
-  .results input {
-    font-size: 17px; }
-  .results #header {
-    margin-top: 25px;
-    margin-bottom: 20px; }
-    .results #header #header-code {
-      right: 78px; }
-    .results #header #header-logo {
-      font-size: 36px;
-      cursor: pointer; }
-  .results #slogan {
-    font-size: 17px; }
-    .results #slogan br {
-      display: none; }
-  .results #query {
-    padding: 0; }
-    .results #query #queryButtons {
-      padding: 0 20px; }
-  .results #howTo {
-    margin: 80px 0;
-    padding-top: 40px; }
-    .results #howTo p {
-      padding: 0; }
-  .results #data {
-    bottom: 0;
-    top: 50px;
-    z-index: 12; }
 
 #header {
   font-family: "Avenir Black";
@@ -244,9 +204,7 @@ body {
   text-transform: uppercase; }
 
 #query {
-  text-transform: uppercase;
-  font-size: 10px;
-  letter-spacing: .8px;
+  font-size: 14px;
   padding: 0; }
   #query [data-query]:hover {
     background: none; }
@@ -261,15 +219,17 @@ body {
       border-radius: 3px;
       line-height: 1.1rem;
       color: black;
-      font-family: "Avenir Black";
+      font-family: "Avenir Medium";
       width: 33.33%;
       float: left;
-      text-align: center; }
+      text-align: center;
+      transition: all 150ms; }
     #query #queryButtons p {
-      padding: 0 2px 1px 2px;
+      padding: 0 1px 1px 1px;
       margin: 0;
       border-bottom: 1px dotted #BBB;
-      display: inline; }
+      display: inline;
+      transition: all 150ms; }
 
 #searchSymbols {
   position: fixed;
@@ -343,7 +303,7 @@ body {
     width: 100%;
     right: 0;
     padding: 0 100px 0 0;
-    bottom: 150px;
+    bottom: 125px;
     top: 50px;
     padding-left: 500px; }
     #data table tbody {
@@ -376,7 +336,7 @@ body {
       display: inline-block;
       top: -2px;
       position: relative; }
-    #data table .text-green, #data table #body-bigCount, #data table #data_cols div, #data #data_cols table div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
+    #data table .text-green, #data table #body-bigCount, #data table #query #queryButtons span:hover p, #query #queryButtons span:hover #data table p, #data table #data_cols div, #data #data_cols table div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
       font-size: 22px;
       position: relative;
       top: 1px; }
@@ -403,33 +363,42 @@ body {
 
 footer {
   position: fixed;
-  bottom: 0rem;
+  bottom: 1rem;
   left: 50%;
   transform: translateX(-50%);
-  padding: 0.4rem 0rem 0.6rem 0rem;
+  padding: 0.4rem 0 0.6rem 0;
   width: 100%;
   transition: all 300ms;
   text-align: center;
-  font-family: "Avenir Black";
-  font-size: 0.6rem; }
+  font-family: "Avenir Medium";
+  font-size: 0.6rem;
+  z-index: 14; }
   footer img {
     width: 100px;
     margin-bottom: -0.2rem; }
   footer #stripe {
     position: relative;
     margin-bottom: -0.3rem;
-    width: 38px; }
+    width: 36px;
+    margin-right: 2px; }
+  footer #authors {
+    position: absolute;
+    left: 25px; }
+  footer #sponsors {
+    position: absolute;
+    right: 25px; }
   footer .footer-text {
-    text-transform: uppercase;
-    letter-spacing: 0.015rem;
-    word-spacing: -0.075rem; }
+    font-size: 12px; }
   footer .footer-text--divider {
     color: #CBCBCB;
-    font-size: 18px;
-    margin-right: 5px;
+    font-size: 10px;
+    margin-right: 2px;
+    margin-left: 2px;
     position: relative;
     display: inline-block;
-    vertical-align: top; }
+    vertical-align: middle;
+    font-family: "Avenir Black";
+    top: -1px; }
 
 #subscribe_ {
   position: fixed !important;
@@ -442,6 +411,78 @@ footer {
     font-family: "Avenir Light";
     padding: 10px 10px 9px 10px;
     color: #6F6F6F; }
+
+.learnMore {
+  margin-top: 20px;
+  font-size: 14px;
+  display: block;
+  text-align: center;
+  position: relative;
+  top: 10px;
+  display: none; }
+  .learnMore:before {
+    content: "i";
+    border: 1px solid #29BD66;
+    border-radius: 20px;
+    display: inline-block;
+    height: 16px;
+    line-height: 16px;
+    width: 16px;
+    background: #29BD66;
+    text-align: center;
+    font-size: 14px;
+    margin-right: 6px;
+    color: #FFF;
+    font-family: "Avenir Black"; }
+
+.results {
+  background: #F7F7F7; }
+  .results #searchWrap {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 400px;
+    height: 100%;
+    border-right: 1px solid #ECECEC;
+    padding: 34px;
+    margin-left: 0;
+    background-color: white;
+    transition: all 300ms;
+    z-index: 13; }
+  .results footer {
+    padding-left: 0;
+    padding-right: 0; }
+    .results footer #authors {
+      left: 500px; }
+    .results footer #sponsors {
+      right: 100px; }
+  .results input {
+    font-size: 17px; }
+  .results #header {
+    margin-top: 25px;
+    margin-bottom: 20px; }
+    .results #header #header-code {
+      right: 78px; }
+    .results #header #header-logo {
+      font-size: 36px;
+      cursor: pointer; }
+  .results #slogan {
+    font-size: 17px; }
+    .results #slogan br {
+      display: none; }
+  .results #query {
+    padding: 0; }
+    .results #query #queryButtons {
+      padding: 0 20px; }
+  .results #howTo {
+    margin: 80px 0;
+    padding-top: 40px; }
+    .results #howTo p {
+      padding: 0; }
+  .results #data {
+    bottom: 0;
+    top: 50px;
+    z-index: 12; }
 
 /***************
     Initial
@@ -474,7 +515,12 @@ footer {
   #data #data_cols div {
     left: 450px; }
     #data #data_cols div:nth-child(even) {
-      right: 50px; } }
+      right: 50px; }
+
+  .results footer #authors {
+    left: 450px; }
+  .results footer #sponsors {
+    right: 50px; } }
 @media screen and (max-width: 1050px) {
   #data #data_cols div {
     font-size: 16px; }
@@ -492,7 +538,7 @@ footer {
         font-size: 16px; }
       #data table td:nth-child(odd) {
         width: 75%; }
-      #data table td .text-green, #data table td #body-bigCount, #data table td #data_cols div, #data #data_cols table td div, #data table td .text-blue, #data table td #header #header-code #header-code-property:hover, #data table #header #header-code td #header-code-property:hover, #header #header-code #data table td #header-code-property:hover {
+      #data table td .text-green, #data table td #body-bigCount, #data table td #query #queryButtons span:hover p, #query #queryButtons span:hover #data table td p, #data table td #data_cols div, #data #data_cols table td div, #data table td .text-blue, #data table td #header #header-code #header-code-property:hover, #data table #header #header-code td #header-code-property:hover, #header #header-code #data table td #header-code-property:hover {
         font-size: 18px; }
   #data #data_cols div {
     left: 430px; }
@@ -500,7 +546,11 @@ footer {
       right: 30px; }
 
   .results #data {
-    top: 45px; } }
+    top: 45px; }
+  .results footer #authors {
+    left: 430px; }
+  .results footer #sponsors {
+    right: 30px; } }
 @media screen and (max-width: 850px) {
   .results {
     overflow-y: scroll; }
@@ -514,12 +564,19 @@ footer {
     .results footer {
       background-color: #F7F7F7;
       margin-left: 0;
-      padding: 13px;
-      z-index: 15; }
+      padding: 20px 0 30px 0;
+      z-index: 15;
+      bottom: 0; }
+      .results footer #authors {
+        left: 34px; }
+      .results footer #sponsors {
+        right: 34px; }
     .results #query #queryButtons {
       display: none; }
     .results #header {
       margin-top: 0; }
+      .results #header #header-code {
+        right: 267px; }
     .results #howTo {
       display: none !important; }
     .results #slogan {
