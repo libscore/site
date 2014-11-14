@@ -62,7 +62,9 @@ var $html = $("html"),
 	$howTo = $("#howTo"),
 	$footer = $("footer"),
 	$subscribe_ = $("#subscribe_"),
-	$subscribe = $("#subscribe");
+	$subscribe = $("#subscribe"),
+	$searchWrap = $("#searchWrap");
+	
 
 /**************
     Global
@@ -154,14 +156,29 @@ var UI = {
 		]);
 	},
 	query: function() {
+
+		//alert("happening!");
+		// $("body").addClass("results");
+
 		var data = $search.val();
 
-		$.Velocity.RunSequence([
-			{ elements: $search, properties: { opacity: .4 }, options: { sequenceQueue: false, duration: 225 } },
-			{ elements: $body, properties: { borderColor: "#3dd46d" }, options: { duration: 400, sequenceQueue: false } },
-			{ elements: $sectionHeader_search, properties: { opacity: 0.45 }, options: { duration: 300, sequenceQueue: false } },
-			{ elements: $sectionHeader_search.find("o"), properties: "callout.flicker", options: { delay: 300 } }
-		]);
+		if (!$("body").hasClass("results")) {
+			$searchWrap.velocity({
+			    properties: "transition.slideDownBigOut", options: {duration: 250}
+			});
+
+			// this is a hack, need to figure out proper callback
+			setTimeout(function(){
+				$("body").addClass("results");
+			}, 600)
+
+			$.Velocity.RunSequence([
+				{ elements: $footer, properties: "transition.fadeOut", options: { duration: 500}},
+				{ elements: $body, properties: { backgroundColor: "#F7F7F7" }, options: { sequenceQueue: false, duration: 400}},
+				{ elements: $searchWrap, properties: "transition.slideLeftBigIn", options: { delay: 600, duration: 250}},
+				{ elements: $footer, properties: "transition.fadeIn", options: { duration: 500}}
+			]);
+		}
 
 		(function indicator () {
 			var symbols = [ "□","◅","◇","○" ];
@@ -182,6 +199,7 @@ var UI = {
 							$searchSymbols.html(symbol);
 						},
 						complete: function() {
+
 							if (UI.loading === false) {
 
 								$search
@@ -201,7 +219,22 @@ var UI = {
 		})();
 
 		$("#header-logo").on("click", function (){
-			$("body").removeClass("results");
+
+			if ($("body").hasClass("results")) {
+
+				setTimeout(function(){
+					$("body").removeClass("results");
+				}, 500);
+
+				$.Velocity.RunSequence([
+					{ elements: $footer, properties: "transition.fadeOut", options: { duration: 500}},
+					{ elements: $searchWrap, properties: "transition.slideLeftBigOut", options: { sequenceQueue: false, duration: 250}},
+					{ elements: $body, properties: { backgroundColor: "#FFFFFF" }, options: { sequenceQueue: false, duration: 400}},
+					{ elements: $footer, properties: "transition.fadeIn", options: { duration: 500}},
+					{ elements: $searchWrap, properties: "transition.slideUpBigIn", options: { delay: 300, duration: 250}}
+				]);
+			}
+
 		});
 
 		function request (query, callback) {
@@ -216,7 +249,6 @@ var UI = {
 			function ajax(url) {
 				UI.loading = true;
 				$html.css("cursor", "wait");
-				$("body").addClass("results");
 
 				$.ajax({
 					url: API.hostname + url,
@@ -474,12 +506,11 @@ $.Velocity.hook($bigCount, "translateX", "-50%");
 
 $(window).load(function() {
 	$.Velocity.RunSequence([
-		// { elements: $footer, properties: "transition.vanishBottomIn", options: { delay: 265, duration: 700 } },
-		{ elements: $header_logo, properties: { opacity: [ 1, 0.1 ] }, options: { duration: 425, sequenceQueue: false } },
-		{ elements: $slogan, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
-		{ elements: $search_, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
-		{ elements: $queryButtons, properties: "transition.clipBottomIn", options: { delay: 365, duration: 625, stagger: 185, sequenceQueue: false } },
-		{ elements: $howTo, properties: "transition.clipBottomIn", options: { delay: 665, duration: 625, sequenceQueue: false } },
+		{ elements: $header_logo, properties: "transition.fadeIn", options: { delay: 100, duration: 600} },
+		{ elements: $slogan, properties: "transition.fadeIn", options: { delay: 400, duration: 725, sequenceQueue: false } },
+		{ elements: $search_, properties: "transition.clipBottomIn", options: { duration: 725, sequenceQueue: false } },
+		{ elements: $queryButtons, properties: "transition.slideUpIn", options: { duration: 300, stagger: 125 } },
+		{ elements: $howTo, properties: "transition.clipBottomIn", options: { delay: 500, duration: 900, sequenceQueue: false } },
 		{ elements: $header_logo_o, properties: { opacity: [ 0.6, 1 ] }, options: { sequenceQueue: false, duration: 500, loop: 2 } },
 		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 500, begin: 
 			function() {
