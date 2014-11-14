@@ -62,8 +62,7 @@
 }
 
 ::selection {
-	background: #000;
-	color: #fff;
+	background: #E4E4E4;
 }
 
 /*****************
@@ -143,15 +142,17 @@ input {
 body {
 	cursor: default;
 	overflow: hidden;
-
 	height: 100%;
-
 	border-top: 3px solid white;
 	background: #fff;
-
 	color: #000;
 	font-family: "Avenir Light";
 	transition: all 300ms;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	font-smoothing: antialiased;
+	-moz-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 #body-bigError {
@@ -194,76 +195,7 @@ body {
 	z-index: 10;
 }
 
-.results {
-	background: #F7F7F7;
 
-	 #searchWrap {
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: 400px;
-		height: 100%;
-		border-right: 1px solid #ECECEC;
-		padding: 34px;
-		margin-left: 0;
-		background-color: white;
-		transition: all 300ms;
-		z-index: 13;
-	}
-
-	footer {
-		margin-left: 200px;
-	}
-
-	input {
-		font-size: 17px;
-	}
-
-	#header {
-		margin-top: 25px;
-		margin-bottom: 20px;
-
-		#header-code {
-			right: 78px;
-		}
-
-		#header-logo {
-			font-size: 36px;
-			cursor: pointer;
-		}
-	}
-
-	#slogan {
-		font-size: 17px; 
-
-		br {
-			display: none;
-		}
-	}
-
-	#query {
-		padding: 0;
-
-		#queryButtons {
-			padding: 0 20px;
-		}
-	}
-
-	#howTo {
-		margin: 80px 0;
-		padding-top: 40px;
-
-		p {
-			padding: 0;
-		}
-	}
-
-	#data {
-		bottom: 0;
-		top: 50px;
-		z-index: 12;
-	}
-}
 
 #header {
 	font-family: "Avenir Black";
@@ -348,9 +280,9 @@ body {
 }
 
 #query {
-	text-transform: uppercase;
-	font-size: 10px;
-	letter-spacing: .8px;
+	//text-transform: uppercase;
+	font-size: 14px;
+	//letter-spacing: .8px;
 	padding: 0;
 
 	[data-query] {
@@ -375,17 +307,25 @@ body {
 			border-radius: 3px;
 			line-height: 1.1rem;
 			color: black;
-			font-family: "Avenir Black";
+			font-family: "Avenir Medium";
 			width: 33.33%;
 			float: left;
 			text-align: center;
+			transition: all 150ms;
+
+			&:hover {
+				p {
+					@extend .text-green;
+				}
+			}
 		}
 
 		p {
-			padding: 0 2px 1px 2px;
+			padding: 0 1px 1px 1px;
 			margin: 0;
 			border-bottom: 1px dotted #BBB;
 			display: inline;
+			transition: all 150ms;
 		}
 	}
 }
@@ -487,7 +427,7 @@ body {
 		width: 100%;
 		right: 0;
 		padding: 0 100px 0 0;
-		bottom: 150px;
+		bottom: 125px;
 		top: 50px;
 		padding-left: 500px;
 
@@ -580,15 +520,15 @@ body {
 
 footer {
 	position: fixed;
-	bottom: 0rem;
+	bottom: 1rem;
 	left: 50%; transform: translateX(-50%);
-	padding: 0.4rem 0rem 0.6rem 0rem;
+	padding: 0.4rem 0 0.6rem 0;
 	width: 100%;
 	transition: all 300ms;
-
 	text-align: center;
-	font-family: "Avenir Black";
+	font-family: "Avenir Medium";
 	font-size: 0.6rem;
+	z-index: 14;
 
 	img {
 		width: 100px;
@@ -598,22 +538,34 @@ footer {
 	#stripe {
 		position: relative;
 		margin-bottom: -0.3rem;
-		width: 38px;
+		width: 36px;
+		margin-right: 2px;
+	}
+
+	#authors {
+		position: absolute;
+		left: 25px;
+	}
+
+	#sponsors {
+		position: absolute;
+		right: 25px;
 	}
 
 	.footer-text {
-		text-transform: uppercase;
-		letter-spacing: 0.015rem;
-		word-spacing: -0.075rem;
+		font-size: 12px;
 	}
 
 	.footer-text--divider {
 		color: #CBCBCB;
-		font-size: 18px;
-		margin-right: 5px;
+		font-size: 10px;
+		margin-right: 2px;
+		margin-left: 2px;
 		position: relative;
 		display: inline-block;
-		vertical-align: top;
+		vertical-align: middle;
+		font-family: "Avenir Black";
+		top: -1px;
 	}
 }
 
@@ -629,6 +581,112 @@ footer {
 		font-family: "Avenir Light";
 		padding: 10px 10px 9px 10px;
 		color: #6F6F6F;
+	}
+}
+
+.learnMore {
+	margin-top: 20px;
+	font-size: 14px;
+	display: block;
+	text-align: center;
+	position: relative;
+	top: 10px;
+	display: none;
+
+	&:before {
+		content: "i";
+		border: 1px solid #29BD66;
+		border-radius: 20px;
+		display: inline-block;
+		height: 16px;
+		line-height: 16px;
+		width: 16px;
+		background: #29BD66;
+		text-align: center;
+		font-size: 14px;
+		margin-right: 6px;
+		color: #FFF;
+		font-family: "Avenir Black";
+	}
+}
+
+.results {
+	background: #F7F7F7;
+
+	#searchWrap {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 400px;
+		height: 100%;
+		border-right: 1px solid #ECECEC;
+		padding: 34px;
+		margin-left: 0;
+		background-color: white;
+		transition: all 300ms;
+		z-index: 13;
+	}
+
+	footer {
+		padding-left: 0;
+		padding-right: 0;
+
+		#authors {
+			left: 500px;
+		}
+
+		#sponsors {
+			right: 100px;
+		}
+	}
+
+	input {
+		font-size: 17px;
+	}
+
+	#header {
+		margin-top: 25px;
+		margin-bottom: 20px;
+
+		#header-code {
+			right: 78px;
+		}
+
+		#header-logo {
+			font-size: 36px;
+			cursor: pointer;
+		}
+	}
+
+	#slogan {
+		font-size: 17px; 
+
+		br {
+			display: none;
+		}
+	}
+
+	#query {
+		padding: 0;
+
+		#queryButtons {
+			padding: 0 20px;
+		}
+	}
+
+	#howTo {
+		margin: 80px 0;
+		padding-top: 40px;
+
+		p {
+			padding: 0;
+		}
+	}
+
+	#data {
+		bottom: 0;
+		top: 50px;
+		z-index: 12;
 	}
 }
 
@@ -686,6 +744,19 @@ footer {
 			}
 		}
 	}
+
+	.results {
+		footer {
+			#authors {
+				left: 450px;
+			}
+
+			#sponsors {
+				right: 50px;
+			}
+		}
+	}
+	
 }
 
 @media screen and ( max-width: 1050px ){
@@ -743,6 +814,16 @@ footer {
 		#data {
 			top: 45px;
 		}
+
+		footer {
+			#authors {
+				left: 430px;
+			}
+
+			#sponsors {
+				right: 30px;
+			}
+		}
 	}
 }
 
@@ -763,8 +844,18 @@ footer {
 		footer {
 			background-color: #F7F7F7;
 			margin-left: 0;
-			padding: 13px;
+			padding: 20px 0 30px 0;
 			z-index: 15;
+			bottom: 0;
+
+			#authors {
+				left: 34px;
+			}
+
+			#sponsors {
+				right: 34px;
+			}
+
 		}
 
 		#query #queryButtons {
@@ -773,6 +864,10 @@ footer {
 
 		#header {
 			margin-top: 0;
+
+			#header-code {
+				right: 267px;
+			}
 		}
 
 		#howTo {
