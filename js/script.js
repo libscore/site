@@ -469,12 +469,12 @@ $("input").on("keydown", function(event) {
      Init
 **************/
 
-$.Velocity.hook($footer, "translateX", "-50%");
+// $.Velocity.hook($footer, "translateX", "-50%");
 $.Velocity.hook($bigCount, "translateX", "-50%");
 
 $(window).load(function() {
 	$.Velocity.RunSequence([
-		{ elements: $footer, properties: "transition.vanishBottomIn", options: { delay: 265, duration: 700 } },
+		// { elements: $footer, properties: "transition.vanishBottomIn", options: { delay: 265, duration: 700 } },
 		{ elements: $header_logo, properties: { opacity: [ 1, 0.1 ] }, options: { duration: 425, sequenceQueue: false } },
 		{ elements: $slogan, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
 		{ elements: $search_, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
@@ -521,3 +521,21 @@ $(window).load(function() {
 		{ elements: $header_logo_o, properties: { opacity: 0.9, color: "#24A85A" }, options: { duration: 2000, loop: true } }
 	]);
 });
+
+
+$(window).on('scroll', function() {
+
+	var scrollTop     = $(window).scrollTop(),
+    elementOffset = $('#query').offset().top + 65,
+    distance      = (elementOffset - scrollTop);
+
+		if(scrollTop > distance){
+			console.log("over!");
+			$("#searchWrap").addClass("sticky");
+			$("#data").addClass("sticky");
+		}
+});
+
+
+
+

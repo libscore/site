@@ -260,52 +260,54 @@ body {
 
 #data {
   font-size: 13px;
-  top: auto;
   z-index: -1;
   position: absolute;
-  bottom: -100%;
   left: 0;
+  overflow: scroll;
   width: 100%;
-  height: 100%;
   transition: all 250ms;
+  height: 100%;
+  bottom: -100%;
+  padding: 0 100px 0 500px;
+  opacity: 0;
   @-moz-document url-prefix() {
     /* This is to space out the Firefox scrollbar. */
     padding-right: 0.65rem; }
  }
-  #data #data_cols div {
-    position: absolute;
-    left: 500px;
-    font-family: "Avenir Black";
-    letter-spacing: 0.05rem;
-    text-transform: uppercase;
-    font-size: 18px; }
-    #data #data_cols div:nth-child(even) {
-      right: 100px;
-      left: auto; }
-    #data #data_cols div a {
-      display: inline-block;
-      position: relative;
-      top: -3px;
-      left: 3px;
-      padding: 5px 8px;
-      color: #9D9D9D;
-      font-size: 7px;
-      border-radius: 14px;
-      border: 1px solid #E0E0E0; }
-      #data #data_cols div a:hover {
-        border-color: #c7c7c7; }
+  #data #data_cols {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 53px; }
+    #data #data_cols div {
+      position: absolute;
+      left: 500px;
+      font-family: "Avenir Black";
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+      font-size: 18px; }
+      #data #data_cols div:nth-child(even) {
+        right: 100px;
+        left: auto; }
+      #data #data_cols div a {
+        display: inline-block;
+        position: relative;
+        top: -3px;
+        left: 3px;
+        padding: 5px 8px;
+        color: #9D9D9D;
+        font-size: 7px;
+        border-radius: 14px;
+        border: 1px solid #E0E0E0; }
+        #data #data_cols div a:hover {
+          border-color: #c7c7c7; }
   #data table {
-    position: absolute;
-    display: block;
+    position: relative;
     overflow-y: scroll;
     clear: both;
     font-size: 26px;
     width: 100%;
-    right: 0;
-    padding: 0 100px 0 0;
-    bottom: 125px;
-    top: 50px;
-    padding-left: 500px; }
+    padding: 0; }
     #data table tbody {
       display: table;
       width: 100%; }
@@ -363,10 +365,8 @@ body {
 
 footer {
   position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0.4rem 0 0.6rem 0;
+  bottom: 0;
+  padding: 12px 19px;
   width: 100%;
   transition: all 300ms;
   text-align: center;
@@ -382,11 +382,9 @@ footer {
     width: 36px;
     margin-right: 2px; }
   footer #authors {
-    position: absolute;
-    left: 25px; }
+    float: left; }
   footer #sponsors {
-    position: absolute;
-    right: 25px; }
+    float: right; }
   footer .footer-text {
     font-size: 12px; }
   footer .footer-text--divider {
@@ -450,8 +448,7 @@ footer {
     transition: all 300ms;
     z-index: 13; }
   .results footer {
-    padding-left: 0;
-    padding-right: 0; }
+    padding: 12px 100px 12px 500px; }
     .results footer #authors {
       left: 500px; }
     .results footer #sponsors {
@@ -480,9 +477,10 @@ footer {
     .results #howTo p {
       padding: 0; }
   .results #data {
-    bottom: 0;
-    top: 50px;
-    z-index: 12; }
+    bottom: 50px;
+    top: 90px;
+    height: auto;
+    opacity: 1; }
 
 /***************
     Initial
@@ -490,7 +488,7 @@ footer {
 #header-code, #header-logo, #subscribe {
   opacity: 0; }
 
-#body-bigError, #body-bigCount, #howTo, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, footer, #subscribe_ {
+#body-bigError, #body-bigCount, #howTo, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, #subscribe_ {
   display: none; }
 
 /***************
@@ -509,48 +507,44 @@ footer {
   #header {
     margin-top: 70px; } }
 @media screen and (max-width: 1200px) {
-  #data table {
-    font-size: 22px;
-    padding: 0 50px 0 450px; }
-  #data #data_cols div {
-    left: 450px; }
-    #data #data_cols div:nth-child(even) {
-      right: 50px; }
+  #data {
+    padding: 0 70px 0 470px; }
+    #data table {
+      font-size: 22px; }
+    #data #data_cols div {
+      left: 470px; }
+      #data #data_cols div:nth-child(even) {
+        right: 70px; }
 
-  .results footer #authors {
-    left: 450px; }
-  .results footer #sponsors {
-    right: 50px; } }
+  .results footer {
+    padding: 12px 70px 12px 470px; } }
 @media screen and (max-width: 1050px) {
-  #data #data_cols div {
-    font-size: 16px; }
-  #data table {
-    font-size: 18px;
-    top: 30px;
-    padding: 0 30px 0 430px; }
-    #data table tr:hover td {
-      padding: 10px 9px 7px 10px; }
-    #data table td {
-      padding: 10px 0 7px 0;
-      word-break: break-all; }
-      #data table td:nth-child(even) {
-        width: 25%;
-        font-size: 16px; }
-      #data table td:nth-child(odd) {
-        width: 75%; }
-      #data table td .text-green, #data table td #body-bigCount, #data table td #query #queryButtons span:hover p, #query #queryButtons span:hover #data table td p, #data table td #data_cols div, #data #data_cols table td div, #data table td .text-blue, #data table td #header #header-code #header-code-property:hover, #data table #header #header-code td #header-code-property:hover, #header #header-code #data table td #header-code-property:hover {
-        font-size: 18px; }
-  #data #data_cols div {
-    left: 430px; }
-    #data #data_cols div:nth-child(even) {
-      right: 30px; }
+  #data {
+    padding: 0 40px 0 440px; }
+    #data #data_cols div {
+      left: 440px;
+      font-size: 16px; }
+    #data table {
+      font-size: 18px; }
+      #data table tr:hover td {
+        padding: 10px 9px 7px 10px; }
+      #data table td {
+        padding: 10px 0 7px 0;
+        word-break: break-all; }
+        #data table td:nth-child(even) {
+          width: 25%;
+          font-size: 16px; }
+        #data table td:nth-child(odd) {
+          width: 75%; }
+        #data table td .text-green, #data table td #body-bigCount, #data table td #query #queryButtons span:hover p, #query #queryButtons span:hover #data table td p, #data table td #data_cols div, #data #data_cols table td div, #data table td .text-blue, #data table td #header #header-code #header-code-property:hover, #data table #header #header-code td #header-code-property:hover, #header #header-code #data table td #header-code-property:hover {
+          font-size: 18px; }
+    #data #data_cols div {
+      left: 440px; }
+      #data #data_cols div:nth-child(even) {
+        right: 40px; }
 
-  .results #data {
-    top: 45px; }
-  .results footer #authors {
-    left: 430px; }
-  .results footer #sponsors {
-    right: 30px; } }
+  .results footer {
+    padding: 12px 40px 12px 440px; } }
 @media screen and (max-width: 850px) {
   .results {
     overflow-y: scroll; }
@@ -560,17 +554,10 @@ footer {
       width: auto;
       height: auto;
       border: 0;
-      padding: 15px 34px 36px 34px; }
+      padding: 15px 35px 35px 35px; }
     .results footer {
-      background-color: #F7F7F7;
-      margin-left: 0;
-      padding: 20px 0 30px 0;
-      z-index: 15;
-      bottom: 0; }
-      .results footer #authors {
-        left: 34px; }
-      .results footer #sponsors {
-        right: 34px; }
+      padding: 12px 35px 12px 35px;
+      background: #F7F7F7; }
     .results #query #queryButtons {
       display: none; }
     .results #header {
@@ -583,19 +570,30 @@ footer {
       max-width: 461px;
       margin: 0 auto 26px auto; }
     .results #data {
-      top: 20px;
-      position: relative; }
+      padding: 0 35px;
+      position: relative;
+      top: auto;
+      bottom: auto; }
+    .results #searchWrap.sticky {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      padding: 25px 35px; }
+      .results #searchWrap.sticky #header {
+        display: none; }
+      .results #searchWrap.sticky #slogan {
+        display: none !important; }
+    .results #data.sticky {
+      top: 95px; }
 
-  #data {
-    z-index: 10; }
-    #data table {
-      padding: 0 35px 0 35px;
-      top: 30px;
-      position: relative; }
-    #data #data_cols div {
-      left: 35px; }
-      #data #data_cols div:nth-child(even) {
-        right: 33px; }
+  #data table {
+    top: 30px;
+    position: relative; }
+  #data #data_cols div {
+    left: 35px; }
+    #data #data_cols div:nth-child(even) {
+      right: 33px; }
 
   #searchSymbols {
     margin-top: -156px;
@@ -627,4 +625,11 @@ footer {
     padding: 0; } }
 @media screen and (max-width: 420px) {
   #query #queryButtons {
-    padding: 0; } }
+    padding: 0; }
+
+  .results #data {
+    padding: 0 25px; }
+  .results #searchWrap.sticky {
+    padding: 25px; }
+  .results footer {
+    padding: 12px 25px 12px 25px; } }
