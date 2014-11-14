@@ -195,8 +195,6 @@ body {
 	z-index: 10;
 }
 
-
-
 #header {
 	font-family: "Avenir Black";
 	text-transform: uppercase;
@@ -373,63 +371,67 @@ body {
 
 #data {
 	font-size: 13px;
-	top: auto;
 	z-index: -1;
 	position: absolute;
-	bottom: -100%;
 	left: 0;
+	overflow: scroll;
 	width: 100%;
-	height: 100%;
 	transition: all 250ms;
+	height: 100%;
+	bottom: -100%;
+	padding: 0 100px 0 500px;
+	opacity: 0;
 
 	@-moz-document url-prefix() {
 		/* This is to space out the Firefox scrollbar. */
 		padding-right: 0.65rem;
 	}
 
-	#data_cols div {
-		position: absolute;
-		left: 500px;
-		font-family: "Avenir Black";
-		letter-spacing: 0.05rem;
-		text-transform: uppercase;
-		@extend .text-green;
-		font-size: 18px;
+	#data_cols {
+		position: fixed;
+		width: 100%;
+		left: 0;
+		top: 53px;
 
-		&:nth-child(even) {
-			right: 100px;
-			left: auto;
-		}
+		div {
+			position: absolute;
+			left: 500px;
+			font-family: "Avenir Black";
+			letter-spacing: 0.05rem;
+			text-transform: uppercase;
+			@extend .text-green;
+			font-size: 18px;
 
-		a {
-			display: inline-block;
-			position: relative;
-			top: -3px;
-			left: 3px;
-			padding: 5px 8px;
-			color: #9D9D9D;
-			font-size: 7px;
-			border-radius: 14px;
-			border: 1px solid #E0E0E0;
+			&:nth-child(even) {
+				right: 100px;
+				left: auto;
+			}
 
-			&:hover {
-				border-color: #c7c7c7;
+			a {
+				display: inline-block;
+				position: relative;
+				top: -3px;
+				left: 3px;
+				padding: 5px 8px;
+				color: #9D9D9D;
+				font-size: 7px;
+				border-radius: 14px;
+				border: 1px solid #E0E0E0;
+
+				&:hover {
+					border-color: #c7c7c7;
+				}
 			}
 		}
-	}
+	} 
 
 	table {
-		position: absolute;
-		display: block;
+		position: relative;
 		overflow-y: scroll;
 		clear: both;
 		font-size: 26px;
 		width: 100%;
-		right: 0;
-		padding: 0 100px 0 0;
-		bottom: 125px;
-		top: 50px;
-		padding-left: 500px;
+		padding: 0;
 
 		tbody {
 			display: table;
@@ -520,9 +522,8 @@ body {
 
 footer {
 	position: fixed;
-	bottom: 1rem;
-	left: 50%; transform: translateX(-50%);
-	padding: 0.4rem 0 0.6rem 0;
+	bottom: 0;
+	padding: 12px 19px;
 	width: 100%;
 	transition: all 300ms;
 	text-align: center;
@@ -543,13 +544,11 @@ footer {
 	}
 
 	#authors {
-		position: absolute;
-		left: 25px;
+		float: left;
 	}
 
 	#sponsors {
-		position: absolute;
-		right: 25px;
+		float: right;
 	}
 
 	.footer-text {
@@ -628,8 +627,7 @@ footer {
 	}
 
 	footer {
-		padding-left: 0;
-		padding-right: 0;
+		padding: 12px 100px 12px 500px;
 
 		#authors {
 			left: 500px;
@@ -684,9 +682,10 @@ footer {
 	}
 
 	#data {
-		bottom: 0;
-		top: 50px;
-		z-index: 12;
+		bottom: 50px;
+		top: 90px;
+		height: auto;
+		opacity: 1;
 	}
 }
 
@@ -698,7 +697,7 @@ footer {
 	opacity: 0;
 }
 
-#body-bigError, #body-bigCount, #howTo, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, footer, #subscribe_ {
+#body-bigError, #body-bigCount, #howTo, #slogan, #subSlogan, #search_, #queryButtons span, .data_more, #data_scroll, #subscribe_ {
 	display: none;
 }
 
@@ -729,17 +728,18 @@ footer {
 
 @media screen and ( max-width: 1200px ){
 	#data {
+		padding: 0 70px 0 470px;
+
 		table {
 			font-size: 22px;
-			padding: 0 50px 0 450px;
 		}
 
 		#data_cols {
 			div {
-				left: 450px;
+				left: 470px;
 
 				&:nth-child(even) {
-					right: 50px;
+					right: 70px;
 				}
 			}
 		}
@@ -747,13 +747,7 @@ footer {
 
 	.results {
 		footer {
-			#authors {
-				left: 450px;
-			}
-
-			#sponsors {
-				right: 50px;
-			}
+			padding: 12px 70px 12px 470px;
 		}
 	}
 	
@@ -761,16 +755,17 @@ footer {
 
 @media screen and ( max-width: 1050px ){
 	#data {
+		padding: 0 40px 0 440px;
+
 		#data_cols {
 			div {
+				left: 440px;
 				font-size: 16px;
 			}
 		}
 
 		table {
 			font-size: 18px;
-			top: 30px;
-			padding: 0 30px 0 430px;
 
 			tr {
 				&:hover {
@@ -801,28 +796,18 @@ footer {
 
 		#data_cols {
 			div {
-				left: 430px;
+				left: 440px;
 
 				&:nth-child(even) {
-					right: 30px;
+					right: 40px;
 				}
 			}
 		}
 	}
 
 	.results {
-		#data {
-			top: 45px;
-		}
-
 		footer {
-			#authors {
-				left: 430px;
-			}
-
-			#sponsors {
-				right: 30px;
-			}
+			padding: 12px 40px 12px 440px;
 		}
 	}
 }
@@ -838,24 +823,12 @@ footer {
 			width: auto;
 			height: auto;
 			border: 0;
-			padding: 15px 34px 36px 34px;
+			padding: 15px 35px 35px 35px;
 		}
 
 		footer {
-			background-color: #F7F7F7;
-			margin-left: 0;
-			padding: 20px 0 30px 0;
-			z-index: 15;
-			bottom: 0;
-
-			#authors {
-				left: 34px;
-			}
-
-			#sponsors {
-				right: 34px;
-			}
-
+			padding: 12px 35px 12px 35px;
+			background: #F7F7F7;
 		}
 
 		#query #queryButtons {
@@ -880,16 +853,36 @@ footer {
 		}
 
 		#data {
-			top: 20px;
+			padding: 0 35px;
 			position: relative;
+			top: auto;
+			bottom: auto;
+		}
+
+		#searchWrap.sticky {
+			position: fixed;
+			left: 0;
+			top: 0;
+			width: 100%;
+			padding: 25px 35px;
+
+			#header {
+				display: none;
+			}
+
+			#slogan {
+				display: none!important;
+			}
+		}
+
+		#data.sticky {
+			top: 95px;
 		}
 	}
 
 	#data {
-		z-index: 10;
 
 		table {
-			padding: 0 35px 0 35px;
 			top: 30px;
 			position: relative;
 		}
@@ -956,9 +949,23 @@ footer {
 }
 
 @media screen and ( max-width: 420px ){
-		#query {
-			#queryButtons {
-				padding: 0;
-			}
+	#query {
+		#queryButtons {
+			padding: 0;
 		}
+	}
+
+	.results {
+		#data {
+			padding: 0 25px;
+		}
+
+		#searchWrap.sticky {
+			padding: 25px;
+		}
+
+		footer {
+			padding: 12px 25px 12px 25px;
+		}
+	}
 }
