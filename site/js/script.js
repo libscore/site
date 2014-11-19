@@ -129,18 +129,18 @@ $data_scroll.one("mousedown", function() {
 var UI = {
 	loading: false,
 	showCount: function() {
-		$.Velocity.RunSequence([
-			{ elements: $bigCount, properties: { color: "#2eca3f" }, options: { duration: 1 } },
-			{ elements: $bigCount, properties: "transition.vanishBottomIn", options: { duration: 225 } },
-			{ elements: $bigCount, properties: "callout.flicker.text" },
-			{ elements: $bigCount, properties: { opacity: 0.05 }, options: { delay: 250, duration: 750 } },
-			{ elements: $bigCount, properties: { color: "#000000" }, options: { duration: 550 } }
-		]);
+		// $.Velocity.RunSequence([
+		// 	{ elements: $bigCount, properties: { color: "#2eca3f" }, options: { duration: 1 } },
+		// 	{ elements: $bigCount, properties: "transition.vanishBottomIn", options: { duration: 225 } },
+		// 	{ elements: $bigCount, properties: "callout.flicker.text" },
+		// 	{ elements: $bigCount, properties: { opacity: 0.05 }, options: { delay: 250, duration: 750 } },
+		// 	{ elements: $bigCount, properties: { color: "#000000" }, options: { duration: 550 } }
+		// ]);
 	},
 	hideCount: function() {
-		$.Velocity.RunSequence([
-			{ elements: $bigCount, properties: "transition.fadeOut", options: { duration: 575 } }
-		]);
+		// $.Velocity.RunSequence([
+		// 	{ elements: $bigCount, properties: "transition.fadeOut", options: { duration: 575 } }
+		// ]);
 	},
 	error: function() {
 		$search.addClass('error');
@@ -391,7 +391,7 @@ var UI = {
 
 			switch (UI.requestTarget) {
 				case "lib":
-					$bigCount.html(prettifyNumber(response.count));
+					// $bigCount.html(prettifyNumber(response.count));
 					UI.showCount();
 					break;
 
