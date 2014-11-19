@@ -257,6 +257,7 @@ body {
   border-radius: 3px;
   border-top: 1px solid #F1F1F1;
   margin: 125px 0 0;
+  opacity: 0;
   transition: all 0.65s cubic-bezier(0.5, -0.035, 0.24, 1); }
   #howTo p {
     margin-bottom: 30px;
