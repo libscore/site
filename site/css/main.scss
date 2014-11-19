@@ -87,36 +87,23 @@ strong {
 a, a:visited {
 	cursor: pointer;
 	color: inherit;
-
 	text-decoration: none;
-
-	// &:hover {
-	// 	@extend .text-blue-dark;
-	// }
-
-	// &:active {
-	// 	@extend .text-blue-dark;
-	// }
 }
 
 [data-query] {
 	display: inline-block;
 	transition: background-color 75ms;
 	cursor: pointer;
-
-	// &:hover {
-	// 	@extend .background-green;
-	// }
 }
 
 input {
-	transition: border 400ms;
 	width: 100%;
 	padding: 18px 20px 14px 20px;
 	border: 1px solid #E0E0E0;
 	border-radius: 2px;
 	color: #4D4D4D;
 	font-size: 19px;
+	@include custom-bezier(all, 1500ms);
 
 	&:focus {
 		border-color: #d5d5d5;
@@ -125,6 +112,10 @@ input {
 	&:focus, &:hover {
 		outline: none;
 	}
+}
+
+#search.error {
+	border: 2px solid #F18B8B;
 }
 
 ::-webkit-input-placeholder {
@@ -582,10 +573,11 @@ footer {
 }
 
 #subscribe_ {
-	position: fixed !important;
-	top: 25px;
-	right: 25px;
-	width: 210px;
+	position: absolute !important;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	padding: 35px;
 
 	#subscribe {
 		width: 100%;
@@ -829,6 +821,11 @@ footer {
 
 
 @media screen and ( max-width: 850px ){
+
+	#subscribe_ {
+		display: none!important;
+	}
+
 	.results {
 		overflow-y: scroll;
 
@@ -872,6 +869,7 @@ footer {
 			position: relative;
 			top: auto;
 			bottom: auto;
+			z-index: 100;
 		}
 
 		#searchWrap.sticky {
@@ -880,6 +878,9 @@ footer {
 			top: 0;
 			width: 100%;
 			padding: 25px 35px;
+			box-shadow: 0 1px 7px rgba(104, 104, 104, 0.16);
+			z-index: 101;
+			transition: none;
 
 			#header {
 				display: none;
@@ -892,6 +893,7 @@ footer {
 
 		#data.sticky {
 			top: 95px;
+			transition: none;
 		}
 	}
 

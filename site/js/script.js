@@ -39,8 +39,6 @@ var hiddenVariableGroups = /^(Goog_.+|G(A|S)_google.+|WebForm_.+|WR[A-z]{1,2}|Cl
 
 var $html = $("html"),
 	$body = $("body"),
-	$bigError = $("#body-bigError"),
-	$bigCount = $("#body-bigCount"),
 	$header_code = $("#header-code"),
 	$header_code_object = $("#header-code-object"),
 	$header_code_property = $("#header-code-property"),
@@ -145,17 +143,16 @@ var UI = {
 		]);
 	},
 	error: function() {
-		$body.velocity("stop", true);
+		$search.addClass('error');
 
 		$.Velocity.RunSequence([
-			{ elements: $bigError, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 225 } },
-			{ elements: $bigError, properties: "transition.fadeOut", options: { duration: 300 } },
+			{ elements: $search_, properties: "callout.shake", options: { delay: 800, duration: 450, sequenceQueue: false } }
 		]);
 	},
 	query: function() {
 		var data = $search.val();
-
-    $("body").addClass("results");
+		$search.removeClass('error');
+    $body.addClass("results");
 
 		(function indicator () {
 			var symbols = [ "□","◅","◇","○" ];
@@ -192,7 +189,6 @@ var UI = {
 			if ($("body").hasClass("results")) {
         window.location.hash = '';
         $("body").removeClass("results");
-        // if table has contents, lets clear it.
 				$( "table" ).empty();
 			}
 		});
@@ -529,5 +525,8 @@ $(window).on('scroll', function() {
 		if(scrollTop > distance){
 			$("#searchWrap").addClass("sticky");
 			$("#data").addClass("sticky");
+		} else {
+			$("#searchWrap").removeClass("sticky");
+			$("#data").removeClass("sticky");
 		}
 });
