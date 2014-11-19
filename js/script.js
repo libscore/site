@@ -148,37 +148,14 @@ var UI = {
 		$body.velocity("stop", true);
 
 		$.Velocity.RunSequence([
-			{ elements: $search_, properties: "callout.shake", options: { duration: 375, sequenceQueue: false } },
-			{ elements: $body, properties: { borderColor: "#ff0000" }, options: { sequenceQueue: false, duration: 400 } },
 			{ elements: $bigError, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 225 } },
 			{ elements: $bigError, properties: "transition.fadeOut", options: { duration: 300 } },
-			{ elements: $body, properties: "reverse", options: { sequenceQueue: false, duration: 500 } }
 		]);
 	},
 	query: function() {
-
-		//alert("happening!");
-		// $("body").addClass("results");
-
 		var data = $search.val();
 
-		if (!$("body").hasClass("results")) {
-			$searchWrap.velocity({
-			    properties: "transition.slideDownBigOut", options: {duration: 250}
-			});
-
-			// this is a hack, need to figure out proper callback
-			setTimeout(function(){
-				$("body").addClass("results");
-			}, 600)
-
-			$.Velocity.RunSequence([
-				{ elements: $footer, properties: "transition.fadeOut", options: { duration: 500}},
-				{ elements: $body, properties: { backgroundColor: "#F7F7F7" }, options: { sequenceQueue: false, duration: 400}},
-				{ elements: $searchWrap, properties: "transition.slideLeftBigIn", options: { delay: 600, duration: 250}},
-				{ elements: $footer, properties: "transition.fadeIn", options: { duration: 500}}
-			]);
-		}
+    $("body").addClass("results");
 
 		(function indicator () {
 			var symbols = [ "□","◅","◇","○" ];
@@ -202,13 +179,6 @@ var UI = {
 
 							if (UI.loading === false) {
 
-								$search
-									.velocity({ scaleX: [ "100%", "easeInOutCirc" ], opacity: [ 1, "linear" ] }, { sequenceQueue: false, duration: 350 });
-
-								$.Velocity.RunSequence([
-									{ elements: $body, properties: { borderColor: "#000" }, options: { queue: false } },
-									{ elements: $sectionHeader_search, properties: { opacity: 1 }, options: { duration: 700 } }
-								]);
 							} else if (index === symbols.length - 1) {
 								indicator();
 							}
@@ -219,22 +189,12 @@ var UI = {
 		})();
 
 		$("#header-logo").on("click", function (){
-
 			if ($("body").hasClass("results")) {
-
-				setTimeout(function(){
-					$("body").removeClass("results");
-				}, 500);
-
-				$.Velocity.RunSequence([
-					{ elements: $footer, properties: "transition.fadeOut", options: { duration: 500}},
-					{ elements: $searchWrap, properties: "transition.slideLeftBigOut", options: { sequenceQueue: false, duration: 250}},
-					{ elements: $body, properties: { backgroundColor: "#FFFFFF" }, options: { sequenceQueue: false, duration: 400}},
-					{ elements: $footer, properties: "transition.fadeIn", options: { duration: 500}},
-					{ elements: $searchWrap, properties: "transition.slideUpBigIn", options: { delay: 300, duration: 250}}
-				]);
+        window.location.hash = '';
+        $("body").removeClass("results");
+        // if table has contents, lets clear it.
+				$( "table" ).empty();
 			}
-
 		});
 
 		function request (query, callback) {
@@ -256,11 +216,15 @@ var UI = {
 					complete: function() {
 						UI.loading = false;
 						$html.css("cursor", "default");
-						
 					},
 					success: function (response) {
 						if (response && response.meta) {
-							callback(response);
+							
+							// this is a hack to ensure that the animation completes before data returns - need Julians help
+							setTimeout(function(){
+								callback(response);
+							}, 1300);
+							
 						} else {
 							UI.error();
 						}
@@ -281,8 +245,10 @@ var UI = {
 
 				query = "jQuery";
 			}
+
 			$search.val(query);
-			window.location.hash = query;
+			// disabling this for dev
+			//window.location.hash = query;
 
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
 				queryNormalized = "site";
@@ -361,6 +327,7 @@ var UI = {
 		var matches;
 
 		request(data, function(response) {
+
 			var $html = "";
 			var $columns;
 
@@ -448,12 +415,12 @@ var UI = {
 				$data_table.html("<tr><td class='text-red'>No libraries or scripts were detected on this site.</td><td class='text-red'>Ø</td></tr>");
 			}
 
+			//note: because the table is so large, it does not have a clean animation. At 50000px height, how can we fade this in nicely. Julian Help
 			$.Velocity.RunSequence([
-				{ elements: $data_cols.find("div"), properties: "transition.glitchIn" },
-				{ elements: $data_table, properties: "transition.vanishBottomIn", options: { 
+				{ elements: $data_cols.find("div"), properties: "transition.fadeIn", options: { duration: 1000} },
+				{ elements: $data_table, properties: "transition.fadeIn", options: { 
 					sequenceQueue: false,
-					display: "block",
-					duration: 475,
+					duration: 1200,
 					complete: function() {
 						if ($data_table[0].scrollHeight > $data_table.height()) {
 							$data_scroll
@@ -502,15 +469,15 @@ $("input").on("keydown", function(event) {
 **************/
 
 // $.Velocity.hook($footer, "translateX", "-50%");
-$.Velocity.hook($bigCount, "translateX", "-50%");
+//$.Velocity.hook($bigCount, "translateX", "-50%");
 
 $(window).load(function() {
 	$.Velocity.RunSequence([
-		{ elements: $header_logo, properties: "transition.fadeIn", options: { delay: 100, duration: 600} },
+		{ elements: $header_logo, properties: "transition.fadeIn", options: { delay: 100, duration: 800} },
 		{ elements: $slogan, properties: "transition.fadeIn", options: { delay: 400, duration: 725, sequenceQueue: false } },
 		{ elements: $search_, properties: "transition.clipBottomIn", options: { duration: 725, sequenceQueue: false } },
-		{ elements: $queryButtons, properties: "transition.slideUpIn", options: { duration: 300, stagger: 125 } },
-		{ elements: $howTo, properties: "transition.clipBottomIn", options: { delay: 500, duration: 900, sequenceQueue: false } },
+		{ elements: $queryButtons, properties: "transition.fadeIn", options: { delay: 200, duration: 300, stagger: 125, sequenceQueue: false  } },
+		{ elements: $howTo, properties: "transition.clipBottomIn", options: { delay: 150, duration: 900, sequenceQueue: false } },
 		{ elements: $header_logo_o, properties: { opacity: [ 0.6, 1 ] }, options: { sequenceQueue: false, duration: 500, loop: 2 } },
 		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 500, begin: 
 			function() {
@@ -553,20 +520,14 @@ $(window).load(function() {
 	]);
 });
 
-
+//this is for mobile, to add header class of sticky. Doesnt matter on large screens as the class is media query controlled
 $(window).on('scroll', function() {
-
 	var scrollTop     = $(window).scrollTop(),
     elementOffset = $('#query').offset().top + 65,
     distance      = (elementOffset - scrollTop);
 
 		if(scrollTop > distance){
-			console.log("over!");
 			$("#searchWrap").addClass("sticky");
 			$("#data").addClass("sticky");
 		}
 });
-
-
-
-
