@@ -25,7 +25,7 @@
 .text-green, #body-bigCount, #query #queryButtons span:hover p, #data #data_cols div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
   color: #29bd66; }
 
-.background-green {
+.background-green, #data #data_cols div a:hover {
   background-color: #29bd66; }
 
 .text-grey, #data .accent {
@@ -44,6 +44,8 @@
   display: none; }
 
 * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
 ::selection {
@@ -271,6 +273,9 @@ body {
     #howTo p:last-child {
       margin-bottom: 0; }
 
+#data.show {
+  opacity: 1; }
+
 #data {
   font-size: 13px;
   z-index: -1;
@@ -280,28 +285,46 @@ body {
   width: 100%;
   transition: all 250ms;
   height: 100%;
-  padding: 0 100px 0 500px;
+  padding: 0 80px 0 480px;
   opacity: 0;
   top: 90px; }
-@-moz-document url-prefix() {
-  #data {
-    /* This is to space out the Firefox scrollbar. */
-    padding-right: 0.65rem; } }
   #data #data_cols {
     position: fixed;
     width: 100%;
     left: 0;
     top: 53px; }
+    #data #data_cols h3.middle {
+      position: absolute;
+      font-family: "Avenir Medium";
+      letter-spacing: 0;
+      text-transform: uppercase;
+      font-size: 19px;
+      color: #2E2E2E;
+      top: -2px;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      padding: 0 0 0 400px;
+      text-align: center;
+      z-index: 0;
+      text-transform: none; }
+      #data #data_cols h3.middle span {
+        color: #C4C4C4;
+        font-size: 18px;
+        text-transform: uppercase;
+        position: relative;
+        top: 1px; }
     #data #data_cols div {
       position: absolute;
-      left: 500px;
+      left: 480px;
       font-family: "Avenir Black";
       letter-spacing: 0.05rem;
       text-transform: uppercase;
       font-size: 18px;
-      opacity: 0; }
+      opacity: 0;
+      z-index: 1; }
       #data #data_cols div:nth-child(even) {
-        right: 100px;
+        right: 80px;
         left: auto; }
       #data #data_cols div a {
         display: inline-block;
@@ -309,12 +332,14 @@ body {
         top: -3px;
         left: 3px;
         padding: 5px 8px;
-        color: #9D9D9D;
         font-size: 7px;
         border-radius: 14px;
-        border: 1px solid #E0E0E0; }
+        transition: all 200ms;
+        color: #8D8D8D;
+        border: 1px solid #B1B1B1; }
         #data #data_cols div a:hover {
-          border-color: #c7c7c7; }
+          color: white;
+          border: 1px solid #29BD66; }
   #data table {
     position: relative;
     overflow-y: scroll;
@@ -385,7 +410,7 @@ footer {
   text-align: center;
   font-family: "Avenir Medium";
   font-size: 0.6rem;
-  z-index: 14;
+  z-index: 1000;
   transition: all 0.4s cubic-bezier(0.5, -0.035, 0.24, 1); }
   footer img {
     width: 100px;
@@ -462,7 +487,7 @@ footer {
     background-color: white;
     z-index: 13; }
   .results footer {
-    padding: 12px 100px 12px 500px; }
+    padding: 12px 80px 12px 480px; }
     .results footer #authors {
       left: 500px; }
     .results footer #sponsors {
@@ -492,8 +517,7 @@ footer {
       padding: 0; }
   .results #data {
     bottom: 50px;
-    height: auto;
-    opacity: 1; }
+    height: auto; }
   .results #searchSymbols {
     visibility: visible; }
 
@@ -515,6 +539,9 @@ footer {
 
   #header {
     margin-top: 90px; } }
+@media screen and (max-height: 770px) {
+  #subscribe_ {
+    display: none !important; } }
 @media screen and (max-height: 735px) {
   #howTo {
     margin-top: 70px; }
@@ -533,6 +560,9 @@ footer {
 
   .results footer {
     padding: 12px 70px 12px 470px; } }
+@media screen and (max-width: 1140px) {
+  #data #data_cols h3.middle {
+    display: none; } }
 @media screen and (max-width: 1050px) {
   #data {
     padding: 0 40px 0 440px; }

@@ -153,7 +153,10 @@ var UI = {
 		var data = $search.val();
 		$search.removeClass('error');
     $body.addClass("results");
-
+    setTimeout(function(){
+    	$data.addClass("show");
+    }, 800);
+    
 		(function indicator () {
 			var symbols = [ "□","◅","◇","○" ];
 
@@ -217,10 +220,11 @@ var UI = {
 						if (response && response.meta) {
 							
 							// this is a hack to ensure that the animation completes before data returns - need Julians help
-							setTimeout(function(){
-								callback(response);
-							}, 1300);
-							
+							// setTimeout(function(){
+							// 	callback(response);
+							// }, 1300);
+							callback(response);
+
 						} else {
 							UI.error();
 						}
@@ -341,7 +345,7 @@ var UI = {
 
 				switch (UI.requestTarget) {
 					case "site":
-						$columns = "<div>library</div><div>site count</div>";
+						$columns = "<h3 class='middle'><span>Site: </span> " + data + " </h3><div>library</div>" + data + "<div>site count</div>";
 
 						var isScript = /^script:/.test(match.name);
 
@@ -356,31 +360,31 @@ var UI = {
 						break
 
 					case "sites":
-						$columns = "<div>site</div><div>site rank</div>";
+						$columns = "<h3 class='middle'><span>Top Sites</span></h3><div>site</div><div>site rank</div>";
 						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'>→</span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "lib":
-						$columns = "<div><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div>site rank</div>";
+						$columns = "<h3 class='middle'><span>Library: </span> " + data + " </h3><div><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⬈</span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "libs":
-						$columns = "<div>library <a href='https://107.170.240.125/libraries.txt'>Download list</a></div><div>site count</div>";
+						$columns = "<h3 class='middle'><span>Top Libs</span></h3><div>library <a href='https://107.170.240.125/libraries.txt'>Download list</a></div><div>site count</div>";
 						$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.library) + " <span class='text-blue'>" + (match.github ? "⬈" : "<span class='hint' data-hint='Click to help track down this library.'>?</span>") + "</span></a>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
 
 					case "script":
-						$columns = "<div>" + prettifyNumber(response.count) + " sites</div><div>site rank</div>";
+						$columns = "<h3 class='middle'><span>Script: </span> " + data + " </h3><div>" + prettifyNumber(response.count) + " sites</div><div>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⬈</span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "scripts":
-						$columns = "<div>script</div><div>site count</div>";
+						$columns = "<h3 class='middle'><span>Top Scripts</span></h3><div>script</div><div>site count</div>";
 						$matchData = "<td><span data-query='script:" + match.script + "'>" + prettifyName(match.script) + "</span> <span class='text-green'>→</span></td>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
