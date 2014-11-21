@@ -22,7 +22,7 @@
 .background-blue {
   background-color: #0b8fb2; }
 
-.text-green, #body-bigCount, #query #queryButtons span:hover p, #data #data_cols div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
+.text-green, #body-bigCount, #query #queryButtons span:hover p, #data #data_cols div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover, .charts #header #header-logo o {
   color: #29bd66; }
 
 .background-green, #data #data_cols div a:hover {
@@ -377,7 +377,7 @@ body {
       display: inline-block;
       top: -2px;
       position: relative; }
-    #data table .text-green, #data table #body-bigCount, #data table #query #queryButtons span:hover p, #query #queryButtons span:hover #data table p, #data table #data_cols div, #data #data_cols table div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
+    #data table .text-green, #data table #body-bigCount, #data table #query #queryButtons span:hover p, #query #queryButtons span:hover #data table p, #data table #data_cols div, #data #data_cols table div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover, #data table .charts #header #header-logo o, .charts #header #header-logo #data table o {
       font-size: 22px;
       position: relative;
       top: 1px; }
@@ -531,6 +531,77 @@ footer {
   display: none; }
 
 /***************
+  Charts
+***************/
+.charts {
+  background-color: #F7F7F7; }
+  .charts #header {
+    padding: 0;
+    margin: 22px 0 30px 0; }
+    .charts #header #header-logo {
+      margin: 0; }
+
+#chartWrap {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: white;
+  padding: 40px;
+  position: relative; }
+
+.holder-parent {
+  position: relative;
+  width: 45%;
+  float: left; }
+  .holder-parent h4 {
+    font-size: 20px;
+    text-align: center;
+    line-height: 1.3;
+    font-weight: normal;
+    font-family: "Avenir Medium";
+    margin: 0; }
+  .holder-parent .holder {
+    margin-top: 25px; }
+    .holder-parent .holder canvas {
+      width: 100% !important;
+      height: auto !important; }
+  .holder-parent .legend {
+    position: absolute;
+    top: 50px;
+    right: -50px;
+    border: 3px solid #f1f1f1;
+    padding: 10px 0;
+    list-style: none;
+    margin: 0;
+    border-radius: 3px;
+    background: white; }
+    .holder-parent .legend li {
+      margin: 0;
+      padding: 6px 35px 6px 20px;
+      font-size: 14px;
+      cursor: pointer; }
+      .holder-parent .legend li:hover {
+        background-color: #FAFAFA; }
+      .holder-parent .legend li span {
+        width: 10px;
+        height: 10px;
+        border-radius: 6px;
+        display: block;
+        float: left;
+        margin-right: 7px;
+        position: relative;
+        top: 2px; }
+        .holder-parent .legend li span:after {
+          content: "";
+          position: absolute;
+          width: 4px;
+          height: 4px;
+          border-radius: 2px;
+          background-color: white;
+          left: 3px;
+          top: 3px; }
+
+/***************
   Media Queries
 ***************/
 @media screen and (max-height: 850px) {
@@ -581,7 +652,7 @@ footer {
           font-size: 16px; }
         #data table td:nth-child(odd) {
           width: 75%; }
-        #data table td .text-green, #data table td #body-bigCount, #data table td #query #queryButtons span:hover p, #query #queryButtons span:hover #data table td p, #data table td #data_cols div, #data #data_cols table td div, #data table td .text-blue, #data table td #header #header-code #header-code-property:hover, #data table #header #header-code td #header-code-property:hover, #header #header-code #data table td #header-code-property:hover {
+        #data table td .text-green, #data table td #body-bigCount, #data table td #query #queryButtons span:hover p, #query #queryButtons span:hover #data table td p, #data table td #data_cols div, #data #data_cols table td div, #data table td .text-blue, #data table td #header #header-code #header-code-property:hover, #data table #header #header-code td #header-code-property:hover, #header #header-code #data table td #header-code-property:hover, #data table td .charts #header #header-logo o, .charts #header #header-logo #data table td o {
           font-size: 18px; }
     #data #data_cols div {
       left: 440px; }
