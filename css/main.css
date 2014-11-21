@@ -548,7 +548,7 @@ footer {
       margin: 0; }
 
 #chartWrap {
-  max-width: 1100px;
+  max-width: 800px;
   width: 100%;
   margin: 0 auto;
   position: relative; }
@@ -556,14 +556,17 @@ footer {
     background: #FFF;
     float: left;
     width: 100%;
-    padding: 40px; }
+    padding: 40px 0 0 0; }
 
 .holder-parent {
   position: relative;
-  width: 45%;
-  float: left; }
-  .holder-parent:nth-child(2n+2) {
-    margin-right: 10%; }
+  width: 100%;
+  float: left;
+  border-bottom: 1px solid #F1F1F1;
+  margin-bottom: 41px;
+  padding-bottom: 45px; }
+  .holder-parent:last-child {
+    border: 0; }
   .holder-parent h4 {
     font-size: 20px;
     text-align: center;
@@ -572,25 +575,23 @@ footer {
     font-family: "Avenir Medium";
     margin: 0; }
   .holder-parent .holder {
-    width: 280px;
-    margin-top: 25px; }
+    width: 50%;
+    margin-top: 35px; }
     .holder-parent .holder canvas {
-      width: 100% !important;
-      height: auto !important; }
-  .holder-parent .legend.show {
-    opacity: 1; }
+      margin: 0 auto;
+      display: block; }
   .holder-parent .legend {
     position: absolute;
-    top: 50%;
-    right: -34px;
+    top: 0;
+    right: 55px;
     border: 3px solid #F1F1F1;
     padding: 12px 0 8px 0;
     list-style: none;
-    margin: -82px 0 0 0;
+    margin: 70px 0 0 0;
     border-radius: 3px;
     background: #FFF;
-    opacity: 0;
-    transition: all 800ms; }
+    transition: all 800ms;
+    width: 43%; }
     .holder-parent .legend li {
       margin: 0;
       padding: 6px 25px 6px 20px;
