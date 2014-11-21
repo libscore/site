@@ -524,7 +524,7 @@ footer {
 /***************
     Initial
 ***************/
-#header-code, #header-logo, #subscribe, #slogan, #queryButtons span {
+#header-code, #header-logo, #subscribe, #slogan, #queryButtons span, #header h1 {
   opacity: 0; }
 
 #body-bigError, #body-bigCount, #howTo, #subSlogan, #search_, .data_more, #data_scroll, #subscribe_ {
@@ -538,6 +538,12 @@ footer {
   .charts #header {
     padding: 0;
     margin: 22px 0 30px 0; }
+    .charts #header h1 {
+      margin: -2px 0 0 0;
+      font-size: 13px;
+      font-family: "Avenir Medium";
+      letter-spacing: 0.8px;
+      color: #ACACAC; }
     .charts #header #header-logo {
       margin: 0; }
 
@@ -556,6 +562,8 @@ footer {
   position: relative;
   width: 45%;
   float: left; }
+  .holder-parent:nth-child(2n+2) {
+    margin-right: 10%; }
   .holder-parent h4 {
     font-size: 20px;
     text-align: center;
@@ -569,6 +577,8 @@ footer {
     .holder-parent .holder canvas {
       width: 100% !important;
       height: auto !important; }
+  .holder-parent .legend.show {
+    opacity: 1; }
   .holder-parent .legend {
     position: absolute;
     top: 50%;
@@ -578,7 +588,9 @@ footer {
     list-style: none;
     margin: -82px 0 0 0;
     border-radius: 3px;
-    background: #FFF; }
+    background: #FFF;
+    opacity: 0;
+    transition: all 800ms; }
     .holder-parent .legend li {
       margin: 0;
       padding: 6px 25px 6px 20px;
