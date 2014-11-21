@@ -71,7 +71,8 @@
       tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%",
       animateRotate: true,
       animation: false,
-      legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+      percentageInnerCutout : 25,
+      legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%><p><%=segments[i].value%>%</p></li><%}%></ul>"
 
   });
 

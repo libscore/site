@@ -765,9 +765,14 @@ footer {
 	max-width: 1100px;
 	width: 100%;
 	margin: 0 auto;
-	background-color: white;
-	padding: 40px;
 	position: relative;
+
+	#innerChart {
+		background: #FFF;
+		float: left;
+		width: 100%;
+		padding: 40px;
+	}
 }
 
 .holder-parent {
@@ -785,7 +790,7 @@ footer {
 	}
 
 	.holder {
-		// padding-right: 205px;
+		width: 280px;
 		margin-top: 25px;
 
 		canvas {
@@ -796,23 +801,31 @@ footer {
 
 	.legend {
 		position: absolute;
-		top: 50px;
-		right: -50px;
-		border: 3px solid #f1f1f1;
-		padding: 10px 0;
+		top: 50%;
+		right: -34px;
+		border: 3px solid #F1F1F1;
+		padding: 12px 0 8px 0;
 		list-style: none;
-		margin: 0;
+		margin: -82px 0 0 0;
 		border-radius: 3px;
-		background: white;
+		background: #FFF;
 
 		li {
 			margin: 0;
-			padding: 6px 35px 6px 20px;
+			padding: 6px 25px 6px 20px;
 			font-size: 14px;
 			cursor: pointer;
 
 			&:hover {
 				background-color: #FAFAFA;
+			}
+
+			p {
+				color: #B8B8B8;
+				margin: 0 0 0 20px;
+				float: right;
+				display: inline;
+				font-family: "Avenir Medium";
 			}
 
 			span {
