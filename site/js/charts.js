@@ -123,11 +123,6 @@
       animation: true,
       animationSteps : 60,
       animationEasing : "easeOutQuad",
-      onAnimationComplete: function(){
-        setTimeout(function(){
-          $(".legend").addClass('show');
-        }, 200);
-      },
       percentageInnerCutout : 25,
       legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%><p><%=segments[i].value%>%</p></li><%}%></ul>"
   });
@@ -158,11 +153,6 @@
       animation: true,
       animationSteps : 60,
       animationEasing : "easeOutQuad",
-      onAnimationComplete: function(){
-        setTimeout(function(){
-          $(".legend").addClass('show');
-        }, 200);
-      },
       percentageInnerCutout : 25,
       legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%><p><%=segments[i].value%>%</p></li><%}%></ul>"
   });
