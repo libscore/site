@@ -130,10 +130,10 @@ var UI = {
 	query: function() {
 		var data = $search.val();
 		$search.removeClass('error');
-	    $body.addClass("results");
-	    setTimeout(function(){
-	    	$data.addClass("show");
-	    }, 800);
+	  $body.addClass("results");
+    setTimeout(function(){
+    	$data.addClass("show");
+    }, 800);
 
 		// (function indicator () {
 		// 	var symbols = [ "□","◅","◇","○" ];
@@ -169,8 +169,8 @@ var UI = {
 		$("#header-logo").on("click", function (){
 			if ($("body").hasClass("results")) {
         window.location.hash = '';
-        $("body").removeClass("results");
-				$( "table" ).empty();
+        $body.removeClass("results");
+				$data_table.empty();
 				$data_cols.removeClass("show");
 			}
 		});
@@ -197,9 +197,8 @@ var UI = {
 					},
 					success: function (response) {
 						if (response && response.meta) {
-							
-							callback(response);
 
+							callback(response);
 							$data_table.addClass('show');
 							$data_cols.addClass("show");
 
@@ -424,9 +423,6 @@ $("input").on("keydown", function(event) {
 /**************
      Init
 **************/
-
-// $.Velocity.hook($footer, "translateX", "-50%");
-//$.Velocity.hook($bigCount, "translateX", "-50%");
 
 $(window).load(function() {
 	$.Velocity.RunSequence([
