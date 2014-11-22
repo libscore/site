@@ -151,7 +151,6 @@ body {
 	-moz-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
   -webkit-backface-visibility: hidden;
-  overflow: hidden;
 }
 
 #body-bigError {
@@ -392,11 +391,17 @@ body {
 	opacity: 0;
 	top: 90px;
 
+  #data_cols.show {
+    opacity: 1;
+  }
+
 	#data_cols {
 		position: fixed;
 		width: 100%;
 		left: 0;
 		top: 53px;
+    opacity: 0;
+    transition: all 400ms ease-in-out;
 
 		h3.middle {
 			position: absolute;
@@ -423,6 +428,7 @@ body {
 			}
 		}
 
+
 		div {
 			position: absolute;
 			left: 480px;
@@ -431,7 +437,6 @@ body {
 			text-transform: uppercase;
 			@extend .text-green;
 			font-size: 18px;
-			opacity: 0;
 			z-index: 1;
 
 			&:nth-child(even) {
@@ -460,6 +465,10 @@ body {
 		}
 	} 
 
+  table.show {
+    opacity: 1!important;
+  }
+
 	table {
 		position: relative;
 		overflow-y: scroll;
@@ -467,6 +476,8 @@ body {
 		font-size: 26px;
 		width: 100%;
 		padding: 0;
+    opacity: 0;
+    transition: all 1000ms;
 
 		tbody {
 			display: table;
@@ -475,7 +486,6 @@ body {
 
 		td {
 			padding: 15px 0 11px 0;
-			transition: padding 200ms;
 
 			&:nth-child(odd) {
 				letter-spacing: 0.03rem;
@@ -494,13 +504,12 @@ body {
 
 		tr {
 			border-bottom: 1px solid #EFEFEF;
-			transition: all 75ms;
 
 			&:hover {
 				background-color: #f2f2f2;
 
 				td {
-					padding: 15px 13px 11px 13px;
+					padding: 15px 13px 11px 10px;
 				}
 			}
 		}
