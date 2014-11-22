@@ -68,11 +68,6 @@ var $html = $("html"),
     Global
 **************/
 
-$(window).on("mousewheel", function(event) {
-	$data_table[0].scrollTop += event.originalEvent.deltaY / 2;
-	$data_scroll.filter(":visible").velocity("transition.fadeOut");
-});
-
 $body.on("mousedown", function(event) {
 	var target = event.target,
 		dataQuery = target.getAttribute("data-query");
@@ -98,8 +93,6 @@ $body.on("mousedown", function(event) {
 				}, j * (18 - Math.min(12, query.length)) * 3);
 			})(i);
 		}
-
-		$.Velocity(target, "callout.pulse", 250);
 	}
 });
 
@@ -117,11 +110,6 @@ $subscribe.one("mouseup", function() {
 		.select();
 });
 
-$data_scroll.one("mousedown", function() {
-	$data_table[0].scrollTop += 50;
-	$data_scroll.velocity("transition.slideDownBigOut");
-});
-
 /**************
       UI
 **************/
@@ -129,18 +117,8 @@ $data_scroll.one("mousedown", function() {
 var UI = {
 	loading: false,
 	showCount: function() {
-		// $.Velocity.RunSequence([
-		// 	{ elements: $bigCount, properties: { color: "#2eca3f" }, options: { duration: 1 } },
-		// 	{ elements: $bigCount, properties: "transition.vanishBottomIn", options: { duration: 225 } },
-		// 	{ elements: $bigCount, properties: "callout.flicker.text" },
-		// 	{ elements: $bigCount, properties: { opacity: 0.05 }, options: { delay: 250, duration: 750 } },
-		// 	{ elements: $bigCount, properties: { color: "#000000" }, options: { duration: 550 } }
-		// ]);
 	},
 	hideCount: function() {
-		// $.Velocity.RunSequence([
-		// 	{ elements: $bigCount, properties: "transition.fadeOut", options: { duration: 575 } }
-		// ]);
 	},
 	error: function() {
 		$search.addClass('error');
@@ -152,47 +130,48 @@ var UI = {
 	query: function() {
 		var data = $search.val();
 		$search.removeClass('error');
-    $body.addClass("results");
-    setTimeout(function(){
-    	$data.addClass("show");
-    }, 800);
-    
-		(function indicator () {
-			var symbols = [ "□","◅","◇","○" ];
+	    $body.addClass("results");
+	    setTimeout(function(){
+	    	$data.addClass("show");
+	    }, 800);
 
-			symbols.forEach(function(symbol, index) {
-				$.Velocity($searchSymbols, "reverse");
-				$.Velocity(
-					$searchSymbols,
-					{ 
-						opacity: [ 0, "easeInOutsine" ], 
-						color: "#29BD66",
-						scale: 2 - index/20
-					}, 
-					{ 
-						duration: 300,
-						easing: "linear",
-						begin: function() { 
-							$searchSymbols.html(symbol);
-						},
-						complete: function() {
+		// (function indicator () {
+		// 	var symbols = [ "□","◅","◇","○" ];
 
-							if (UI.loading === false) {
+		// 	symbols.forEach(function(symbol, index) {
+		// 		$.Velocity($searchSymbols, "reverse");
+		// 		$.Velocity(
+		// 			$searchSymbols,
+		// 			{ 
+		// 				opacity: [ 0, "easeInOutsine" ], 
+		// 				color: "#29BD66",
+		// 				scale: 2 - index/20
+		// 			}, 
+		// 			{ 
+		// 				duration: 300,
+		// 				easing: "linear",
+		// 				begin: function() { 
+		// 					$searchSymbols.html(symbol);
+		// 				},
+		// 				complete: function() {
 
-							} else if (index === symbols.length - 1) {
-								indicator();
-							}
-						}
-					}
-				);
-			});
-		})();
+		// 					if (UI.loading === false) {
+
+		// 					} else if (index === symbols.length - 1) {
+		// 						indicator();
+		// 					}
+		// 				}
+		// 			}
+		// 		);
+		// 	});
+		// })();
 
 		$("#header-logo").on("click", function (){
 			if ($("body").hasClass("results")) {
         window.location.hash = '';
         $("body").removeClass("results");
 				$( "table" ).empty();
+				$data_cols.removeClass("show");
 			}
 		});
 
@@ -219,11 +198,10 @@ var UI = {
 					success: function (response) {
 						if (response && response.meta) {
 							
-							// this is a hack to ensure that the animation completes before data returns - need Julians help
-							// setTimeout(function(){
-							// 	callback(response);
-							// }, 1300);
 							callback(response);
+
+							$data_table.addClass('show');
+							$data_cols.addClass("show");
 
 						} else {
 							UI.error();
@@ -248,7 +226,7 @@ var UI = {
 
 			$search.val(query);
 			// disabling this for dev
-			//window.location.hash = query;
+			window.location.hash = query;
 
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
 				queryNormalized = "site";
@@ -395,7 +373,6 @@ var UI = {
 
 			switch (UI.requestTarget) {
 				case "lib":
-					// $bigCount.html(prettifyNumber(response.count));
 					UI.showCount();
 					break;
 
@@ -415,29 +392,9 @@ var UI = {
 				$data_table.html("<tr><td class='text-red'>No libraries or scripts were detected on this site.</td><td class='text-red'>Ø</td></tr>");
 			}
 
-			//note: because the table is so large, it does not have a clean animation. At 50000px height, how can we fade this in nicely. Julian Help
-			$.Velocity.RunSequence([
-				{ elements: $data_cols.find("div"), properties: "transition.fadeIn", options: { duration: 1000} },
-				{ elements: $data_table, properties: "transition.fadeIn", options: { 
-					sequenceQueue: false,
-					duration: 1200,
-					complete: function() {
-						if ($data_table[0].scrollHeight > $data_table.height()) {
-							$data_scroll
-								.velocity("stop", true)
-								.velocity("transition.fadeIn", 850);
-
-							if (matches.length > 900) {
-								$data_table.append("<tr id='data_more'><td>Results after 1,000 are not shown. Query our <a href='https://github.com/julianshapiro/libscore'>API</a> for a complete list.</td><td></td></tr>");
-							}
-						} else {
-							$data_scroll.css("opacity", 0);
-						}
-					}
-				} },
-				{ elements: $subscribe_.filter(":hidden"), properties: "transition.glitchIn", options: { delay: 4500, duration: 300 } },
-				{ elements: $subscribe.filter(":hidden"), properties: "transition.glitchIn", options: { delay: 25, duration: 300 } }
-			]);
+			if (matches.length > 900) {
+				$data_table.append("<tr id='data_more'><td>Results after 1,000 are not shown. Query our <a href='https://github.com/julianshapiro/libscore'>API</a> for a complete list.</td><td></td></tr>");
+			}
 		});
 	}
 };
@@ -479,7 +436,8 @@ $(window).load(function() {
 		{ elements: $queryButtons, properties: "transition.fadeIn", options: { delay: 200, duration: 300, stagger: 125, sequenceQueue: false  } },
 		{ elements: $howTo, properties: "transition.clipBottomIn", options: { delay: 150, duration: 900, sequenceQueue: false } },
 		{ elements: $header_logo_o, properties: { opacity: [ 0.6, 1 ] }, options: { sequenceQueue: false, duration: 500, loop: 2 } },
-		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 500, begin: 
+		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 500
+			, begin: 
 			function() {
 					var hash = window.location.hash.slice(1);
 
@@ -520,17 +478,30 @@ $(window).load(function() {
 	]);
 });
 
-//this is for mobile, to add header class of sticky. Doesnt matter on large screens as the class is media query controlled
-$(window).on('scroll', function() {
+function stickyNav(){
 	var scrollTop     = $(window).scrollTop(),
-    elementOffset = $('#query').offset().top + 65,
-    distance      = (elementOffset - scrollTop);
+  elementOffset = $('#query').offset().top + 65,
+  distance      = (elementOffset - scrollTop);
 
-		if(scrollTop > distance){
-			$("#searchWrap").addClass("sticky");
-			$("#data").addClass("sticky");
-		} else {
-			$("#searchWrap").removeClass("sticky");
-			$("#data").removeClass("sticky");
-		}
+	if(scrollTop > distance){
+		$("#searchWrap").addClass("sticky");
+		$("#data").addClass("sticky");
+	} else {
+		$("#searchWrap").removeClass("sticky");
+		$("#data").removeClass("sticky");
+	}
+}
+
+if ($(window).width() < 850) {
+	$(window).on('scroll', function() {
+		stickyNav();
+	});
+}
+
+$(window).resize( function(e){
+  if ($(window).width() < 850) {
+		$(window).on('scroll', function() {
+			stickyNav();
+		});
+	}
 });

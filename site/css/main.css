@@ -116,8 +116,7 @@ body {
   font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-backface-visibility: hidden;
-  overflow: hidden; }
+  -webkit-backface-visibility: hidden; }
 
 #body-bigError {
   position: fixed;
@@ -288,11 +287,15 @@ body {
   padding: 0 80px 0 480px;
   opacity: 0;
   top: 90px; }
+  #data #data_cols.show {
+    opacity: 1; }
   #data #data_cols {
     position: fixed;
     width: 100%;
     left: 0;
-    top: 53px; }
+    top: 53px;
+    opacity: 0;
+    transition: all 400ms ease-in-out; }
     #data #data_cols h3.middle {
       position: absolute;
       font-family: "Avenir Medium";
@@ -321,7 +324,6 @@ body {
       letter-spacing: 0.05rem;
       text-transform: uppercase;
       font-size: 18px;
-      opacity: 0;
       z-index: 1; }
       #data #data_cols div:nth-child(even) {
         right: 80px;
@@ -340,19 +342,22 @@ body {
         #data #data_cols div a:hover {
           color: white;
           border: 1px solid #29BD66; }
+  #data table.show {
+    opacity: 1 !important; }
   #data table {
     position: relative;
     overflow-y: scroll;
     clear: both;
     font-size: 26px;
     width: 100%;
-    padding: 0; }
+    padding: 0;
+    opacity: 0;
+    transition: all 1000ms; }
     #data table tbody {
       display: table;
       width: 100%; }
     #data table td {
-      padding: 15px 0 11px 0;
-      transition: padding 200ms; }
+      padding: 15px 0 11px 0; }
       #data table td:nth-child(odd) {
         letter-spacing: 0.03rem; }
       #data table td:nth-child(even) {
@@ -362,12 +367,11 @@ body {
       #data table td [data-query] {
         border: none; }
     #data table tr {
-      border-bottom: 1px solid #EFEFEF;
-      transition: all 75ms; }
+      border-bottom: 1px solid #EFEFEF; }
       #data table tr:hover {
         background-color: #f2f2f2; }
         #data table tr:hover td {
-          padding: 15px 13px 11px 13px; }
+          padding: 15px 13px 11px 10px; }
     #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover {
       font-size: 15px;
       padding: 2px;
