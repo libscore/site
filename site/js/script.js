@@ -129,11 +129,7 @@ var UI = {
 	},
 	query: function() {
 		var data = $search.val();
-		$search.removeClass('error');
-	  $body.addClass("results");
-    setTimeout(function(){
-    	$data.addClass("show");
-    }, 800);
+		
 
 		$("#header-logo").on("click", function (){
 			if ($("body").hasClass("results")) {
@@ -155,11 +151,14 @@ var UI = {
 				queryNormalized;
 
 			function ajax(url) {
+				$search.removeClass('error');
 				UI.loading = true;
-				$html.css("cursor", "wait");
-				$searchSymbols.addClass("show");
 				$data_table.removeClass('show');
-
+				$data_cols.removeClass("show");
+				$body.addClass("results");
+				$searchSymbols.addClass("show");
+				$html.css("cursor", "wait");
+				
 				//giving a lag to let the animation complete
 				setTimeout(function(){
 					$.ajax({
@@ -183,7 +182,7 @@ var UI = {
 						},
 						error: UI.error
 					});
-				}, 600);
+				}, 700);
 			}
 
 			if (/\.js$/.test(query)) {
@@ -356,8 +355,7 @@ var UI = {
 			}
 
 			$data_table
-				.css("opacity", 0)
-				[0].scrollTop = 0;
+				.scrollTop = 0;
 
 			if ($html) {
 				$data_cols.html($columns);

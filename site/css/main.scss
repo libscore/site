@@ -419,11 +419,11 @@ body {
 	width: 100%;
 	transition: all 250ms;
 	padding: 0 80px 0 480px;
-	opacity: 0;
+	//opacity: 0;
 	top: 90px;
 	bottom: 50px;
 	height: auto;
-	display: none;
+	//display: none;
 
   #data_cols.show {
     opacity: 1;
@@ -500,7 +500,7 @@ body {
 	} 
 
   table.show {
-    opacity: 1!important;
+    opacity: 1;
   }
 
 	table {
@@ -511,7 +511,7 @@ body {
 		width: 100%;
 		padding: 0;
     opacity: 0;
-    transition: all 1000ms;
+    transition: all 500ms;
 
 		tbody {
 			display: table;
@@ -759,9 +759,9 @@ footer {
 		}
 	}
 
-	#data {
-		display: block;
-	}
+	// #data {
+	// 	display: block;
+	// }
 }
 
 /***************
