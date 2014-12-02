@@ -421,6 +421,9 @@ body {
 	padding: 0 80px 0 480px;
 	opacity: 0;
 	top: 90px;
+	bottom: 50px;
+	height: auto;
+	display: none;
 
   #data_cols.show {
     opacity: 1;
@@ -757,9 +760,7 @@ footer {
 	}
 
 	#data {
-		bottom: 50px;
-		height: auto;
-		// opacity: 1;
+		display: block;
 	}
 }
 
