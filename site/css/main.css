@@ -25,7 +25,7 @@
 .text-green, #body-bigCount, #query #queryButtons span:hover p, #data #data_cols div, #data table .text-blue, #data table #header #header-code #header-code-property:hover, #header #header-code #data table #header-code-property:hover, .charts #header #header-logo o {
   color: #29bd66; }
 
-.background-green, #data #data_cols div a:hover {
+.background-green, #searchSymbols, #data #data_cols div a:hover {
   background-color: #29bd66; }
 
 .text-grey, #data .accent {
@@ -40,9 +40,6 @@
 /********************
     Normalization
 ********************/
-::-webkit-scrollbar {
-  display: none; }
-
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -241,16 +238,38 @@ body {
       display: inline;
       transition: all 150ms; }
 
+@-webkit-keyframes pulseScaleOut {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0); }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: .5; } }
+@keyframes pulseScaleOut {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0); }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: .5; } }
 #searchSymbols {
   position: fixed;
-  margin-top: -156px;
-  margin-right: -230px;
+  margin-top: -60px;
+  margin-right: -210px;
   right: 50%;
   top: 50%;
-  font-size: 109px;
-  color: #79bd95;
   z-index: 15;
-  visibility: hidden; }
+  visibility: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  animation: pulseScaleOut .7s infinite ease-in-out;
+  -webkit-animation: pulseScaleOut .7s infinite ease-in-out; }
+
+#searchSymbols.show {
+  visibility: visible; }
 
 #howTo {
   margin-top: 200px;
@@ -283,7 +302,6 @@ body {
   overflow: scroll;
   width: 100%;
   transition: all 250ms;
-  height: 100%;
   padding: 0 80px 0 480px;
   opacity: 0;
   top: 90px; }
@@ -480,7 +498,7 @@ footer {
 .results {
   background: #F7F7F7; }
   .results #searchWrap {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: 400px;
@@ -522,8 +540,6 @@ footer {
   .results #data {
     bottom: 50px;
     height: auto; }
-  .results #searchSymbols {
-    visibility: visible; }
 
 /***************
     Initial
@@ -709,7 +725,8 @@ footer {
     .results #header {
       margin-top: 0; }
       .results #header #header-code {
-        right: 267px; }
+        right: 50%;
+        margin-right: -87px; }
     .results #howTo {
       display: none !important; }
     .results #slogan {
@@ -736,7 +753,8 @@ footer {
         display: none !important; }
     .results #data.sticky {
       top: 95px;
-      transition: none; }
+      transition: none;
+      padding-bottom: 80px; }
 
   #data table {
     top: 30px;
@@ -747,10 +765,7 @@ footer {
       right: 33px; }
 
   #searchSymbols {
-    margin-top: -156px;
-    margin-right: -50px;
-    right: 50%;
-    top: 50%; } }
+    margin-right: -20px; } }
 @media screen and (max-width: 650px) {
   #searchWrap {
     width: 100%;

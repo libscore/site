@@ -172,6 +172,7 @@ var UI = {
         $body.removeClass("results");
 				$data_table.empty();
 				$data_cols.removeClass("show");
+				$searchSymbols.removeClass("show");
 			}
 		});
 
@@ -187,21 +188,24 @@ var UI = {
 			function ajax(url) {
 				UI.loading = true;
 				$html.css("cursor", "wait");
+				$searchSymbols.addClass("show");
+				$data_table.removeClass('show');
 
 				$.ajax({
 					url: API.hostname + url,
 					dataType: "json",
 					complete: function() {
-						UI.loading = false;
+						// UI.loading = false;
+						$searchSymbols.removeClass("show");
 						$html.css("cursor", "default");
 					},
 					success: function (response) {
 						if (response && response.meta) {
 
+							$data.scrollTop(0);
 							callback(response);
 							$data_table.addClass('show');
 							$data_cols.addClass("show");
-
 						} else {
 							UI.error();
 						}

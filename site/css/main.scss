@@ -58,9 +58,9 @@
     Normalization
 ********************/
 
-::-webkit-scrollbar { 
-    display: none; 
-}
+// ::-webkit-scrollbar { 
+//     display: none; 
+// }
 
 * {
 	-webkit-box-sizing: border-box;
@@ -330,19 +330,51 @@ body {
 	}
 }
 
-#searchSymbols {
-	position: fixed;
-	margin-top: -156px;
-	margin-right: -230px;
-	right: 50%;
-	top: 50%;
-	font-size: 109px;
-	color: #79bd95;
-	z-index: 15;
-	visibility: hidden;
-	//display: none;
+@-webkit-keyframes pulseScaleOut {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0); 
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: .5; 
+  } 
 }
 
+@keyframes pulseScaleOut {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0); 
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: .5; 
+  } 
+}
+
+#searchSymbols {
+	position: fixed;
+  margin-top: -60px;
+  margin-right: -210px;
+  @extend .background-green;
+	right: 50%;
+	top: 50%;
+	z-index: 15;
+	visibility: hidden;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  animation: pulseScaleOut .7s infinite ease-in-out;
+  -webkit-animation: pulseScaleOut .7s infinite ease-in-out;
+}
+
+#searchSymbols.show {
+  visibility: visible;
+}
 
 #howTo {
 	margin-top: 200px;
@@ -386,7 +418,6 @@ body {
 	overflow: scroll;
 	width: 100%;
 	transition: all 250ms;
-	height: 100%;
 	padding: 0 80px 0 480px;
 	opacity: 0;
 	top: 90px;
@@ -658,7 +689,7 @@ footer {
 	background: #F7F7F7;
 
 	#searchWrap {
-		position: absolute;
+		position: fixed;
 		left: 0;
 		top: 0;
 		width: 400px;
@@ -729,10 +760,6 @@ footer {
 		bottom: 50px;
 		height: auto;
 		// opacity: 1;
-	}
-
-	#searchSymbols {
-		visibility: visible;
 	}
 }
 
@@ -1042,7 +1069,8 @@ footer {
 			margin-top: 0;
 
 			#header-code {
-				right: 267px;
+				right: 50%;
+        margin-right: -87px;
 			}
 		}
 
@@ -1085,6 +1113,7 @@ footer {
 		#data.sticky {
 			top: 95px;
 			transition: none;
+      padding-bottom: 80px;
 		}
 	}
 
@@ -1107,10 +1136,7 @@ footer {
 	}
 
 	#searchSymbols {
-		margin-top: -156px;
-		margin-right: -50px;
-		right: 50%;
-		top: 50%;
+		margin-right: -20px;
 	}
 
 }
