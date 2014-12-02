@@ -135,37 +135,6 @@ var UI = {
     	$data.addClass("show");
     }, 800);
 
-		// (function indicator () {
-		// 	var symbols = [ "□","◅","◇","○" ];
-
-		// 	symbols.forEach(function(symbol, index) {
-		// 		$.Velocity($searchSymbols, "reverse");
-		// 		$.Velocity(
-		// 			$searchSymbols,
-		// 			{ 
-		// 				opacity: [ 0, "easeInOutsine" ], 
-		// 				color: "#29BD66",
-		// 				scale: 2 - index/20
-		// 			}, 
-		// 			{ 
-		// 				duration: 300,
-		// 				easing: "linear",
-		// 				begin: function() { 
-		// 					$searchSymbols.html(symbol);
-		// 				},
-		// 				complete: function() {
-
-		// 					if (UI.loading === false) {
-
-		// 					} else if (index === symbols.length - 1) {
-		// 						indicator();
-		// 					}
-		// 				}
-		// 			}
-		// 		);
-		// 	});
-		// })();
-
 		$("#header-logo").on("click", function (){
 			if ($("body").hasClass("results")) {
         window.location.hash = '';
@@ -191,27 +160,30 @@ var UI = {
 				$searchSymbols.addClass("show");
 				$data_table.removeClass('show');
 
-				$.ajax({
-					url: API.hostname + url,
-					dataType: "json",
-					complete: function() {
-						// UI.loading = false;
-						$searchSymbols.removeClass("show");
-						$html.css("cursor", "default");
-					},
-					success: function (response) {
-						if (response && response.meta) {
+				//giving a lag to let the animation complete
+				setTimeout(function(){
+					$.ajax({
+						url: API.hostname + url,
+						dataType: "json",
+						complete: function() {
+							// UI.loading = false;
+							$searchSymbols.removeClass("show");
+							$html.css("cursor", "default");
+						},
+						success: function (response) {
+							if (response && response.meta) {
 
-							$data.scrollTop(0);
-							callback(response);
-							$data_table.addClass('show');
-							$data_cols.addClass("show");
-						} else {
-							UI.error();
-						}
-					},
-					error: UI.error
-				});
+								$data.scrollTop(0);
+								callback(response);
+								$data_table.addClass('show');
+								$data_cols.addClass("show");
+							} else {
+								UI.error();
+							}
+						},
+						error: UI.error
+					});
+				}, 600);
 			}
 
 			if (/\.js$/.test(query)) {
