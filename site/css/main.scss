@@ -208,10 +208,10 @@ body {
 		width: 100%;
 		text-align: right;
 		font-family: "Avenir Medium";
-		font-size: 9px;
-		letter-spacing: 1.6px;
+		font-size: 10px;
+		letter-spacing: 1px;
 		text-transform: none;
-		right: 140px;
+		right: 143px;
 
 		#header-code-property {
 			display: inline-block;
@@ -296,7 +296,7 @@ body {
 	}
 
 	#queryButtons {
-		margin-top: 15px;
+		margin-top: 18px;
 		float: left;
 		width: 100%;
 		padding: 0 130px;
@@ -323,7 +323,8 @@ body {
 		p {
 			padding: 0 1px 1px 1px;
 			margin: 0;
-			border-bottom: 1px dotted #BBB;
+			/*border-bottom: 1px solid #d9d9d9;*/
+			font-size: 0.85rem;
 			display: inline;
 			transition: all 150ms;
 		}
@@ -380,7 +381,7 @@ body {
 	margin-top: 200px;
 	padding: 33px 0;
 	border-radius: 3px;
-	border-top: 1px solid #F1F1F1;
+	border-top: 1px solid #ebebeb;
 	margin: 125px 0 0;
 	opacity: 0;
   @include custom-bezier(all, .65s);
@@ -417,12 +418,12 @@ body {
 	left: 0;
 	overflow: scroll;
 	width: 100%;
-	transition: all 250ms;
+	/*transition: all 250ms;*/
 	padding: 0 80px 0 480px;
 	//opacity: 0;
 	top: 90px;
 	bottom: 50px;
-	height: auto;
+	height: 90%;
 	//display: none;
 
   #data_cols.show {
@@ -541,10 +542,6 @@ body {
 
 			&:hover {
 				background-color: #f2f2f2;
-
-				td {
-					padding: 15px 13px 11px 10px;
-				}
 			}
 		}
 
@@ -599,6 +596,7 @@ body {
 }
 
 footer {
+	background: white;
 	position: fixed;
 	bottom: 0;
 	padding: 12px 19px;
@@ -631,10 +629,14 @@ footer {
 
 	.footer-text {
 		font-size: 12px;
+
+		&:hover {
+			color: #006373;
+		}
 	}
 
 	.footer-text--divider {
-		color: #CBCBCB;
+		color: #adadad;
 		font-size: 10px;
 		margin-right: 2px;
 		margin-left: 2px;
