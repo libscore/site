@@ -104,8 +104,7 @@ input {
 	border: 1px solid #E0E0E0;
 	border-radius: 2px;
 	color: #4D4D4D;
-	font-size: 19px;
-	@include custom-bezier(all, 1500ms);
+	// @include custom-bezier(all, 1500ms);
 
 	&:focus {
 		border-color: #d5d5d5;
@@ -418,13 +417,8 @@ body {
 	left: 0;
 	overflow: scroll;
 	width: 100%;
-	/*transition: all 250ms;*/
-	padding: 0 80px 0 480px;
-	//opacity: 0;
-	top: 90px;
+	top: 95px;
 	bottom: 50px;
-	height: 90%;
-	//display: none;
 
   #data_cols.show {
     opacity: 1;
@@ -441,6 +435,7 @@ body {
 		h3.middle {
 			position: absolute;
 			font-family: "Avenir Medium";
+			font-weight: normal;
 			letter-spacing: 0;
 			text-transform: uppercase;
 			font-size: 19px;
@@ -462,7 +457,6 @@ body {
 				top: 1px;
 			}
 		}
-
 
 		div {
 			position: absolute;
@@ -580,7 +574,6 @@ body {
 
 	.accent {
 		pointer-events: none;
-
 		@extend .text-grey;
 	}
 
@@ -596,7 +589,6 @@ body {
 }
 
 footer {
-	background: white;
 	position: fixed;
 	bottom: 0;
 	padding: 12px 19px;
@@ -607,24 +599,32 @@ footer {
 	z-index: 1000;
   @include custom-bezier(all, .4s);
 
-	img {
-		width: 100px;
-		margin-bottom: -0.2rem;
-	}
-
-	#stripe {
-		position: relative;
-		margin-bottom: -0.3rem;
-		width: 36px;
-		margin-right: 2px;
-	}
-
 	#authors {
 		float: left;
 	}
 
 	#sponsors {
 		float: right;
+
+		a {
+			display: inline-block;
+			background-repeat: no-repeat;
+		}
+
+		#digitalocean {
+			background: url("../images/digitalocean.svg");
+			background-size: 106px 16px;
+			width: 106px;
+			height: 16px;
+		}
+
+		#stripe {
+			background: url("../images/stripe.svg");
+			margin-right: 2px;
+			background-size: 37px 15px;
+			width: 37px;
+			height: 15px;
+		}
 	}
 
 	.footer-text {
@@ -644,23 +644,35 @@ footer {
 		display: inline-block;
 		vertical-align: middle;
 		font-family: "Avenir Black";
-		top: -1px;
+		top: -5px;
 	}
 }
 
 #subscribe_ {
-	position: absolute !important;
+	position: absolute;
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	padding: 35px;
+	padding: 22px;
+	opacity: 0;
+	transition: opacity 1s;
+
+	input {
+		font-size: 14px;
+		padding: 15px 13px 10px 13px
+	}
 
 	#subscribe {
 		width: 100%;
 		font-size: 12px;
-		font-family: "Avenir Light";
 		padding: 10px 10px 9px 10px;
 		color: #6F6F6F;
+		display: none;
+	}
+
+	p {
+		margin: 0 0 12px 0;
+		font-size: 13px;
 	}
 }
 
@@ -704,6 +716,10 @@ footer {
 		margin-left: 0;
 		background-color: white;
 		z-index: 13;
+	}
+
+	#data {
+		padding: 0 80px 0 480px;
 	}
 
 	footer {
@@ -761,9 +777,11 @@ footer {
 		}
 	}
 
-	// #data {
-	// 	display: block;
-	// }
+	#subscribe_ {
+		opacity: 1;
+		display: block;
+		border-top: 1px solid #F1F1F1;
+	}
 }
 
 /***************
@@ -774,7 +792,7 @@ footer {
 	opacity: 0;
 }
 
-#body-bigError, #body-bigCount, #howTo, #subSlogan, #search_, .data_more, #data_scroll, #subscribe_ {
+#body-bigError, #body-bigCount, #howTo, #subSlogan, #search_, .data_more, #data_scroll {
 	display: none;
 }
 
@@ -944,7 +962,7 @@ footer {
 }
 
 @media screen and ( max-width: 1200px ){
-	#data {
+	.results #data {
 		padding: 0 70px 0 470px;
 
 		table {
@@ -957,6 +975,7 @@ footer {
 
 				&:nth-child(even) {
 					right: 70px;
+					left: auto;
 				}
 			}
 		}
@@ -982,7 +1001,7 @@ footer {
 
 
 @media screen and ( max-width: 1050px ){
-	#data {
+	.results #data {
 		padding: 0 40px 0 440px;
 
 		#data_cols {
@@ -1040,9 +1059,7 @@ footer {
 	}
 }
 
-
 @media screen and ( max-width: 850px ){
-
 	#subscribe_ {
 		display: none!important;
 	}
@@ -1094,6 +1111,10 @@ footer {
 			z-index: 100;
 		}
 
+		.resutls #data {
+			padding: 0 35px;
+		}
+
 		#searchWrap.sticky {
 			position: fixed;
 			left: 0;
@@ -1121,7 +1142,6 @@ footer {
 	}
 
 	#data {
-
 		table {
 			top: 30px;
 			position: relative;
@@ -1141,30 +1161,29 @@ footer {
 	#searchSymbols {
 		margin-right: -20px;
 	}
-
 }
 
 @media screen and ( max-width: 650px ){
-    #searchWrap {
-			width: 100%;
-			margin-left: 0;
-			left: 0;
-			padding: 0 40px;
-		}
+  #searchWrap {
+		width: 100%;
+		margin-left: 0;
+		left: 0;
+		padding: 0 40px;
+	}
 
-		#slogan {
-			font-size: 19px;
+	#slogan {
+		font-size: 19px;
 
-			br {
-				display: none;
-			}
+		br {
+			display: none;
 		}
+	}
 
-		#query {
-			#queryButtons {
-				padding: 0 80px;
-			}
+	#query {
+		#queryButtons {
+			padding: 0 80px;
 		}
+	}
 }
 
 @media screen and ( max-width: 500px ){
@@ -1181,6 +1200,54 @@ footer {
 	#howTo {
 		p {
 			padding: 0;
+		}
+	}
+
+	footer {
+		#authors {
+			display: none;
+		}
+		#sponsors {
+			float: none;
+		}
+	}
+}
+
+@media screen and ( max-width: 920px ){
+	.results {
+		footer {
+			#authors {
+				display: none;
+			}
+			#sponsors {
+				float: none;
+			}
+		}
+	}
+}
+
+@media screen and ( max-width: 850px ){
+	.results {
+		footer {
+			#authors {
+				display: block;
+			}
+			#sponsors {
+				float: right;
+			}
+		}
+	}
+}
+
+@media screen and ( max-width: 530px ){
+	.results {
+		footer {
+			#authors {
+				display: none;
+			}
+			#sponsors {
+				float: none;
+			}
 		}
 	}
 }
