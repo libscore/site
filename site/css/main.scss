@@ -21,16 +21,6 @@
      Colors
 ****************/
 
-.text-blue {
-	color: #0b8fb2;
-}
-.text-blue-dark {
-	color: #235364;
-}
-.background-blue {
-	background-color: #0b8fb2;
-}
-
 .text-green {
 	color: #29bd66;
 }
@@ -217,11 +207,11 @@ body {
 			cursor: pointer;
 
 			&:hover {
-				@extend .text-blue;
+				@extend .text-green;
 			}
 
 			&:active {
-				@extend .text-blue-dark;
+				@extend .text-green;
 			}
 		}
 	}
@@ -385,7 +375,6 @@ body {
 	opacity: 0;
   @include custom-bezier(all, .65s);
 
-
   p.graphs {
   	@extend .text-green;
   	font-family: "Avenir Medium";
@@ -393,6 +382,10 @@ body {
 
   	a {
   		border-bottom: 1px dotted #9AD5B2;
+
+  		&:hover {
+  			color: black;
+  		}
   	}
   }
 
@@ -448,7 +441,7 @@ body {
 
 		h3.middle {
 			position: absolute;
-			font-family: "Avenir Medium";
+			font-family: "Avenir Black";
 			font-weight: normal;
 			letter-spacing: 0;
 			text-transform: uppercase;
@@ -485,6 +478,7 @@ body {
 			&:nth-child(odd) {
 				right: 80px;
 				left: auto;
+				top: 0;
 			}
 
 			a {
@@ -652,7 +646,7 @@ footer {
 		font-size: 12px;
 
 		&:hover {
-			color: #006373;
+			color: #0C863E;
 		}
 	}
 
