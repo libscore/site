@@ -477,7 +477,7 @@ body {
 			font-size: 18px;
 			z-index: 1;
 
-			&:nth-child(even) {
+			&:nth-child(odd) {
 				right: 80px;
 				left: auto;
 			}
@@ -987,8 +987,8 @@ footer {
 			div {
 				left: 470px;
 
-				&:nth-child(even) {
-					right: 70px;
+				&:nth-child(odd) {
+					right: 40px;
 					left: auto;
 				}
 			}
