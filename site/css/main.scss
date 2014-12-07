@@ -634,6 +634,10 @@ footer {
 			width: 37px;
 			height: 15px;
 		}
+
+		.footer-text--divider {
+			top: -5px;
+		}
 	}
 
 	.footer-text {
@@ -653,7 +657,7 @@ footer {
 		display: inline-block;
 		vertical-align: middle;
 		font-family: "Avenir Black";
-		top: -5px;
+		top: -1px;
 	}
 }
 
