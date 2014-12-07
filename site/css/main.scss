@@ -385,6 +385,16 @@ body {
 	opacity: 0;
   @include custom-bezier(all, .65s);
 
+
+  p.graphs {
+  	@extend .text-green;
+  	font-family: "Avenir Medium";
+
+  	a {
+  		border-bottom: 1px dotted #9AD5B2;
+  	}
+  }
+
 	p {
 		margin-bottom: 30px;
 		margin-top: 0;
@@ -402,7 +412,6 @@ body {
 		&:last-child {
 			margin-bottom: 0;
 		}
-		
 	}
 }
 
@@ -837,6 +846,7 @@ footer {
 		float: left;
 		width: 100%;
 		padding: 40px 0 0 0;
+		margin-bottom: 60px;
 	}
 }
 
@@ -945,7 +955,7 @@ footer {
     }
 }
 
-@media screen and ( max-height: 770px ){
+@media screen and ( max-height: 860px ){
 	#subscribe_ {
 		display: none!important;	
 	}
@@ -1183,6 +1193,12 @@ footer {
 		#queryButtons {
 			padding: 0 80px;
 		}
+	}
+}
+
+@media screen and ( max-width: 550px ){
+	#header {
+		margin-top: 60px;
 	}
 }
 
