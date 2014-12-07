@@ -132,6 +132,7 @@ var UI = {
         //window.location.hash = '';
         $body.removeClass("results");
 				$data_table.empty();
+				$data_table.removeClass("show");
 				$data_cols.removeClass("show");
 				$searchSymbols.removeClass("show");
 			}
