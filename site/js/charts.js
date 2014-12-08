@@ -30,57 +30,45 @@
     ]
   };
 
-  // var topLibsData = [
-  // 	{
-  // 		value: 63.4,
-  // 		color:"#29bd66",
-  // 		// highlight: "#FF5A5E",
-  // 		label: "jQuery"
-  // 	},
-  // 	{
-  // 		value: 17.6,
-  // 		color: "#29a478",
-  // 		// highlight: "#5AD3D1",
-  // 		label: "jQuery UI"
-  // 	},
-  // 	{
-  // 		value: 10.9,
-  // 		color: "#298c8b",
-  // 		// highlight: "#FFC870",
-  // 		label: "Modernizr"
-  // 	},
-  // 	{
-  // 		value: 8.7,
-  // 		color: "#29749d",
-  // 		// highlight: "#A8B3C5",
-  // 		label: "Ajax For"
-  // 	},
-  // 	{
-  // 		value: 7.9,
-  // 		color: "#295cb0",
-  // 		// highlight: "#616774",
-  // 		label: "Fancy Box"
-  // 	},
-  //   {
-  //     value: 7.3,
-  //     color: "#2a4bbd",
-  //     // highlight: "#616774",
-  //     label: "Carousel"
-  //   }
-  // ];
+  var topABData = {
+    labels: ["Optimizely", "Visual Website Optimizer"],
+    datasets: [
+      {
+          fillColor: "rgba(41,189,102,1)",
+          strokeColor: "rgba(220,220,220,0.8)",
+          highlightFill: "rgba(41,189,102,0.7)",
+          highlightStroke: "rgba(220,220,220,1)",
+          data: [.86, .59]
+      }
+    ]
+  };
 
-  // var topScriptsData = {
-  //   labels: ["Google Analytics", "Facebook Like Button", "Twitter Tweet Button", "Google Maps Widget", "New Relic", "Pinterest Pin Button", "Adroll", "Typekit", "LinkedIn Share Button"],
-  //   datasets: [
-  //     {
-  //         fillColor: "rgba(220,220,220,0.5)",
-  //         strokeColor: "rgba(220,220,220,0.8)",
-  //         highlightFill: "rgba(220,220,220,0.75)",
-  //         highlightStroke: "rgba(220,220,220,1)",
-  //         data: [55.9, 18.6, 12.1, 2.7, 2.0, 2.0, 1.3, 1.2, 1.2]
-  //     }
-  //   ]
-  // };
+  var topChatData = {
+    labels: ["Zopim", "Olark", "LiveChat"],
+    datasets: [
+      {
+          fillColor: "rgba(41,189,102,1)",
+          strokeColor: "rgba(220,220,220,0.8)",
+          highlightFill: "rgba(41,189,102,0.7)",
+          highlightStroke: "rgba(220,220,220,1)",
+          data: [.94, .44, .34]
+      }
+    ]
+  };
+
+  var topCMSData = {
+    labels: ["Wordpress", "Blogger", "Shopify", "Squarespace"],
+    datasets: [
+      {
+          fillColor: "rgba(41,189,102,1)",
+          strokeColor: "rgba(220,220,220,0.8)",
+          highlightFill: "rgba(41,189,102,0.7)",
+          highlightStroke: "rgba(220,220,220,1)",
+          data: [4.2, 2.0, .28, .14]
+      }
+    ]
+  };
+
 
   var topScriptsData = [
     {
@@ -172,6 +160,57 @@
     }
   ];
 
+  var topAnalyticsData = [
+    {
+      value: 55.9,
+      color:"#29bd66",
+      // highlight: "#FF5A5E",
+      label: "Google Analytics"
+    },
+    {
+      value: 2.2,
+      color: "#29a478",
+      // highlight: "#5AD3D1",
+      label: "Socrecard Research"
+    },
+    {
+      value: 1.9,
+      color: "#295cb0",
+      // highlight: "#616774",
+      label: "StatCounter"
+    },
+    {
+      value: 1.4,
+      color: "#298c8b",
+      // highlight: "#FFC870",
+      label: "Histats"
+    },
+    {
+      value: .75,
+      color: "#29749d",
+      // highlight: "#A8B3C5",
+      label: "Alexa"
+    },
+    {
+      value: .62,
+      color: "#29749d",
+      // highlight: "#A8B3C5",
+      label: "Clicky"
+    },
+    {
+      value: .56,
+      color: "#29749d",
+      // highlight: "#A8B3C5",
+      label: "Chartbeat"
+    },
+    {
+      value: .36,
+      color: "#29749d",
+      // highlight: "#A8B3C5",
+      label: "Mixpanel"
+    }
+  ];
+
   var donutDefaults = {
     tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%",
     animateRotate: true,
@@ -220,18 +259,29 @@
   }
 
 
-  // Chart One - Top Libraries
+  // Top Libraries
   var topLib = new Chart(document.getElementById("topLib").getContext("2d")).Bar(topLibsData, barDefaults);
 
-  // Chart Two - Top Scripts
+  // Top Scripts
   var topScript = new Chart(document.getElementById("topScript").getContext("2d")).Doughnut(topScriptsData, donutDefaults);
   createLegend(topScript);
 
-  //Chart Two - Top MVC
+  // Top MVC
   var topMVC = new Chart(document.getElementById("topMVC").getContext("2d")).Doughnut(topMVCData, donutDefaults);
   createLegend(topMVC);
 
+  // Top Analytics
+  var topAnalytics = new Chart(document.getElementById("topAnalytics").getContext("2d")).Doughnut(topAnalyticsData, donutDefaults);
+  createLegend(topAnalytics);
 
+  // Top AB Testing
+  var topAB = new Chart(document.getElementById("topAB").getContext("2d")).Bar(topABData, barDefaults);
+
+  // Live Chat 
+  var topChat = new Chart(document.getElementById("topChat").getContext("2d")).Bar(topChatData, barDefaults);
+
+  // CMS
+  var topCMS = new Chart(document.getElementById("topCMS").getContext("2d")).Bar(topCMSData, barDefaults);
 
   //var myBarChart = new Chart(document.getElementById("topMVC").getContext("2d")).Bar(jesse, donutDefaults);
 
