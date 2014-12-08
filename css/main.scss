@@ -826,7 +826,8 @@ footer {
 ***************/
 
 .charts {
-	background-color: #F7F7F7;
+	background-color: #eaeaea;
+	border: 0;
 
 	#header {
 		padding: 0;
@@ -837,7 +838,7 @@ footer {
 			font-size: 13px;
 			font-family: "Avenir Medium";
 			letter-spacing: 0.8px;
-			color: #ACACAC;
+			color: #969696;
 		}
 
 		#header-logo {
@@ -851,106 +852,113 @@ footer {
 }
 
 #chartWrap {
-	max-width: 800px;
 	width: 100%;
-	margin: 0 auto;
+	margin: 0 0 60px 0;
 	position: relative;
 
-	#innerChart {
-		background: #FFF;
-		float: left;
+	ul {
+		padding: 5px 50px 50px 50px;
 		width: 100%;
-		padding: 40px 0 0 0;
-		margin-bottom: 60px;
-	}
-}
-
-.holder-parent {
-	position: relative;
-  width: 100%;
-  float: left;
-  border-bottom: 1px solid #F1F1F1;
-  margin-bottom: 41px;
-  padding-bottom: 45px;
-
-  &:last-child {
-    border: 0;
-  }
-
-	h4 {
-		font-size: 20px;
-		text-align: center;
-		line-height: 1.3;
-		font-weight: normal;
-		font-family: "Avenir Medium";
 		margin: 0;
-	}
-
-	.holder {
-		width: 50%;
-		margin-top: 35px;
-
-		canvas {
-      margin: 0 auto;
-      display: block;
-		}
-	}
-
-	.legend {
-		position: absolute;
-    top: 0;
-    right: 55px;
-    border: 3px solid #F1F1F1;
-    padding: 12px 0 8px 0;
-    list-style: none;
-    margin: 70px 0 0 0;
-    border-radius: 3px;
-    background: #FFF;
-    transition: all 800ms;
-    width: 43%;
+		text-align: center;
 
 		li {
-			margin: 0;
-			padding: 6px 25px 6px 20px;
-			font-size: 14px;
-			cursor: pointer;
+			width: 290px;
+			margin: 15px;
+			list-style: none;
+			border-radius: 2px;
+			background: #f2f2f2;
+			display: inline-block;
+			box-shadow: 0px 0px 1px 1px rgba(200, 200, 200, 0.53);
+			-webkit-box-shadow: 0px 0px 1px 1px rgba(200, 200, 200, 0.53);
+			-moz-box-shadow: 0px 0px 1px 1px rgba(200, 200, 200, 0.53);
 
-			&:hover {
-				background-color: #FAFAFA;
-			}
-
-			p {
-				color: #B8B8B8;
-				margin: 0 0 0 20px;
-				float: right;
-				display: inline;
+			h4 {
+				font-size: 19px;
+				text-align: center;
+				line-height: 1.3;
+				font-weight: normal;
 				font-family: "Avenir Medium";
+				margin: 23px 0 0 0;
+				padding: 0 10px;
+				color: #242424;
 			}
 
-			span {
-				width: 10px;
-				height: 10px;
-				border-radius: 6px;
-				display: block;
-				float: left;
-				margin-right: 7px;
-				position: relative;
-				top: 2px;
+			.holder {
+				padding: 22px 25px 25px 25px;
 
-				&:after {
-					content: "";
-					position: absolute;
-					width: 4px;
-					height: 4px;
-					border-radius: 2px;
-					background-color: white;
-					left: 3px;
-					top: 3px;
+				canvas {
+		      margin: 0 auto;
+		      display: block;
+				}
+			}
+
+			.legend {
+				list-style: none;
+		    transition: all 800ms;
+		    padding: 19px 0 13px 0;
+		    border-top: 1px solid #DDD;
+		    float: left;
+		    width: 100%;
+		    background-color: #fff;
+
+				li {
+					margin: 0;
+					padding: 6px 25px 6px 20px;
+					font-size: 14px;
+					cursor: pointer;
+					width: 100%;
+					float: left;
+					background: none;
+					box-shadow: none;
+					border-radius: 0;
+					text-align: left;
+
+					&:hover {
+						background-color: #F5F5F5;
+					}
+
+					p.value {
+						color: #B8B8B8;
+						margin: 0;
+						float: right;
+						font-family: "Avenir Medium";
+						display: inline-block;
+					}
+
+					p.metric {
+						color: #000;
+						font-family: "Avenir Light";
+						display: inline-block;
+						margin: 0;
+					}
+
+					span {
+						width: 10px;
+						height: 10px;
+						border-radius: 6px;
+						display: inline-block;
+						margin-right: 7px;
+						position: relative;
+						top: 0;
+
+						&:after {
+							content: "";
+							position: absolute;
+							width: 4px;
+							height: 4px;
+							border-radius: 2px;
+							background-color: white;
+							left: 3px;
+							top: 3px;
+						}
+					}
 				}
 			}
 		}
 	}
 }
+
 
 
 

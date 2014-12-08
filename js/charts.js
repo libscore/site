@@ -115,14 +115,48 @@
     }
   ];
 
+  var topMVCData = [
+    {
+      value: .79,
+      color:"#29bd66",
+      // highlight: "#FF5A5E",
+      label: "Backbone"
+    },
+    {
+      value: .49,
+      color: "#29a478",
+      // highlight: "#5AD3D1",
+      label: "Angular"
+    },
+    {
+      value: .002,
+      color: "#298c8b",
+      // highlight: "#FFC870",
+      label: "React"
+    },
+    {
+      value: .0018,
+      color: "#29749d",
+      // highlight: "#A8B3C5",
+      label: "Ember"
+    },
+    {
+      value: .2,
+      color: "#295cb0",
+      // highlight: "#616774",
+      label: "Knockout"
+    }
+  ];
+
   var defaults = {
     tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%",
     animateRotate: true,
     animation: true,
+    segmentStrokeColor : "#f2f2f2",
     animationSteps : 60,
     animationEasing : "easeOutQuad",
-    percentageInnerCutout : 25,
-    legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%><p><%=segments[i].value%>%</p></li><%}%></ul>"
+    percentageInnerCutout : 57,
+    legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><p class=\"metric\"><%if(segments[i].label){%><%=segments[i].label%><%}%></p><p class=\"value\"><%=segments[i].value%>%</p></li><%}%></ul>"
   }
 
   var helpers = Chart.helpers;
@@ -154,6 +188,10 @@
   // Chart Two - Top Scripts
   var topScript = new Chart(document.getElementById("topScript").getContext("2d")).Doughnut(topScriptsData, defaults);
   createChart(topScript);
+
+  // Chart Two - Top MVC
+  var topMVC = new Chart(document.getElementById("topMVC").getContext("2d")).Doughnut(topMVCData, defaults);
+  createChart(topMVC);
 
 
 })();
