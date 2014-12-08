@@ -94,25 +94,25 @@
       color: "#2a4bbd",
       // highlight: "#616774",
       label: "Pinterest Pin Button"
-    },
-    {
-      value: 1.3,
-      color: "#2a4bbd",
-      // highlight: "#616774",
-      label: "Adroll"
-    },
-    {
-      value: 1.2,
-      color: "#2a4bbd",
-      // highlight: "#616774",
-      label: "TypeKit"
-    },
-    {
-      value: 1.2,
-      color: "#2a4bbd",
-      // highlight: "#616774",
-      label: "LinkedIn Share Button"
     }
+    // {
+    //   value: 1.3,
+    //   color: "#2a4bbd",
+    //   // highlight: "#616774",
+    //   label: "Adroll"
+    // },
+    // {
+    //   value: 1.2,
+    //   color: "#2a4bbd",
+    //   // highlight: "#616774",
+    //   label: "TypeKit"
+    // },
+    // {
+    //   value: 1.2,
+    //   color: "#2a4bbd",
+    //   // highlight: "#616774",
+    //   label: "LinkedIn Share Button"
+    // }
   ];
 
   var topMVCData = [
