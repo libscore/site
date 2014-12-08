@@ -14,7 +14,6 @@
     $.Velocity.RunSequence([
       { elements: $header_logo, properties: "transition.fadeIn", options: { delay: 100, duration: 800} },
       { elements: $header_title, properties: "transition.fadeIn", options: { delay: 250, duration: 800, sequenceQueue: false} }
-
     ]);
   });
 
@@ -116,64 +115,45 @@
     }
   ];
 
-  var helpers = Chart.helpers;
-  var topLib = new Chart(document.getElementById("topLib").getContext("2d")).Doughnut(topLibsData, {
-      tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%",
-      animateRotate: true,
-      animation: true,
-      animationSteps : 60,
-      animationEasing : "easeOutQuad",
-      percentageInnerCutout : 25,
-      legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%><p><%=segments[i].value%>%</p></li><%}%></ul>"
-  });
-
-  var legendHolder = document.createElement('div');
-  legendHolder.innerHTML = topLib.generateLegend();
-
-  helpers.each(legendHolder.firstChild.childNodes, function (legendNode, index) {
-    helpers.addEvent(legendNode, 'mouseover', function () {
-      var activeSegment = topLib.segments[index];
-      activeSegment.save();
-      topLib.showTooltip([activeSegment]);
-      activeSegment.restore();
-    });
-  });
-
-  helpers.addEvent(legendHolder.firstChild, 'mouseout', function () {
-    topLib.draw();
-  });
-
-  topLib.chart.canvas.parentNode.parentNode.appendChild(legendHolder.firstChild);
-
+  var defaults = {
+    tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%",
+    animateRotate: true,
+    animation: true,
+    animationSteps : 60,
+    animationEasing : "easeOutQuad",
+    percentageInnerCutout : 25,
+    legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%><p><%=segments[i].value%>%</p></li><%}%></ul>"
+  }
 
   var helpers = Chart.helpers;
-  var topScript = new Chart(document.getElementById("topScript").getContext("2d")).Doughnut(topScriptsData, {
-      tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%",
-      animateRotate: true,
-      animation: true,
-      animationSteps : 60,
-      animationEasing : "easeOutQuad",
-      percentageInnerCutout : 25,
-      legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%><p><%=segments[i].value%>%</p></li><%}%></ul>"
-  });
-
   var legendHolder = document.createElement('div');
-  legendHolder.innerHTML = topScript.generateLegend();
 
-  helpers.each(legendHolder.firstChild.childNodes, function (legendNode, index) {
-    helpers.addEvent(legendNode, 'mouseover', function () {
-      var activeSegment = topScript.segments[index];
-      activeSegment.save();
-      topScript.showTooltip([activeSegment]);
-      activeSegment.restore();
+  function createChart(dataName){
+    legendHolder.innerHTML = dataName.generateLegend();
+
+    helpers.each(legendHolder.firstChild.childNodes, function (legendNode, index) {
+      helpers.addEvent(legendNode, 'mouseover', function () {
+        var activeSegment = dataName.segments[index];
+        activeSegment.save();
+        dataName.showTooltip([activeSegment]);
+        activeSegment.restore();
+      });
+
+      helpers.addEvent(legendHolder.firstChild, 'mouseout', function () {
+        dataName.draw();
+      });
     });
-  });
 
-  helpers.addEvent(legendHolder.firstChild, 'mouseout', function () {
-    topScript.draw();
-  });
+    dataName.chart.canvas.parentNode.parentNode.appendChild(legendHolder.firstChild);
+  }
 
-  topScript.chart.canvas.parentNode.parentNode.appendChild(legendHolder.firstChild);
+  // Chart One - Top Libraries
+  var topLib = new Chart(document.getElementById("topLib").getContext("2d")).Doughnut(topLibsData, defaults);
+  createChart(topLib);
+
+  // Chart Two - Top Scripts
+  var topScript = new Chart(document.getElementById("topScript").getContext("2d")).Doughnut(topScriptsData, defaults);
+  createChart(topScript);
 
 
 })();
