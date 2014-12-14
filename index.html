@@ -47,7 +47,7 @@
 				<p>
 					Alternatively, you can retrieve all libraries used on a site by querying for its domain name, e.g. <b data-query>stripe.com</b> or <b data-query>digitalocean.com</b>.
 				</p>
-				<p class="graphs"><a href="data.html">View Trending Data</a></p>
+				<p class="graphs"><a id="view_trending_data" href="data.html">View Trending Data</a></p>
 			</div>
 		</main>
 
@@ -58,16 +58,18 @@
 			target="_blank"
 			novalidate
 		>
-			<input id="subscribe" name="EMAIL" class="field-input" type="text" />
+
+			<input type="text" name="b_30c0d4c5d64d5d9fcf7b76792_69666fd115" tabindex="-1" style="position: absolute; left: -1000000px">
 			<div>
-				<p>Get notified when a new library explodes onto the scene!</p>
-				<input type="text" placeholder="Enter Email Address" name="b_30c0d4c5d64d5d9fcf7b76792_69666fd115" tabindex="-1" value="">
+				<p>Get notified when a new library surges in popularity!</p>
+				<input id="subscribe" name="EMAIL" class="field-input" type="text" placeholder="Enter Email Address" />
 			</div>
 		</form>
 	</div>
 
+	<div id="data_scroll">↓</div>
+
 	<div id="data">
-		<!-- <div id="data_scroll">↓</div> -->
 		<div id="col_wrap">
 			<div id="data_cols"></div>
 		</div>

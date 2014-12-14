@@ -554,7 +554,6 @@ body {
 			padding: 2px;
 			line-height: 15px;
 			text-align: center;
-			border-radius: 13px;
 			display: inline-block;
 			top: -2px;
 			position: relative;
@@ -586,16 +585,17 @@ body {
 		pointer-events: none;
 		@extend .text-grey;
 	}
+}
 
-	#data_scroll {
-		z-index: 1;
-		position: absolute;
-		left: 50%;
-		margin-left: 200px;
-		bottom: 100px;
-		color: #373737;
-		font-size: 27px;
-	}
+#data_scroll {
+	display: none;
+	z-index: 1;
+	position: fixed;
+	left: 50%;
+	margin-left: 200px;
+	bottom: 50px;
+	color: #373737;
+	font-size: 32px;
 }
 
 footer {
@@ -682,11 +682,12 @@ footer {
 		font-size: 12px;
 		padding: 10px 10px 9px 10px;
 		color: #6F6F6F;
-		display: none;
 	}
 
 	p {
-		margin: 0 0 12px 0;
+		font-family: "Avenir Black";
+		margin: 0px 0px 12px 2px;
+		letter-spacing: 0.02rem;
 		font-size: 13px;
 	}
 }
@@ -812,14 +813,17 @@ footer {
     Initial
 ***************/
 
-#header-code, #header-logo, #subscribe, #slogan, #queryButtons span, #header h1 {
+#header-code, #header-logo, #slogan, #queryButtons span, #header h1 {
 	opacity: 0;
 }
 
-#body-bigError, #body-bigCount, #howTo, #subSlogan, #search_, .data_more, #data_scroll {
-	display: none;
+#body-bigError, #body-bigCount, #subSlogan, #search_, .data_more, #data_scroll {
+	/*display: none;*/
 }
 
+#howTo {
+	display: block;
+}
 
 /***************
   Charts

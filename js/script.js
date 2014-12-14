@@ -69,8 +69,10 @@ var $html = $("html"),
 **************/
 
 $body.on("click", "a", function(event) {
-	event.preventDefault();
-	window.open(event.target.href)
+	if (event.target.id !== "view_trending_data") {
+		event.preventDefault();
+		window.open(event.target.href)
+	}
 });
 
 $body.on("click", "[data-query]", function(event) {
@@ -96,18 +98,16 @@ $body.on("click", "[data-query]", function(event) {
 	}
 });
 
+$(window).on("scroll", function() {
+	$data_scroll.hide();
+});
+
 /***************
     Helpers
 ***************/
 
 $search.one("mouseup", function() {
 	$search.select();
-});
-
-$subscribe.one("mouseup", function() {
-	$subscribe
-		.val("email@domain.com")
-		.select();
 });
 
 /**************
@@ -129,7 +129,7 @@ var UI = {
 
 		$("#header-logo").on("click", function (){
 			if ($("body").hasClass("results")) {
-        //window.location.hash = '';
+       window.location.hash = '';
         $body.removeClass("results");
 				$data_table.empty();
 				$data_table.removeClass("show");
@@ -169,7 +169,7 @@ var UI = {
 						success: function (response) {
 							if (response && response.meta) {
 
-								$data.scrollTop(0);
+								$(window).scrollTop(0);
 								callback(response);
 								$data_table.addClass('show');
 								$data_cols.addClass("show");
@@ -181,6 +181,8 @@ var UI = {
 					});
 				}, 700);
 			}
+
+			$data_scroll.velocity("fadeOut");
 
 			if (/\.js$/.test(query)) {
 				alert("Be careful: We noticed you suffixed your search query with '.js'. Instead, you need to enter the exact case-sensitive VARIABLE that a library exposes itself under -- not simply the name of the library.");
@@ -250,8 +252,6 @@ var UI = {
 				prettified = prettified.slice(0, 37);
 			}
 
-			prettified = prettified.replace(/\./g, "<span class='accent'>.</span>");
-
 			if (truncated) {
 				prettified = "<span title='" + name + "'>" + prettified + "…</span>";
 			}
@@ -301,8 +301,8 @@ var UI = {
 						if (isScript) {
 							$matchData = "<td><a href='//" + match.name.replace(/^script:/, "") + "'>" + prettifyName(match.name, match.type) + "</a> <span class='text-blue'>⬈</span></td>";
 						} else {
-							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.name, match.type)
-							$matchData += " <span class='text-blue'>" + (match.github ? "⬈" : "<span class='hint' data-hint='Click to help track down this library.'>?</span>") + "</span></a>";
+							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.name, match.type);
+							$matchData += " <span class='text-blue'>⬈</span></a>";
 						}
 
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
@@ -322,7 +322,7 @@ var UI = {
 
 					case "libs":
 						$columns = "<h3 class='middle'><span>Top Libs</span></h3><div>library <a href='https://107.170.240.125/libraries.txt'>Download list</a></div><div>site count</div>";
-						$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.library) + " <span class='text-blue'>" + (match.github ? "⬈" : "<span class='hint' data-hint='Click to help track down this library.'>?</span>") + "</span></a>";
+						$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.'>" + prettifyName(match.library) + "</a> <span class='text-blue'>⬈</span></a>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
 
@@ -344,6 +344,9 @@ var UI = {
 
 			$data_table
 				.scrollTop = 0;
+
+			$data_scroll
+				.velocity("transition.fadeIn", { delay: 1000, duration: 1000 });
 
 			if ($html) {
 				$data_cols.html($columns);
@@ -368,20 +371,15 @@ var UI = {
     Events
 **************/
 
-if (localStorage.getItem("subscribed") === "true") {
-	$subscribe.remove();
-}
-
 /* Input behavior. */
 $("input").on("keydown", function(event) {
 	if (event.keyCode === 13 && this.value !== "") {
-		if (this.id === "search" && this.value !== "variable (case sensitive) or domain...") {
+		if (event.target.id === "search" && this.value !== "variable (case sensitive) or domain...") {
 			UI.query(event.target);
-		} else if (this.id === "subscribe" & this.value !== "email@domain.com") {
-			localStorage.setItem("subscribed", "true");
-
-			$subscribe_.submit();
-			$subscribe.remove();
+		} else if (this.id === "subscribe" && this.value) {
+			$subscribe_
+				.submit()
+				.remove();
 		}
 	}
 });
@@ -392,11 +390,7 @@ $("input").on("keydown", function(event) {
 
 $(window).load(function() {
 	$.Velocity.RunSequence([
-		{ elements: $header_logo, properties: "transition.fadeIn", options: { delay: 100, duration: 800} },
-		{ elements: $slogan, properties: "transition.fadeIn", options: { delay: 400, duration: 725, sequenceQueue: false } },
-		{ elements: $search_, properties: "transition.clipBottomIn", options: { duration: 725, sequenceQueue: false } },
-		{ elements: $queryButtons, properties: "transition.fadeIn", options: { delay: 200, duration: 300, stagger: 125, sequenceQueue: false  } },
-		{ elements: $howTo, properties: "transition.clipBottomIn", options: { delay: 150, duration: 900, sequenceQueue: false } },
+		{ elements: $header_logo.add($slogan).add($search_).add($queryButtons).add($howTo).add($howTo.find("p")), properties: "transition.fadeIn", options: { stagger: 50, duration: 300 } },
 		{ elements: $header_logo_o, properties: { opacity: [ 0.6, 1 ] }, options: { sequenceQueue: false, duration: 500, loop: 2 } },
 		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 500
 			, begin: 
