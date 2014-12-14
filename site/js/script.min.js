@@ -321,7 +321,7 @@ var UI = {
 						break;
 
 					case "libs":
-						$columns = "<h3 class='middle'><span>Top Libs</span></h3><div>library <a href='https://107.170.240.125/libraries.txt'>Download list</a></div><div>site count</div>";
+						$columns = "<h3 class='middle'><span>Top Libs</span></h3><div>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div>site count</div>";
 						$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.'>" + prettifyName(match.library) + "</a> <span class='text-blue'>⬈</span></a>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
