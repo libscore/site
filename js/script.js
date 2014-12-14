@@ -126,11 +126,10 @@ var UI = {
 	query: function() {
 		var data = $search.val();
 		
-
 		$("#header-logo").on("click", function (){
 			if ($("body").hasClass("results")) {
-       window.location.hash = '';
-        $body.removeClass("results");
+      			window.location.hash = "";
+        		$body.removeClass("results");
 				$data_table.empty();
 				$data_table.removeClass("show");
 				$data_cols.removeClass("show");
