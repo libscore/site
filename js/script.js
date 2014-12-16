@@ -129,6 +129,7 @@ var UI = {
 		$("#header-logo").on("click", function (){
 			if ($("body").hasClass("results")) {
       			window.location.hash = "";
+      			$data_scroll.hide();
         		$body.removeClass("results");
 				$data_table.empty();
 				$data_table.removeClass("show");
@@ -139,7 +140,7 @@ var UI = {
 
 		function request (query, callback) {
 			var API = {
-					hostname: "http://107.170.240.125/v1/",
+					hostname: "http://api.libscore.com/v1/",
 					librariesPath: "libraries/",
 					sitesPath: "sites/",
 					scriptsPath: "scripts/"
@@ -190,7 +191,7 @@ var UI = {
 			query = $.trim(query.replace(/^(^https?:\/\/)?(www\.)?/i, "").replace(/^jQuery\./i, "$.").replace(/\.js$/i, ""));
 			if (query === "jquery" || query === "$") {
 				if (query === "jquery") {
-					alert("Be careful: Variable lookup is case sensitive. We've gone ahead and turned 'jquery' into 'jQuery' for you. Remember that you need to enter the exact case-sensitive VARIABLE that a library epxoses itself under -- not simply the name of the library.");
+					alert("Be careful: Variable lookup is case sensitive. We've gone ahead and turned 'jquery' into 'jQuery' for you. Remember that you need to enter the exact case-sensitive VARIABLE that a library exposes itself under -- not simply the name of the library.");
 				}
 
 				query = "jQuery";
@@ -401,10 +402,10 @@ $(window).load(function() {
 						$search.val(hash);
 						UI.query();
 					} else {
-						$search.attr("placeholder", "variable (case sensitive) or domain...");
+						$search.attr("placeholder", "search for a JavaScript variable (case sensitive) or a domain name...");
 					}
 
-					[ "location()", "hash()", "map()", "<a href='//medium.com/@Shapiro/be93165fa497'>About</a>" ].forEach(function(val, i) {
+					[ "location()", "hash()", "map()", "<a href='//medium.com/@Shapiro/introducing-libscore-com-be93165fa497'>Learn more <span style='color: #29bd66'>⬈</span></a>" ].forEach(function(val, i) {
 						$.Velocity($header_code_property, "transition.vanishBottomIn",
 							{ 
 								delay: i === 0 ? 125 : 0,

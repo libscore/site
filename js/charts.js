@@ -117,7 +117,7 @@
       value: 1.2,
       color: "#2a4bbd",
       // highlight: "#616774",
-      label: "TypeKit"
+      label: "Typekit"
     },
     {
       value: 1.2,
@@ -132,31 +132,31 @@
       value: .79,
       color:"#29bd66",
       // highlight: "#FF5A5E",
-      label: "Backbone"
+      label: "Backbone (Backbone)"
     },
     {
       value: .49,
       color: "#29a478",
       // highlight: "#5AD3D1",
-      label: "Angular"
+      label: "Angular (angular)"
     },
     {
       value: .2,
       color: "#295cb0",
       // highlight: "#616774",
-      label: "Knockout"
+      label: "Knockout (KO)"
     },
     {
       value: .002,
       color: "#298c8b",
       // highlight: "#FFC870",
-      label: "React"
+      label: "React (React)"
     },
     {
       value: .0018,
       color: "#29749d",
       // highlight: "#A8B3C5",
-      label: "Ember"
+      label: "Ember (Ember)"
     }
   ];
 
@@ -171,7 +171,7 @@
       value: 2.2,
       color: "#29a478",
       // highlight: "#5AD3D1",
-      label: "Socrecard Research"
+      label: "Scorecard Research"
     },
     {
       value: 1.9,
