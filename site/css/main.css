@@ -575,7 +575,7 @@ footer {
   opacity: 0; }
 
 #body-bigError, #body-bigCount, #subSlogan, #search_, .data_more, #data_scroll {
-  /*display: none;*/ }
+  display: none; }
 
 #howTo {
   display: block; }
