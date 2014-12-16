@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Libscore</title>
+	<link href="css/normalize.css" rel="stylesheet">
+	<link href="css/main.css" rel="stylesheet">
+</head>
+<body>
+	<div id="searchSymbols"></div>
+
+	<div id="searchWrap">
+		<header id="header">
+			<div id="header-code">
+				<span id="header-code-object">window.</span><span id="header-code-property">closure()</span>
+			</div>
+			<div id="header-logo">
+				Libsc<o>o<span></span></o>re
+			</div>
+		</header>
+
+		<main>
+			<div id="slogan">
+				Libscore scans the top <strong>million</strong> sites on the web to collect <br> stats on <strong>JavaScript library</strong> usage. Explore this month's data. 
+			</div>
+
+			<div id="query">
+				<div id="search_">
+					<input id="search" class="field-input" type="text" value="" placeholder="variable (case sensitive) or domain..." />
+				</div>
+				<div id="queryButtons">
+					<span><p data-query="*">Top Libs</p></span>
+					<span><p data-query="script:*">Top Scripts</p></span>
+					<span><p data-query="*.*">Top Sites</p></span>
+				</div>
+			</div>
+
+			<a href="#" class="learnMore">How do I use Libscore?</a>
+
+			<div id="howTo">
+				<p>
+					In the search box above, enter the <strong>variable</strong> that a JavaScript library exposes itself under, e.g. <b data-query>jQuery</b>, <b data-query>Modernizr</b>, <b data-query>$.ui</b>, or <b data-query>$.fn.fancybox</b>.
+				</p>
+				<p>
+					You can also search for sites containing an external script by prefixing a query with <i>script:</i>, e.g. <b data-query>script:stats.wp.com</b> or <b data-query>script:use.typekit.net</b>.
+				</p>
+				<p>
+					Alternatively, you can retrieve all libraries used on a site by querying for its domain name, e.g. <b data-query>stripe.com</b> or <b data-query>digitalocean.com</b>.
+				</p>
+				<p class="graphs"><a id="view_trending_data" href="data.html">View Trending Data</a></p>
+			</div>
+		</main>
+
+		<form 
+			id="subscribe_"
+			class="field hint--right"
+			action="//libscore.us9.list-manage.com/subscribe/post?u=30c0d4c5d64d5d9fcf7b76792&amp;id=69666fd115" method="post" name="mc-embedded-subscribe-form"
+			target="_blank"
+			novalidate
+		>
+
+			<input type="text" name="b_30c0d4c5d64d5d9fcf7b76792_69666fd115" tabindex="-1" style="position: absolute; left: -1000000px">
+			<div>
+				<p>Get notified when a new library surges in popularity!</p>
+				<input id="subscribe" name="EMAIL" class="field-input" type="text" placeholder="Enter Email Address" />
+			</div>
+		</form>
+	</div>
+
+	<div id="data_scroll">↓</div>
+
+	<div id="data">
+		<div id="col_wrap">
+			<div id="data_cols"></div>
+		</div>
+		<table></table>
+	</div>
+
+	<footer>
+		<div id="authors">
+			<a class="footer-text" href="http://twitter.com/shapiro">Julian Shapiro</a>
+			<span class="footer-text--divider">+</span>
+			<a class="footer-text" href="http://twitter.com/neutralthoughts">Thomas Davis</a>
+			<span class="footer-text--divider">+</span>
+			<a class="footer-text" href="http://twitter.com/chasingUX">Jesse Chase</a>
+		</div>
+		
+		<div id="sponsors">
+			<a href="https://stripe.com" id="stripe"/></a>
+			<span class="footer-text--divider">+</span>
+			<a href="https://digitalocean.com" id="digitalocean"/></a>
+		</div>
+	</footer> 
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/velocity.min.js"></script>
+	<script src="js/velocity.ui.min.js"></script>
+	<script src="js/velocity.ui.custom.min.js"></script>
+	<script src="js/numeral.min.js"></script>
+	<script src="js/script.js"></script>
+</body>
+</html>
