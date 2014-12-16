@@ -26,7 +26,7 @@
 
 			<div id="query">
 				<div id="search_">
-					<input id="search" class="field-input" type="text" value="" placeholder="variable (case sensitive) or domain..." />
+					<input id="search" class="field-input" type="text" value="" placeholder="search for a JavaScript variable (case sensitive) or domain name..." />
 				</div>
 				<div id="queryButtons">
 					<span><p data-query="*">Top Libs</p></span>
@@ -39,7 +39,7 @@
 
 			<div id="howTo">
 				<p>
-					In the search box above, enter the <strong>variable</strong> that a JavaScript library exposes itself under, e.g. <b data-query>jQuery</b>, <b data-query>Modernizr</b>, <b data-query>$.ui</b>, or <b data-query>$.fn.fancybox</b>.
+					<strong>In the search box above</strong>, enter the case-sensitive variable that a library exposes itself as, e.g. <b data-query>Modernizr</b>, <b data-query>$.ui</b>, or <b data-query>$.fn.fancybox</b>.
 				</p>
 				<p>
 					You can also search for sites containing an external script by prefixing a query with <i>script:</i>, e.g. <b data-query>script:stats.wp.com</b> or <b data-query>script:use.typekit.net</b>.
@@ -98,5 +98,15 @@
 	<script src="js/velocity.ui.custom.min.js"></script>
 	<script src="js/numeral.min.js"></script>
 	<script src="js/script.js"></script>
+
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	  ga('create', 'UA-50550635-2', 'auto');
+	  ga('send', 'pageview');
+	</script>
 </body>
 </html>

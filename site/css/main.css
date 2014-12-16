@@ -223,7 +223,7 @@ body {
     #query #queryButtons p {
       padding: 0 1px 1px 1px;
       margin: 0;
-      /*border-bottom: 1px solid #d9d9d9;*/
+      border-bottom: 1px solid #d9d9d9;
       font-size: 0.85rem;
       display: inline;
       transition: all 150ms; }
