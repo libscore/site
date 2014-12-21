@@ -151,12 +151,6 @@
       color: "#298c8b",
       // highlight: "#FFC870",
       label: "React (React)"
-    },
-    {
-      value: .0018,
-      color: "#29749d",
-      // highlight: "#A8B3C5",
-      label: "Ember (Ember)"
     }
   ];
 
