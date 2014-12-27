@@ -39,14 +39,14 @@ var hiddenVariableGroups = /^(Goog_.+|G(A|S)_google.+|WebForm_.+|WR[A-z]{1,2}|Cl
 
 var $html = $("html"),
 	$body = $("body"),
-	$bigError = $("#body-bigError"),
-	$bigCount = $("#body-bigCount"),
 	$header_code = $("#header-code"),
 	$header_code_object = $("#header-code-object"),
 	$header_code_property = $("#header-code-property"),
 	$header_logo = $("#header-logo"),
 	$header_logo_o = $("#header-logo o"),
 	$main = $("main"),
+	$slogan = $("#slogan"),
+	$subSlogan = $("#subSlogan"),
 	$data = $("#data"),
 	$data_table = $("#data table"),
 	$data_cols = $("#data_cols"),
@@ -56,27 +56,28 @@ var $html = $("html"),
 	$search_ = $("#search_"),
 	$search = $("#search"),
 	$searchSymbols = $("#searchSymbols"),
+	$queryButtons = $("#queryButtons span"),
+	$howTo = $("#howTo"),
 	$footer = $("footer"),
 	$subscribe_ = $("#subscribe_"),
-	$subscribe = $("#subscribe");
+	$subscribe = $("#subscribe"),
+	$searchWrap = $("#searchWrap");
+	
 
 /**************
     Global
 **************/
 
-$(window).on("mousewheel", function(event) {
-	$data_table[0].scrollTop += event.originalEvent.deltaY / 2;
-	$data_scroll.filter(":visible").velocity("transition.fadeOut");
+$body.on("click", "a", function(event) {
+	if (event.target.id !== "view_trending_data") {
+		event.preventDefault();
+		window.open(event.target.href)
+	}
 });
 
-$body.on("mousedown", function(event) {
+$body.on("click", "[data-query]", function(event) {
 	var target = event.target,
 		dataQuery = target.getAttribute("data-query");
-
-	if (target.href) {
-		event.preventDefault();
-		window.open(target.href)
-	}
 
 	if (dataQuery !== null) {
 		var query = dataQuery || $(target).text();
@@ -94,9 +95,11 @@ $body.on("mousedown", function(event) {
 				}, j * (18 - Math.min(12, query.length)) * 3);
 			})(i);
 		}
-
-		$.Velocity(target, "callout.pulse", 250);
 	}
+});
+
+$(window).on("scroll", function() {
+	$data_scroll.hide();
 });
 
 /***************
@@ -107,97 +110,37 @@ $search.one("mouseup", function() {
 	$search.select();
 });
 
-$subscribe.one("mouseup", function() {
-	$subscribe
-		.val("email@domain.com")
-		.select();
-});
-
-$data_scroll.one("mousedown", function() {
-	$data_table[0].scrollTop += 50;
-	$data_scroll.velocity("transition.slideDownBigOut");
-});
-
 /**************
       UI
 **************/
 
 var UI = {
 	loading: false,
-	showCount: function() {
-		$.Velocity.RunSequence([
-			{ elements: $bigCount, properties: { color: "#2eca3f" }, options: { duration: 1 } },
-			{ elements: $bigCount, properties: "transition.vanishBottomIn", options: { duration: 225 } },
-			{ elements: $bigCount, properties: "callout.flicker.text" },
-			{ elements: $bigCount, properties: { opacity: 0.05 }, options: { delay: 250, duration: 750 } },
-			{ elements: $bigCount, properties: { color: "#000000" }, options: { duration: 550 } }
-		]);
-	},
-	hideCount: function() {
-		$.Velocity.RunSequence([
-			{ elements: $bigCount, properties: "transition.fadeOut", options: { duration: 575 } }
-		]);
-	},
 	error: function() {
-		$body.velocity("stop", true);
+		$search.addClass('error');
 
 		$.Velocity.RunSequence([
-			{ elements: $search_, properties: "callout.shake", options: { duration: 375, sequenceQueue: false } },
-			{ elements: $body, properties: { borderColor: "#ff0000" }, options: { sequenceQueue: false, duration: 400 } },
-			{ elements: $bigError, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 225 } },
-			{ elements: $bigError, properties: "transition.fadeOut", options: { duration: 300 } },
-			{ elements: $body, properties: "reverse", options: { sequenceQueue: false, duration: 500 } }
+			{ elements: $search_, properties: "callout.shake", options: { delay: 800, duration: 450, sequenceQueue: false } }
 		]);
 	},
 	query: function() {
 		var data = $search.val();
-
-		$.Velocity.RunSequence([
-			{ elements: $search, properties: { scaleX: [ 0, "easeOutQuad" ], opacity: 0 }, options: { sequenceQueue: false, duration: 225 } },
-			{ elements: $body, properties: { borderColor: "#3dd46d" }, options: { duration: 400, sequenceQueue: false } },
-			{ elements: $sectionHeader_search, properties: { opacity: 0.45 }, options: { duration: 300, sequenceQueue: false } },
-			{ elements: $sectionHeader_search.find("o"), properties: "callout.flicker", options: { delay: 300 } }
-		]);
-
-		(function indicator () {
-			var symbols = [ "△", "▱", "▽", "◯" ];
-
-			symbols.forEach(function(symbol, index) {
-				$.Velocity($searchSymbols, "reverse");
-				$.Velocity(
-					$searchSymbols,
-					{ 
-						opacity: [ 0, "easeInOutsine" ], 
-						color: "#79ffd6",
-						scale: 1.5 - index/20
-					}, 
-					{ 
-						duration: 225,
-						easing: "linear",
-						begin: function() { 
-							$searchSymbols.html(symbol);
-						},
-						complete: function() {
-							if (UI.loading === false) {
-								$search
-									.velocity({ scaleX: [ "100%", "easeInOutCirc" ], opacity: [ 1, "linear" ] }, { sequenceQueue: false, duration: 225 });
-
-								$.Velocity.RunSequence([
-									{ elements: $body, properties: { borderColor: "#000" }, options: { queue: false } },
-									{ elements: $sectionHeader_search, properties: { opacity: 1 }, options: { duration: 700 } }
-								]);
-							} else if (index === symbols.length - 1) {
-								indicator();
-							}
-						}
-					}
-				);
-			});
-		})();
+		
+		$("#header-logo").on("click", function (){
+			if ($("body").hasClass("results")) {
+      			window.location.hash = "";
+      			$data_scroll.hide();
+        		$body.removeClass("results");
+				$data_table.empty();
+				$data_table.removeClass("show");
+				$data_cols.removeClass("show");
+				$searchSymbols.removeClass("show");
+			}
+		});
 
 		function request (query, callback) {
 			var API = {
-					hostname: "//api.libscore.com/v1/",
+					hostname: "http://api.libscore.com/v1/",
 					librariesPath: "libraries/",
 					sitesPath: "sites/",
 					scriptsPath: "scripts/"
@@ -205,26 +148,41 @@ var UI = {
 				queryNormalized;
 
 			function ajax(url) {
+				$search.removeClass('error');
 				UI.loading = true;
+				$data_table.removeClass('show');
+				$data_cols.removeClass("show");
+				$body.addClass("results");
+				$searchSymbols.addClass("show");
 				$html.css("cursor", "wait");
+				
+				//giving a lag to let the animation complete
+				setTimeout(function(){
+					$.ajax({
+						url: API.hostname + url,
+						dataType: "json",
+						complete: function() {
+							// UI.loading = false;
+							$searchSymbols.removeClass("show");
+							$html.css("cursor", "default");
+						},
+						success: function (response) {
+							if (response && response.meta) {
 
-				$.ajax({
-					url: API.hostname + url,
-					dataType: "json",
-					complete: function() {
-						UI.loading = false;
-						$html.css("cursor", "default");
-					},
-					success: function (response) {
-						if (response && response.meta) {
-							callback(response);
-						} else {
-							UI.error();
-						}
-					},
-					error: UI.error
-				});
+								$(window).scrollTop(0);
+								callback(response);
+								$data_table.addClass('show');
+								$data_cols.addClass("show");
+							} else {
+								UI.error();
+							}
+						},
+						error: UI.error
+					});
+				}, 700);
 			}
+
+			$data_scroll.velocity("fadeOut");
 
 			if (/\.js$/.test(query)) {
 				alert("Be careful: We noticed you suffixed your search query with '.js'. Instead, you need to enter the exact case-sensitive VARIABLE that a library exposes itself under -- not simply the name of the library.");
@@ -233,12 +191,14 @@ var UI = {
 			query = $.trim(query.replace(/^(^https?:\/\/)?(www\.)?/i, "").replace(/^jQuery\./i, "$.").replace(/\.js$/i, ""));
 			if (query === "jquery" || query === "$") {
 				if (query === "jquery") {
-					alert("Be careful: Variable lookup is case sensitive. We've gone ahead and turned 'jquery' into 'jQuery' for you. Remember that you need to enter the exact case-sensitive VARIABLE that a library epxoses itself under -- not simply the name of the library.");
+					alert("Be careful: Variable lookup is case sensitive. We've gone ahead and turned 'jquery' into 'jQuery' for you. Remember that you need to enter the exact case-sensitive VARIABLE that a library exposes itself under -- not simply the name of the library.");
 				}
 
 				query = "jQuery";
 			}
+
 			$search.val(query);
+			// disabling this for dev
 			window.location.hash = query;
 
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
@@ -252,7 +212,7 @@ var UI = {
 			}
 
 			if (query === "libscore.com") {
-				alert("OMG. RECURSION!!@#!KJ$K BRAIN EXPLOSION. AHAHAHAHAHAHHHHHHH\n\nJust kidding. Let's pull some data from you.")
+				alert("OMG. RECURSION!!@#!KJ$K BRAIN EXPLOSION. AHAHAHAHAHAHHHHHHH\n\nJust kidding. But there's no data to show right now...")
 			}
 
 			switch (queryNormalized) {
@@ -284,15 +244,13 @@ var UI = {
 		}
 
 		function prettifyName (name, type) {
-			var prettified = name;
+			var prettified = name || "";
 			var truncated = false;
 
-			if (name.length > 40) {
+			if (name && name.length > 40) {
 				truncated = true;
 				prettified = prettified.slice(0, 37);
 			}
-
-			prettified = prettified.replace(/\./g, "<span class='accent'>.</span>");
 
 			if (truncated) {
 				prettified = "<span title='" + name + "'>" + prettified + "…</span>";
@@ -318,6 +276,7 @@ var UI = {
 		var matches;
 
 		request(data, function(response) {
+
 			var $html = "";
 			var $columns;
 
@@ -335,46 +294,46 @@ var UI = {
 
 				switch (UI.requestTarget) {
 					case "site":
-						$columns = "<div>library</div><div>site count</div>";
+						$columns = "<h3 class='middle'><span>Site: </span> " + data + " </h3><div>library</div>" + data + "<div>site count</div>";
 
 						var isScript = /^script:/.test(match.name);
 
 						if (isScript) {
 							$matchData = "<td><a href='//" + match.name.replace(/^script:/, "") + "'>" + prettifyName(match.name, match.type) + "</a> <span class='text-blue'>⬈</span></td>";
 						} else {
-							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.name, match.type)
-							$matchData += " <span class='text-blue'>" + (match.github ? "⬈" : "<span class='hint' data-hint='Click to help track down this library.'>?</span>") + "</span></a>";
+							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.name, match.type);
+							$matchData += " <span class='text-blue'>⬈</span></a>";
 						}
 
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break
 
 					case "sites":
-						$columns = "<div>site</div><div>site rank</div>";
+						$columns = "<h3 class='middle'><span>Top Sites</span></h3><div>site</div><div>site rank</div>";
 						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'>→</span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "lib":
-						$columns = "<div><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://api.libscore.com/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div>site rank</div>";
+						$columns = "<h3 class='middle'><span>Library: </span> " + data + " </h3><div><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⬈</span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "libs":
-						$columns = "<div>library <a href='https://api.libscore.com/libraries.txt'>Download list</a></div><div>site count</div>";
-						$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.library) + " <span class='text-blue'>" + (match.github ? "⬈" : "<span class='hint' data-hint='Click to help track down this library.'>?</span>") + "</span></a>";
+						$columns = "<h3 class='middle'><span>Top Libs</span></h3><div>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div>site count</div>";
+						$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.'>" + prettifyName(match.library) + "</a> <span class='text-blue'>⬈</span></a>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
 
 					case "script":
-						$columns = "<div>" + prettifyNumber(response.count) + " sites</div><div>site rank</div>";
+						$columns = "<h3 class='middle'><span>Script: </span> " + data + " </h3><div>" + prettifyNumber(response.count) + " sites</div><div>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'>⬈</span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "scripts":
-						$columns = "<div>script</div><div>site count</div>";
+						$columns = "<h3 class='middle'><span>Top Scripts</span></h3><div>script</div><div>site count</div>";
 						$matchData = "<td><span data-query='script:" + match.script + "'>" + prettifyName(match.script) + "</span> <span class='text-green'>→</span></td>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
@@ -383,19 +342,11 @@ var UI = {
 				$html += "<tr>" + $matchData + "</tr>";
 			});
 
-			switch (UI.requestTarget) {
-				case "lib":
-					$bigCount.html(prettifyNumber(response.count));
-					UI.showCount();
-					break;
-
-				default:
-					UI.hideCount();
-			}
-
 			$data_table
-				.css("opacity", 0)
-				[0].scrollTop = 0;
+				.scrollTop = 0;
+
+			$data_scroll
+				.velocity("transition.fadeIn", { delay: 1000, duration: 1000 });
 
 			if ($html) {
 				$data_cols.html($columns);
@@ -405,29 +356,13 @@ var UI = {
 				$data_table.html("<tr><td class='text-red'>No libraries or scripts were detected on this site.</td><td class='text-red'>Ø</td></tr>");
 			}
 
-			$.Velocity.RunSequence([
-				{ elements: $data_cols.find("div"), properties: "transition.glitchIn" },
-				{ elements: $data_table, properties: "transition.vanishBottomIn", options: { 
-					sequenceQueue: false,
-					display: "block",
-					duration: 475,
-					complete: function() {
-						if ($data_table[0].scrollHeight > $data_table.height()) {
-							$data_scroll
-								.velocity("stop", true)
-								.velocity("transition.fadeIn", 850);
+			if (matches.length > 900) {
+				$data_table.append("<tr id='data_more'><td>Results after 1,000 are not shown. Query our <a href='https://github.com/julianshapiro/libscore'>API</a> for a complete list.</td><td></td></tr>");
+			}
 
-							if (matches.length > 900) {
-								$data_table.append("<tr id='data_more'><td>Results after 1,000 are not shown. Query our <a href='https://github.com/julianshapiro/libscore'>API</a> for a complete list.</td><td></td></tr>");
-							}
-						} else {
-							$data_scroll.css("opacity", 0);
-						}
-					}
-				} },
-				{ elements: $subscribe_.filter(":hidden"), properties: "transition.glitchIn", options: { delay: 4500, duration: 300 } },
-				{ elements: $subscribe.filter(":hidden"), properties: "transition.glitchIn", options: { delay: 25, duration: 300 } }
-			]);
+			setTimeout(function() {
+				$("#data").resize();
+			}, 2000);
 		});
 	}
 };
@@ -436,20 +371,15 @@ var UI = {
     Events
 **************/
 
-if (localStorage.getItem("subscribed") === "true") {
-	$subscribe.remove();
-}
-
 /* Input behavior. */
 $("input").on("keydown", function(event) {
 	if (event.keyCode === 13 && this.value !== "") {
-		if (this.id === "search" && this.value !== "variable (case sensitive) or domain...") {
+		if (event.target.id === "search" && this.value !== "variable (case sensitive) or domain...") {
 			UI.query(event.target);
-		} else if (this.id === "subscribe" & this.value !== "email@domain.com") {
-			localStorage.setItem("subscribed", "true");
-
-			$subscribe_.submit();
-			$subscribe.remove();
+		} else if (this.id === "subscribe" && this.value) {
+			$subscribe_
+				.submit()
+				.remove();
 		}
 	}
 });
@@ -458,29 +388,24 @@ $("input").on("keydown", function(event) {
      Init
 **************/
 
-$.Velocity.hook($footer, "translateX", "-50%");
-$.Velocity.hook($bigCount, "translateX", "-50%");
-
 $(window).load(function() {
 	$.Velocity.RunSequence([
-		{ elements: $footer, properties: "transition.vanishBottomIn", options: { delay: 265, duration: 700 } },
-		{ elements: $main, properties: "transition.clipBottomIn", options: { delay: 265, duration: 625, sequenceQueue: false } },
-		{ elements: $body, properties: { borderColor: [ "#000", "#fff" ] }, options: { duration: 1300, sequenceQueue: false } },
-		{ elements: $header_logo, properties: { opacity: [ 1, 0.1 ] }, options: { delay: 300, duration: 425, sequenceQueue: false } },
-		{ elements: $("#query [data-query]"), properties: "callout.pulse", options: { delay: 150, duration: 350, stagger: 85, sequenceQueue: false } },
+		{ elements: $header_logo.add($slogan).add($search_).add($queryButtons).add($howTo).add($howTo.find("p")), properties: "transition.fadeIn", options: { stagger: 50, duration: 300 } },
 		{ elements: $header_logo_o, properties: { opacity: [ 0.6, 1 ] }, options: { sequenceQueue: false, duration: 500, loop: 2 } },
-		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 1250, begin: 
+		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 500
+			, begin: 
 			function() {
 					var hash = window.location.hash.slice(1);
 
 					if (hash) {
+						$search.attr("placeholder", hash);
 						$search.val(hash);
 						UI.query();
 					} else {
-						$search.val("variable (case sensitive) or domain...");
+						$search.attr("placeholder", "search for a JavaScript variable (case sensitive) or a domain name...");
 					}
 
-					[ "location()", "hash()", "map()", "<a href='//medium.com/@Shapiro/be93165fa497'>About</a>" ].forEach(function(val, i) {
+					[ "location()", "hash()", "map()", "<a href='//medium.com/@Shapiro/introducing-libscore-com-be93165fa497'>Learn more <span style='color: #29bd66'>⬈</span></a>" ].forEach(function(val, i) {
 						$.Velocity($header_code_property, "transition.vanishBottomIn",
 							{ 
 								delay: i === 0 ? 125 : 0,
@@ -506,6 +431,34 @@ $(window).load(function() {
 			}
 			}
 		},
-		{ elements: $header_logo_o, properties: { opacity: 0.7, color: "#0f1523" }, options: { duration: 2000, loop: true } }
+		{ elements: $header_logo_o, properties: { opacity: 0.9, color: "#24A85A" }, options: { duration: 2000, loop: true } }
 	]);
+});
+
+function stickyNav(){
+	var scrollTop     = $(window).scrollTop(),
+  elementOffset = $('#query').offset().top + 65,
+  distance      = (elementOffset - scrollTop);
+
+	if(scrollTop > distance){
+		$("#searchWrap").addClass("sticky");
+		$("#data").addClass("sticky");
+	} else {
+		$("#searchWrap").removeClass("sticky");
+		$("#data").removeClass("sticky");
+	}
+}
+
+if ($(window).width() < 850) {
+	$(window).on('scroll', function() {
+		stickyNav();
+	});
+}
+
+$(window).resize( function(e){
+  if ($(window).width() < 850) {
+		$(window).on('scroll', function() {
+			stickyNav();
+		});
+	}
 });
