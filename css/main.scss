@@ -925,6 +925,8 @@ footer {
 
 		h1 {
 			margin: -2px 0 0 0;
+			position: relative;
+			top: -2px;
 			font-size: 13px;
 			font-family: "Avenir Medium";
 			letter-spacing: 0.8px;
@@ -1087,7 +1089,7 @@ footer {
 	.charts {
 		#header {
 			margin: 22px 0 13px 0;
-			
+
 			#header-logo {
 				font-size: 52px;
 			}
@@ -1095,7 +1097,6 @@ footer {
 			h1 {
 				font-size: 11px;
 				top: -3px;
-				position: relative;
 			}
 		}
 	}
