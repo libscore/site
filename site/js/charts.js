@@ -21,24 +21,20 @@
     labels: ["jQuery", "jQuery UI", "Modernizr", "Ajax Form", "Fancy Box", "Carousel"],
     datasets: [
       {
-          fillColor: "rgba(41,189,102,1)",
-          strokeColor: "rgba(220,220,220,0.8)",
-          highlightFill: "rgba(41,189,102,0.7)",
-          highlightStroke: "rgba(220,220,220,1)",
-          data: [63.4, 17.6, 10.9, 8.7, 7.9, 7.3]
+        fillColor: "#dfdfdf",
+        highlightFill: "#29bd66",
+        data: [63.4, 17.6, 10.9, 8.7, 7.9, 7.3]
       }
     ]
   };
 
   var topABData = {
-    labels: ["Optimizely", "Visual Website Optimizer"],
+    labels: ["Optimizely", "Visual Website Opt."],
     datasets: [
       {
-          fillColor: "rgba(41,189,102,1)",
-          strokeColor: "rgba(220,220,220,0.8)",
-          highlightFill: "rgba(41,189,102,0.7)",
-          highlightStroke: "rgba(220,220,220,1)",
-          data: [.86, .59]
+        fillColor: "#dfdfdf",
+        highlightFill: "#29bd66",
+        data: [.86, .59]
       }
     ]
   };
@@ -47,11 +43,9 @@
     labels: ["Zopim", "Olark", "LiveChat"],
     datasets: [
       {
-          fillColor: "rgba(41,189,102,1)",
-          strokeColor: "rgba(220,220,220,0.8)",
-          highlightFill: "rgba(41,189,102,0.7)",
-          highlightStroke: "rgba(220,220,220,1)",
-          data: [.94, .44, .34]
+        fillColor: "#dfdfdf",
+        highlightFill: "#29bd66",
+        data: [.94, .44, .34]
       }
     ]
   };
@@ -60,95 +54,86 @@
     labels: ["Wordpress", "Blogger", "Shopify", "Squarespace"],
     datasets: [
       {
-          fillColor: "rgba(41,189,102,1)",
-          strokeColor: "rgba(220,220,220,0.8)",
-          highlightFill: "rgba(41,189,102,0.7)",
-          highlightStroke: "rgba(220,220,220,1)",
-          data: [4.2, 2.0, .28, .14]
+        fillColor: "#dfdfdf",
+        highlightFill: "#29bd66",        
+        data: [4.2, 2.0, .28, .14]
       }
     ]
   };
 
-
   var topScriptsData = [
     {
       value: 55.9,
-      color:"#29bd66",
+      color:"#1ea866",
       // highlight: "#FF5A5E",
       label: "Google Analytics"
     },
     {
       value: 18.6,
-      color: "#29a478",
+      color: "#2fb977",
       // highlight: "#5AD3D1",
       label: "Facebook Like Button"
     },
     {
       value: 12.1,
-      color: "#298c8b",
+      color: "#42c687",
       // highlight: "#FFC870",
       label: "Twitter Tweet Button"
     },
     {
       value: 2.7,
-      color: "#29749d",
+      color: "#60d39c",
       // highlight: "#A8B3C5",
       label: "Google Maps Widget"
     },
     {
       value: 2.0,
-      color: "#295cb0",
+      color: "#85e0b4",
       // highlight: "#616774",
       label: "New Relic"
     },
     {
       value: 2.0,
-      color: "#2a4bbd",
+      color: "#a9eecd",
       // highlight: "#616774",
       label: "Pinterest Pin Button"
     },
     {
       value: 1.3,
-      color: "#2a4bbd",
+      color: "#c3f5dd",
       // highlight: "#616774",
       label: "Adroll"
     },
     {
       value: 1.2,
-      color: "#2a4bbd",
+      color: "#c3f5dd",
       // highlight: "#616774",
       label: "Typekit"
-    },
-    {
-      value: 1.2,
-      color: "#2a4bbd",
-      // highlight: "#616774",
-      label: "LinkedIn Share Button"
     }
   ];
 
   var topMVCData = [
     {
       value: .79,
-      color:"#29bd66",
+      color:"#1ea866",
       // highlight: "#FF5A5E",
       label: "Backbone (Backbone)"
     },
     {
       value: .49,
-      color: "#29a478",
+      color: "#2fb977",
       // highlight: "#5AD3D1",
       label: "Angular (angular)"
     },
     {
       value: .2,
-      color: "#295cb0",
+      color: "#42c687",
       // highlight: "#616774",
       label: "Knockout (KO)"
     },
     {
       value: .002,
-      color: "#298c8b",
+      color: "#60d39c",
       // highlight: "#FFC870",
       label: "React (React)"
     }
@@ -157,49 +142,49 @@
   var topAnalyticsData = [
     {
       value: 55.9,
-      color:"#29bd66",
+      color:"#1ea866",
       // highlight: "#FF5A5E",
       label: "Google Analytics"
     },
     {
       value: 2.2,
-      color: "#29a478",
+      color: "#2fb977",
       // highlight: "#5AD3D1",
       label: "Scorecard Research"
     },
     {
       value: 1.9,
-      color: "#295cb0",
+      color: "#42c687",
       // highlight: "#616774",
       label: "StatCounter"
     },
     {
       value: 1.4,
-      color: "#298c8b",
+      color: "#60d39c",
       // highlight: "#FFC870",
       label: "Histats"
     },
     {
       value: .75,
-      color: "#29749d",
+      color: "#85e0b4",
       // highlight: "#A8B3C5",
       label: "Alexa"
     },
     {
       value: .62,
-      color: "#29749d",
+      color: "#a9eecd",
       // highlight: "#A8B3C5",
       label: "Clicky"
     },
     {
       value: .56,
-      color: "#29749d",
+      color: "#c3f5dd",
       // highlight: "#A8B3C5",
       label: "Chartbeat"
     },
     {
       value: .36,
-      color: "#29749d",
+      color: "#d5f6e6",
       // highlight: "#A8B3C5",
       label: "Mixpanel"
     }
@@ -209,10 +194,11 @@
     tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%",
     animateRotate: true,
     animation: true,
-    segmentStrokeColor : "#f2f2f2",
-    animationSteps : 60,
+    segmentShowStroke : false,
+    animationSteps : 80,
     animationEasing : "easeOutQuad",
-    percentageInnerCutout : 57,
+    percentageInnerCutout : 60,
+    segmentStrokeWidth : 0,
     legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><p class=\"metric\"><%if(segments[i].label){%><%=segments[i].label%><%}%></p><p class=\"value\"><%=segments[i].value%>%</p></li><%}%></ul>"
   }
 
@@ -221,9 +207,9 @@
     animateRotate: true,
     animation: true,
     scaleShowGridLines: false,
-    scaleGridLineColor : "rgba(0,0,0,.15)",
+    scaleGridLineColor : "red",
     barShowStroke : false,
-    barStrokeWidth : 2,
+    barStrokeWidth : 1,
     barValueSpacing : 5,
     barDatasetSpacing : 3,
     animationEasing : "easeOutQuad",
@@ -256,6 +242,16 @@
   // Top Libraries
   var topLib = new Chart(document.getElementById("topLib").getContext("2d")).Bar(topLibsData, barDefaults);
 
+  topLib.datasets[0].bars[0].fillColor = "#1a6792";
+  topLib.datasets[0].bars[1].fillColor = "#257bab";
+  topLib.datasets[0].bars[2].fillColor = "#399fb9";
+  topLib.datasets[0].bars[3].fillColor = "#45aec8";
+  topLib.datasets[0].bars[4].fillColor = "#61c2da";
+  topLib.datasets[0].bars[5].fillColor = "#73d1e9";
+  topLib.update();
+
+
+
   // Top Scripts
   var topScript = new Chart(document.getElementById("topScript").getContext("2d")).Doughnut(topScriptsData, donutDefaults);
   createLegend(topScript);
@@ -271,11 +267,27 @@
   // Top AB Testing
   var topAB = new Chart(document.getElementById("topAB").getContext("2d")).Bar(topABData, barDefaults);
 
+  topAB.datasets[0].bars[0].fillColor = "#1a6792";
+  topAB.datasets[0].bars[1].fillColor = "#257bab";
+  topAB.update(); 
+
   // Live Chat 
   var topChat = new Chart(document.getElementById("topChat").getContext("2d")).Bar(topChatData, barDefaults);
 
+  topChat.datasets[0].bars[0].fillColor = "#1a6792";
+  topChat.datasets[0].bars[1].fillColor = "#257bab"; 
+  topChat.datasets[0].bars[2].fillColor = "#399fb9"; 
+  topChat.update();
+
   // CMS
   var topCMS = new Chart(document.getElementById("topCMS").getContext("2d")).Bar(topCMSData, barDefaults);
+
+
+  topCMS.datasets[0].bars[0].fillColor = "#1a6792";
+  topCMS.datasets[0].bars[1].fillColor = "#257bab"; 
+  topCMS.datasets[0].bars[2].fillColor = "#399fb9"; 
+  topCMS.datasets[0].bars[3].fillColor = "#45aec8";
+  topCMS.update();
 
   //var myBarChart = new Chart(document.getElementById("topMVC").getContext("2d")).Bar(jesse, donutDefaults);
 

@@ -960,22 +960,23 @@ footer {
 		-moz-column-count: 3;
     -webkit-column-count: 3;
     column-count: 3;
-    -moz-column-gap: 1.7em;
-    -webkit-column-gap: 1.7em;
-    column-gap: 1.7em;
-    -webkit-column-width: 270px;
-    -moz-column-width: 270px;
-    column-width: 270px;
+    -moz-column-gap: 1.4em;
+    -webkit-column-gap: 1.4em;
+    column-gap: 1.4em;
+    -webkit-column-width: 330px;
+    -moz-column-width: 330px;
+    column-width: 330px;
     max-width: 1450px;
 		margin: 0 auto;
 
 		li {
 			width: 100%;
-			margin: .9em 0;
+			margin: .8em 0;
 			list-style: none;
 			border-radius: 2px;
 			background: #f5f5f5;
 			display: inline-block;
+			box-shadow: 0px 0px 1px 0px rgba(1, 1, 1, 0.1);
 			border: 1px solid #DADADA;
 
 			h4 {
@@ -990,7 +991,7 @@ footer {
 			}
 
 			.holder {
-				padding: 22px 25px 25px 25px;
+				padding: 22px 25px 29px 25px;
 
 				canvas {
 		      margin: 0 auto;
@@ -1033,6 +1034,7 @@ footer {
 					text-align: left;
 					display: inline-block;
 			    width: 100%;
+			    box-shadow: none;
 
 					&:hover {
 						background-color: #F5F5F5;
