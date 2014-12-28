@@ -65,49 +65,41 @@
     {
       value: 55.9,
       color:"#1ea866",
-      // highlight: "#FF5A5E",
       label: "Google Analytics"
     },
     {
       value: 18.6,
       color: "#2fb977",
-      // highlight: "#5AD3D1",
       label: "Facebook Like Button"
     },
     {
       value: 12.1,
       color: "#42c687",
-      // highlight: "#FFC870",
       label: "Twitter Tweet Button"
     },
     {
       value: 2.7,
       color: "#60d39c",
-      // highlight: "#A8B3C5",
       label: "Google Maps Widget"
     },
     {
       value: 2.0,
       color: "#85e0b4",
-      // highlight: "#616774",
       label: "New Relic"
     },
     {
       value: 2.0,
       color: "#a9eecd",
-      // highlight: "#616774",
       label: "Pinterest Pin Button"
     },
     {
       value: 1.3,
       color: "#c3f5dd",
-      // highlight: "#616774",
       label: "Adroll"
     },
     {
       value: 1.2,
       color: "#c3f5dd",
-      // highlight: "#616774",
       label: "Typekit"
     }
   ];
@@ -116,25 +108,21 @@
     {
       value: .79,
       color:"#1ea866",
-      // highlight: "#FF5A5E",
       label: "Backbone (Backbone)"
     },
     {
       value: .49,
       color: "#2fb977",
-      // highlight: "#5AD3D1",
       label: "Angular (angular)"
     },
     {
       value: .2,
       color: "#42c687",
-      // highlight: "#616774",
       label: "Knockout (KO)"
     },
     {
       value: .002,
       color: "#60d39c",
-      // highlight: "#FFC870",
       label: "React (React)"
     }
   ];
@@ -143,49 +131,41 @@
     {
       value: 55.9,
       color:"#1ea866",
-      // highlight: "#FF5A5E",
       label: "Google Analytics"
     },
     {
       value: 2.2,
       color: "#2fb977",
-      // highlight: "#5AD3D1",
       label: "Scorecard Research"
     },
     {
       value: 1.9,
       color: "#42c687",
-      // highlight: "#616774",
       label: "StatCounter"
     },
     {
       value: 1.4,
       color: "#60d39c",
-      // highlight: "#FFC870",
       label: "Histats"
     },
     {
       value: .75,
       color: "#85e0b4",
-      // highlight: "#A8B3C5",
       label: "Alexa"
     },
     {
       value: .62,
       color: "#a9eecd",
-      // highlight: "#A8B3C5",
       label: "Clicky"
     },
     {
       value: .56,
       color: "#c3f5dd",
-      // highlight: "#A8B3C5",
       label: "Chartbeat"
     },
     {
       value: .36,
       color: "#d5f6e6",
-      // highlight: "#A8B3C5",
       label: "Mixpanel"
     }
   ];
@@ -251,7 +231,6 @@
   topLib.update();
 
 
-
   // Top Scripts
   var topScript = new Chart(document.getElementById("topScript").getContext("2d")).Doughnut(topScriptsData, donutDefaults);
   createLegend(topScript);
@@ -282,14 +261,10 @@
   // CMS
   var topCMS = new Chart(document.getElementById("topCMS").getContext("2d")).Bar(topCMSData, barDefaults);
 
-
   topCMS.datasets[0].bars[0].fillColor = "#1a6792";
   topCMS.datasets[0].bars[1].fillColor = "#257bab"; 
   topCMS.datasets[0].bars[2].fillColor = "#399fb9"; 
   topCMS.datasets[0].bars[3].fillColor = "#45aec8";
   topCMS.update();
-
-  //var myBarChart = new Chart(document.getElementById("topMVC").getContext("2d")).Bar(jesse, donutDefaults);
-
 
 })();

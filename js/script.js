@@ -387,6 +387,42 @@ $("input").on("keydown", function(event) {
 /**************
      Init
 **************/
+$(document).ready(function() {
+
+    $('#script-tip').tooltipster({
+    	interactive: true,
+      animation: "fade",
+      touchDevices: true,
+      interactiveTolerance: 300,
+      maxWidth: 320,
+      offsetY: 10,
+      onlyOne: true,
+      content: $('<p>You can also search for sites containing an external script by prefixing a query with <i>script:</i>, e.g. <b class="tip-link" data-query="">script:stats.wp.com</b> or <b class="tip-link" data-query="">script:use.typekit.net</b></p>'),
+      functionReady: function(){
+      	$(".tip-link").on("click", function(){
+		    	$('#script-tip').tooltipster('hide');
+		    });
+      }
+    });
+
+    $('#domain-tip').tooltipster({
+    	interactive: true,
+      animation: "fade",
+      touchDevices: true,
+      interactiveTolerance: 300,
+      maxWidth: 320,
+      offsetY: 10,
+      onlyOne: true,
+      content: $('<p>You can retrieve all libraries used on a site by querying for its domain name, e.g. <b data-query="">stripe.com</b> or <b data-query="">digitalocean.com</b></p>'),
+      functionReady: function(){
+      	$(".tip-link").on("click", function(){
+		    	$('#domain-tip').tooltipster('hide');
+		    });
+      }
+    });
+
+    // $('#domain-tip').tooltipster('show');
+});
 
 $(window).load(function() {
 	$.Velocity.RunSequence([
