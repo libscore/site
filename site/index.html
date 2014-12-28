@@ -5,6 +5,7 @@
 	<title>Libscore</title>
 	<link href="css/normalize.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
+	<link href="css/tooltips.css" rel="stylesheet">
 	<meta name="description" content="Libscore scans the top million sites on the web to collect 
 stats on JavaScript library usage.">
 </head>
@@ -29,6 +30,7 @@ stats on JavaScript library usage.">
 			<div id="query">
 				<div id="search_">
 					<input id="search" class="field-input" type="text" value="" placeholder="search for a JavaScript variable (case sensitive) or domain name..." />
+					<input type="submit" id="mobile-submit" value="Go">
 				</div>
 				<div id="queryButtons">
 					<span><p data-query="*">Top Libs</p></span>
@@ -40,16 +42,10 @@ stats on JavaScript library usage.">
 			<a href="#" class="learnMore">How do I use Libscore?</a>
 
 			<div id="howTo">
-				<p>
+				<p class="main">
 					<strong>In the search box above</strong>, enter the case-sensitive variable that a library exposes itself as, e.g. <b data-query>jQuery</b>, <b data-query>Modernizr</b>, <b data-query>$.ui</b>, or <b data-query>$.fn.fancybox</b>.
 				</p>
-				<p>
-					You can also search for sites containing an external script by prefixing a query with <i>script:</i>, e.g. <b data-query>script:stats.wp.com</b> or <b data-query>script:use.typekit.net</b>.
-				</p>
-				<p>
-					Alternatively, you can retrieve all libraries used on a site by querying for its domain name, e.g. <b data-query>stripe.com</b> or <b data-query>digitalocean.com</b>.
-				</p>
-				<p class="graphs"><a id="view_trending_data" href="data.html">View Trending Data</a></p>
+				<p class="popover">You can also query <span id="script-tip">scripts</span> and <span id="domain-tip">domain names</span> or <a id="view_trending_data" href="data.html">View Trending Data</a></p>	
 			</div>
 		</main>
 
@@ -99,6 +95,7 @@ stats on JavaScript library usage.">
 	<script src="js/velocity.ui.min.js"></script>
 	<script src="js/velocity.ui.custom.min.js"></script>
 	<script src="js/numeral.min.js"></script>
+	<script src="js/jquery.tooltipster.min.js"></script>
 	<script src="js/script.js"></script>
 
 	<script>
