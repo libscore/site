@@ -616,6 +616,11 @@ body {
 
 			&:hover {
 				background-color: #f2f2f2;
+
+        td {
+          padding-right: 9px;
+          padding-left: 10px;
+        }
 			}
 		}
 
@@ -1407,6 +1412,10 @@ footer {
 			top: 95px;
 			transition: none;
       padding-bottom: 80px;
+
+      #data_cols {
+        display: none;
+      }
 		}
 	}
 
