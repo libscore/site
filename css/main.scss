@@ -381,10 +381,13 @@ body {
 
 .directions {
   display: none;
+  position: absolute;
+  bottom: 150px;
   text-align: center;
   margin: 85px auto 0 auto;
-  position: relative;
   z-index: 100;
+  left: 0;
+  width: 100%;
 
   &:hover {
     cursor: default;
