@@ -1322,8 +1322,6 @@ footer {
 		display: none!important;
 	}
 
-
-
 	.results {
 		overflow-y: scroll;
 
@@ -1393,6 +1391,10 @@ footer {
 			top: auto;
 			bottom: auto;
 			z-index: 100;
+
+      table {
+        margin-bottom: 20px;
+      }
 		}
 
 		#searchWrap.sticky {
