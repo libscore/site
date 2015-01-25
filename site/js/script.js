@@ -422,6 +422,12 @@ $(document).ready(function() {
     });
 
     // $('#domain-tip').tooltipster('show');
+
+    $(".directions").on('click', function(){
+    	$(this).next('#howTo').addClass('reveal');
+    	$(this).remove();
+    	return false;
+    });	
 });
 
 $(window).load(function() {

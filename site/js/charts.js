@@ -175,10 +175,16 @@
     animateRotate: true,
     animation: true,
     segmentShowStroke : false,
-    animationSteps : 80,
+    animationSteps : 60,
     animationEasing : "easeOutQuad",
     percentageInnerCutout : 60,
     segmentStrokeWidth : 0,
+    tooltipFontSize: 13,
+    tooltipFontFamily: "'Avenir Medium', sans-serif",
+    tooltipFillColor: "rgba(40,40,40,1)",
+    tooltipXPadding: 10,
+    tooltipYPadding: 5,
+    tooltipCornerRadius: 4,
     legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><p class=\"metric\"><%if(segments[i].label){%><%=segments[i].label%><%}%></p><p class=\"value\"><%=segments[i].value%>%</p></li><%}%></ul>"
   }
 
@@ -192,6 +198,12 @@
     barStrokeWidth : 1,
     barValueSpacing : 5,
     barDatasetSpacing : 3,
+    tooltipFontSize: 13,
+    tooltipFontFamily: "'Avenir Medium', sans-serif",
+    tooltipFillColor: "rgba(40,40,40,1)",
+    tooltipXPadding: 10,
+    tooltipYPadding: 5,
+    tooltipCornerRadius: 4,
     animationEasing : "easeOutQuad",
     //legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><p class=\"metric\"><%if(datasets[i].label){%><%=datasets[i].label%><%}%></p><p class=\"value\"><%=datasets[i].value%>%</p></li><%}%></ul>"
   }
