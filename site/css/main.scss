@@ -655,18 +655,23 @@ body {
 		  transform: rotate(45deg);
 		}
 
-		#data_more td {
-			padding-top: 0.3rem;
-			font-family: "Avenir Medium";
-			background: #EFEFEF;
-			padding: 14px 0;
-			font-size: 15px;
-			text-align: center;
-			color: #6C6C6C;
+		#data_more {
+      margin-top: 15px;
 
-			a {
-				border-bottom: 1px dotted black;
-			}
+      span {
+  			font-family: "Avenir Medium";
+  			background: #EFEFEF;
+  			padding: 14px;
+  			font-size: 15px;
+  			text-align: center;
+  			color: #6C6C6C;
+        width: 100%;
+        display: block;
+
+  			a {
+  				border-bottom: 1px dotted black;
+  			}
+      }
 		}
 	}
 
@@ -1219,6 +1224,7 @@ footer {
 
 		table {
 			font-size: 22px;
+      margin-bottom: 75px;
 		}
 
 		#data_cols {

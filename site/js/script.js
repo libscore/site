@@ -357,7 +357,7 @@ var UI = {
 			}
 
 			if (matches.length > 900) {
-				$data_table.append("<tr id='data_more'><td>Results after 1,000 are not shown. Query our <a href='https://github.com/julianshapiro/libscore'>API</a> for a complete list.</td><td></td></tr>");
+				$data_table.append("<div id='data_more'><span>Results after 1,000 are not shown. Query our <a href='https://github.com/julianshapiro/libscore'>API</a> for a complete list.</span></div>");
 			}
 
 			setTimeout(function() {
