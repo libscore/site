@@ -11,14 +11,22 @@
 .tooltipster-default .tooltipster-content {
 	font-family: "Avenir Medium";
 	font-size: 15px;
-	line-height: 1.4;
+	line-height: 1.5;
 	padding: 4px 15px;
 	overflow: hidden;
 	text-align: center;
 }
 
 .tooltipster-default .tooltipster-content a, .tooltipster-default .tooltipster-content b {
-	border-bottom: 1px dotted #A9A9A9;
+	transition: all 150ms;
+	background: rgba(1, 1, 1, 0.06);
+	padding: 1px 4px;
+	border-radius: 2px;
+	font-size: 13px;
+}
+
+.tooltipster-default .tooltipster-content a:hover, .tooltipster-default .tooltipster-content b:hover {
+	background: rgba(1, 1, 1, 0.1);
 }
 
 /* This next selector defines the color of the border on the outside of the arrow. This will automatically match the color and size of the border set on the main tooltip styles. Set display: none; if you would like a border around the tooltip but no border around the arrow */
