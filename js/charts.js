@@ -21,7 +21,7 @@
     chart: {
       type: 'column',
       backgroundColor: 'transparent',
-      height: 600,
+      height: 480,
       spacing: [10, 10, 15, 10],
       style: {
         fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif', 
