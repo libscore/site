@@ -28,10 +28,15 @@
       a {
         padding: 3px 10px;
         font-size: 13px;
-        display: block;
         cursor: pointer;
         color: #909090;
         font-family: "Avenir Medium";
+        display: inline-block;
+
+        &:hover {
+          background: #E2E2E2;
+          border-radius: 3px;
+        }
       }
 
       &.active {
@@ -39,6 +44,10 @@
 
         a {
           color: #4A4A4A;
+
+          &:hover {
+            background: none;
+          }
         }
       }
 
