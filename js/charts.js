@@ -164,6 +164,7 @@
         animation: true,
         borderRadius: 3,
         borderWidth: 0,
+        // pointWidth: 80,
         colorByPoint: true,
         color: '#29BD66',
         colors: [
@@ -233,13 +234,50 @@
       ],
       newLabels = ["Wordpress", "Blogger", "Shopify", "Squarespace"],
       newTitle = "CMS Comparison (Homepage % Penetration)"
+    }
+
+    else if (newChart == 'topChat'){
+      var newData = [
+        ['Zopim', .94],
+        ['Olark', .44],
+        ['LiveChat', .34]
+      ],
+      newLabels = ["Zopim", "Olark", "LiveChat"],
+      newTitle = "Live Chat Comparison (% penetration)"
+    } 
+
+    else if (newChart == 'topAB'){
+      var newData = [
+        ['Optimizely', .86],
+        ['Visual Website Opt.', .59]
+      ],
+      newLabels = ["Optimizely", "Visual Website Opt."],
+      newTitle = "A/B Testing Comparison (% penetration)"
     } 
     
     //change chart data based on above conditional
-    chart.series[0].setData(newData);
-    chart.xAxis[0].setCategories(newLabels);
-    chart.setTitle({text: newTitle});
+    function reDraw() {
 
+      var series = chart.series[0],
+      MaximumBarWidth = 80;
+
+      series.setData(newData);
+      chart.xAxis[0].setCategories(newLabels);
+      chart.setTitle({text: newTitle});
+
+      //set max value for chart bar width
+      if (series && series.data.length) {
+          if (series.data[0].pointWidth  >  MaximumBarWidth) {
+              for(var i=0;i< chart.series.length;i++)
+                  chart.series[i].update({
+                  pointWidth:MaximumBarWidth
+              });
+          }
+      }
+    }
+
+    reDraw();
+    
     return false;
   });
 
