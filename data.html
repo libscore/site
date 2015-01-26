@@ -24,55 +24,35 @@
       <ul class="nav nav-tabs" role="tablist">
         <li class="label"><label>Popularity</label></li>
         <li role="presentation" class="active below-label">
-          <a href="#pop1" aria-controls="pop1" role="tab" data-toggle="tab">
+          <a href="#pop1" data-trigger="topLib">
             Libraries</a>
         </li>
         <li role="presentation">
-          <a href="#pop2" aria-controls="pop2" role="tab" data-toggle="tab">Scripts</a>
+          <a href="#pop2" data-trigger="topScript">Scripts</a>
         </li>
         <li role="presentation">
-          <a href="#pop3" aria-controls="pop3" role="tab" data-toggle="tab">MVCs</a>
+          <a href="#pop3" data-trigger="topMVC">MVCs</a>
         </li>
         <li role="presentation">
-          <a href="#pop4" aria-controls="pop4" role="tab" data-toggle="tab">Analytics</a>
+          <a href="#pop4" data-trigger="topAnalytics">Analytics</a>
         </li>
         <li class="label"><label>Comparisons</label></li>
         <li role="presentation" class="below-label">
-          <a href="#comp1" aria-controls="comp1" role="tab" data-toggle="tab">
+          <a href="#comp1" data-trigger="topCMS">
             CMS</a>
         </li>
         <li role="presentation">
-          <a href="#comp2" aria-controls="comp2" role="tab" data-toggle="tab">Live Chat</a>
+          <a href="#comp2" data-trigger="topChat">Live Chat</a>
         </li>
         <li role="presentation">
-          <a href="#comp3" aria-controls="comp3" role="tab" data-toggle="tab">A/B Testing</a>
+          <a href="#comp3" data-trigger="topAB">A/B Testing</a>
         </li>
       </ul>
     </div>
 
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="pop1">
-
-
-
-      </div>
-      <div role="tabpanel" class="tab-pane" id="pop2">Nulla fermentum magna dolor, eu fermentum lorem suscipit sit amet. Donec convallis feugiat odio, ut ornare quam consequat quis. Suspendisse justo odio, congue sed est ac, faucibus viverra nisl. Nulla commodo vulputate mi. Mauris id ante lobortis, iaculis quam ac, lacinia massa. Sed a placerat felis. Fusce tincidunt ligula eu lectus facilisis, nec sollicitudin metus maximus. Aenean ac ante et</div>
-      <div role="tabpanel" class="tab-pane" id="pop3">vamus iaculis elit nibh, mollis luctus risus pharetra eget. Maecenas interdum, dui porttitor sagittis sollicitudin, nunc lacus consequat enim, quis vestibulum odio felis ac lorem. Phasellus at ex non tortor finibus aliquam nec id sapien. Praesent vulputate quam id orci sollicitudin blandit. Mauris et nibh egestas, aliquam nulla id, egestas ipsum. Nunc vitae dignissim mi. Praesent luctus tortor et nisi dictum maximus. Se</div>
-      <div role="tabpanel" class="tab-pane" id="pop4">est, tristique eget sem sit amet, eleifend ullamcorper libero. Donec euismod mi sit amet nibh semper molestie. In in mi mi. Proin eget eros ac nisi laoreet hendrer.</div>
-
-      <div role="tabpanel" class="tab-pane" id="comp1">est, tristique eget sem sit amet, eleifend ullamcorper libero. Donec euismod mi sit amet nibh semper molestie. In in mi mi. Proin eget eros ac nisi laoreet hendrer.</div>
-
-      <div role="tabpanel" class="tab-pane" id="comp2">rem suscipit sit amet. Donec convallis feugiat odio, ut ornare quam consequat quis. Suspendisse justo odio, congue sed est ac, faucibus viverra nisl. Nulla commodo vulputate mi. Mauris id ante lobortis, iaculis quam ac, lacinia ma</div>
-
-      <div role="tabpanel" class="tab-pane" id="comp3">est, tristique eget sem sit amet, eleifend ullamcorper libero. Donec euismod mi sit amet nibh semper molestie. In in mi mi. Proin eget eros ac nisi laoreet hendrer.</div>
-    </div>
-
-  </div>
-    
+    <div class="tab-content"></div>
   </div>
 
-  
   <footer>
     <div id="authors">
       <a class="footer-text" href="http://twitter.com/shapiro">Julian Shapiro</a>
@@ -94,8 +74,9 @@
 	<script src="js/velocity.ui.min.js"></script>
 	<script src="js/velocity.ui.custom.min.js"></script>
 	<script src="js/numeral.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/charts-new.js"></script>
+  
+  <script src="js/highcharts.js"></script>
+  <script src="js/charts.js"></script>
 
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

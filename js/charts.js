@@ -17,266 +17,230 @@
     ]);
   });
 
-  var topLibsData = {
-    labels: ["jQuery", "jQuery UI", "Modernizr", "Ajax Form", "Fancy Box", "Carousel"],
-    datasets: [
-      {
-        fillColor: "#dfdfdf",
-        highlightFill: "#29bd66",
-        data: [63.4, 17.6, 10.9, 8.7, 7.9, 7.3]
+  var barOptions = {
+    chart: {
+      type: 'column',
+      backgroundColor: 'transparent',
+      height: 600,
+      spacing: [10, 10, 15, 10],
+      style: {
+        fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif', 
+        fontSize: '12px'
       }
-    ]
-  };
+    },
+    credits: {
+      enabled: false
+    },
+    title: {
+      text: 'Most Popular Libraries (% penetration)'
+    },
+    xAxis: {
+      type: 'category',
+      lineColor: '#d5d5d5',
+      categories:   ['jQuery', 'jQuery UI', 'Modernizr', 'Ajax Form', 'Fancy Box', 'Carousel'],
+      labels: {
+        rotation: -45,
+        style: {
+          fontSize: '13px',
+        }
+      },
+      // title: {
+      //   text: 'Lib / Script',
+      //   style: {
+      //     "font-size":"16px",
+      //     "color":"#bdbdbd"
+      //   },
+      //   margin: 15
+      // },
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: '',
+        // style: {
+        //   "font-size":"16px",
+        //   "color":"#bdbdbd"
+        // },
+        // margin: 15
+      },
+      // alternateGridColor: 'rgba(255,255,255,.15)',
+      gridLineColor: '#d5d5d5',
+      labels: {
+        align: 'right',
+        step: 2,
+        style: {
+          "font-size":"14px"
+        }
+      },
 
-  var topABData = {
-    labels: ["Optimizely", "Visual Website Opt."],
-    datasets: [
-      {
-        fillColor: "#dfdfdf",
-        highlightFill: "#29bd66",
-        data: [.86, .59]
+    },
+    legend: {
+      enabled: false
+    },
+    tooltip: {
+      useHTML: true,
+      headerFormat: '<h4 style="font-size: 11px; margin: 5px 0 7px 0; text-transform: uppercase; letter-spacing: 1px; color: #bcbcbc;">Penetration Percentage</h4>',
+      pointFormat: '<h2 style="font-size:16px; margin: 0; display: inline; color: #3a3a3a">{point.name} <span style="color: #29BD66;">{point.y}%</span></h2>',
+      borderColor: '#29BD66',
+      borderWidth: 2,
+      backgroundColor: '#ffffff',
+      shadow: false,
+      positioner: function(boxWidth, boxHeight, point) {         
+        var chart = this.chart,
+          distance = this.distance,
+          ret = {},
+          swapped,
+          first = ['y', chart.chartHeight, boxHeight, point.plotY + chart.plotTop - 8],
+          second = ['x', chart.chartWidth, boxWidth, point.plotX + chart.plotLeft],
+
+          preferFarSide = point.ttBelow || (chart.inverted && !point.negative) || (!chart.inverted && point.negative),
+          
+          firstDimension = function (dim, outerSize, innerSize, point) {
+            var roomLeft = innerSize < point - distance,
+              roomRight = point + distance + innerSize < outerSize,
+              alignedLeft = point - distance - innerSize,
+              alignedRight = point + distance;
+
+            if (preferFarSide && roomRight) {
+              ret[dim] = alignedRight;
+            } else if (!preferFarSide && roomLeft) {
+              ret[dim] = alignedLeft;
+            } else if (roomLeft) {
+              ret[dim] = alignedLeft;
+            } else if (roomRight) {
+              ret[dim] = alignedRight;
+            } else {
+              return false;
+            }
+          },
+          
+          secondDimension = function (dim, outerSize, innerSize, point) {
+            if (point < distance || point > outerSize - distance) {
+              return false;
+            
+            } else if (point < innerSize / 2) {
+              ret[dim] = 1;
+            } else if (point > outerSize - innerSize / 2) {
+              ret[dim] = outerSize - innerSize - 2;
+            } else {
+              ret[dim] = point - innerSize / 2;
+            }
+          },
+          swap = function (count) {
+            var temp = first;
+            first = second;
+            second = temp;
+            swapped = count;
+          },
+          run = function () {
+            if (firstDimension.apply(0, first) !== false) {
+              if (secondDimension.apply(0, second) === false && !swapped) {
+                swap(true);
+                run();
+              }
+            } else if (!swapped) {
+              swap(true);
+              run();
+            } else {
+              ret.x = ret.y = 0;
+            }
+          };
+
+        if (chart.inverted || this.len > 1) {
+          swap();
+        }
+        run();
+
+        return ret;
+      },
+      style: {
+        color: '#333333',
+        fontSize: '13px',
+        padding: '15px'
       }
-    ]
-  };
-
-  var topChatData = {
-    labels: ["Zopim", "Olark", "LiveChat"],
-    datasets: [
-      {
-        fillColor: "#dfdfdf",
-        highlightFill: "#29bd66",
-        data: [.94, .44, .34]
+    },
+    plotOptions: {
+      column: {
+        animation: true,
+        borderRadius: 3,
+        borderWidth: 0,
+        colorByPoint: true,
+        color: '#29BD66',
+        colors: [
+          '#29BD66',
+          '#18a050'
+        ],
+        states: {
+          hover: {
+            brightness: .05
+          }
+        },
+        dataLabels: {
+          align: 'center',
+          enabled: true,
+          y: 3,
+          format: '{y}%',
+          inside: true,
+          color: '#FFFFFF',
+          verticalAlign: 'top',
+          style: {
+            fontSize: '12px',
+            fontWeight: 600
+          }
+        }
       }
-    ]
-  };
-
-  var topCMSData = {
-    labels: ["Wordpress", "Blogger", "Shopify", "Squarespace"],
-    datasets: [
-      {
-        fillColor: "#dfdfdf",
-        highlightFill: "#29bd66",        
-        data: [4.2, 2.0, .28, .14]
-      }
-    ]
-  };
-
-  var topScriptsData = [
-    {
-      value: 55.9,
-      color:"#1ea866",
-      label: "Google Analytics"
     },
-    {
-      value: 18.6,
-      color: "#2fb977",
-      label: "Facebook Like Button"
-    },
-    {
-      value: 12.1,
-      color: "#42c687",
-      label: "Twitter Tweet Button"
-    },
-    {
-      value: 2.7,
-      color: "#60d39c",
-      label: "Google Maps Widget"
-    },
-    {
-      value: 2.0,
-      color: "#85e0b4",
-      label: "New Relic"
-    },
-    {
-      value: 2.0,
-      color: "#a9eecd",
-      label: "Pinterest Pin Button"
-    },
-    {
-      value: 1.3,
-      color: "#c3f5dd",
-      label: "Adroll"
-    },
-    {
-      value: 1.2,
-      color: "#c3f5dd",
-      label: "Typekit"
-    }
-  ];
-
-  var topMVCData = [
-    {
-      value: .79,
-      color:"#1ea866",
-      label: "Backbone (Backbone)"
-    },
-    {
-      value: .49,
-      color: "#2fb977",
-      label: "Angular (angular)"
-    },
-    {
-      value: .2,
-      color: "#42c687",
-      label: "Knockout (KO)"
-    },
-    {
-      value: .002,
-      color: "#60d39c",
-      label: "React (React)"
-    }
-  ];
-
-  var topAnalyticsData = [
-    {
-      value: 55.9,
-      color:"#1ea866",
-      label: "Google Analytics"
-    },
-    {
-      value: 2.2,
-      color: "#2fb977",
-      label: "Scorecard Research"
-    },
-    {
-      value: 1.9,
-      color: "#42c687",
-      label: "StatCounter"
-    },
-    {
-      value: 1.4,
-      color: "#60d39c",
-      label: "Histats"
-    },
-    {
-      value: .75,
-      color: "#85e0b4",
-      label: "Alexa"
-    },
-    {
-      value: .62,
-      color: "#a9eecd",
-      label: "Clicky"
-    },
-    {
-      value: .56,
-      color: "#c3f5dd",
-      label: "Chartbeat"
-    },
-    {
-      value: .36,
-      color: "#d5f6e6",
-      label: "Mixpanel"
-    }
-  ];
-
-  var donutDefaults = {
-    tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%",
-    animateRotate: true,
-    animation: true,
-    segmentShowStroke : false,
-    animationSteps : 60,
-    animationEasing : "easeOutQuad",
-    percentageInnerCutout : 60,
-    segmentStrokeWidth : 0,
-    tooltipFontSize: 13,
-    tooltipFontFamily: "'Avenir Medium', sans-serif",
-    tooltipFillColor: "rgba(40,40,40,1)",
-    tooltipXPadding: 10,
-    tooltipYPadding: 5,
-    tooltipCornerRadius: 4,
-    legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><p class=\"metric\"><%if(segments[i].label){%><%=segments[i].label%><%}%></p><p class=\"value\"><%=segments[i].value%>%</p></li><%}%></ul>"
+    series: [{
+      data: [
+        ['jQuery', 63.4],
+        ['jQuery UI', 17.6],
+        ['Modernizr', 10.9],
+        ['Ajax Form', 8.7],
+        ['Fancy Box', 7.9],
+        ['Carousel', 7.3]
+      ]
+    }]
   }
 
-  var barDefaults = {
-    tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>%",
-    animateRotate: true,
-    animation: true,
-    scaleShowGridLines: false,
-    scaleGridLineColor : "red",
-    barShowStroke : false,
-    barStrokeWidth : 1,
-    barValueSpacing : 5,
-    barDatasetSpacing : 3,
-    tooltipFontSize: 13,
-    tooltipFontFamily: "'Avenir Medium', sans-serif",
-    tooltipFillColor: "rgba(40,40,40,1)",
-    tooltipXPadding: 10,
-    tooltipYPadding: 5,
-    tooltipCornerRadius: 4,
-    animationEasing : "easeOutQuad",
-    //legendTemplate : "<ul class=\"legend\" id=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><p class=\"metric\"><%if(datasets[i].label){%><%=datasets[i].label%><%}%></p><p class=\"value\"><%=datasets[i].value%>%</p></li><%}%></ul>"
-  }
+  $('.tab-content').highcharts(barOptions);
 
-  var helpers = Chart.helpers;
-  var legendHolder = document.createElement('div');
+  $('.nav-tabs a').click(function () {
+    $('.nav-tabs li.active').removeClass();
+    $(this).parent('li').addClass('active');
 
-  function createLegend(dataName){
-    legendHolder.innerHTML = dataName.generateLegend();
+    var chart = $('.tab-content').highcharts(),
+      newChart = $(this).data('trigger');
 
-    helpers.each(legendHolder.firstChild.childNodes, function (legendNode, index) {
-      helpers.addEvent(legendNode, 'mouseover', function () {
-        var activeSegment = dataName.segments[index];
-        activeSegment.save();
-        dataName.showTooltip([activeSegment]);
-        activeSegment.restore();
-      });
+    if ( newChart == 'topLib') {
+      var newData = [
+        ['jQuery', 63.4],
+        ['jQuery UI', 17.6],
+        ['Modernizr', 10.9],
+        ['Ajax Form', 8.7],
+        ['Fancy Box', 7.9],
+        ['Carousel', 7.3]
+      ],
+      newLabels = ['jQuery', 'jQuery UI', 'Modernizr', 'Ajax Form', 'Fancy Box', 'Carousel'],
+      newTitle = "Most Popular Libraries (% penetration)"
+    } 
 
-      helpers.addEvent(legendHolder.firstChild, 'mouseout', function () {
-        dataName.draw();
-      });
-    });
+    else if (newChart == 'topCMS'){
+      var newData = [
+        ['Wordpress', 4.2],
+        ['Blogger', 2.0],
+        ['Shopify', .28],
+        ['Squarespace', .14]
+      ],
+      newLabels = ["Wordpress", "Blogger", "Shopify", "Squarespace"],
+      newTitle = "CMS Comparison (Homepage % Penetration)"
+    } 
+    
+    //change chart data based on above conditional
+    chart.series[0].setData(newData);
+    chart.xAxis[0].setCategories(newLabels);
+    chart.setTitle({text: newTitle});
 
-    dataName.chart.canvas.parentNode.parentNode.appendChild(legendHolder.firstChild);
-  }
-
-
-  // Top Libraries
-  var topLib = new Chart(document.getElementById("topLib").getContext("2d")).Bar(topLibsData, barDefaults);
-
-  topLib.datasets[0].bars[0].fillColor = "#1a6792";
-  topLib.datasets[0].bars[1].fillColor = "#257bab";
-  topLib.datasets[0].bars[2].fillColor = "#399fb9";
-  topLib.datasets[0].bars[3].fillColor = "#45aec8";
-  topLib.datasets[0].bars[4].fillColor = "#61c2da";
-  topLib.datasets[0].bars[5].fillColor = "#73d1e9";
-  topLib.update();
-
-
-  // Top Scripts
-  var topScript = new Chart(document.getElementById("topScript").getContext("2d")).Doughnut(topScriptsData, donutDefaults);
-  createLegend(topScript);
-
-  // Top MVC
-  var topMVC = new Chart(document.getElementById("topMVC").getContext("2d")).Doughnut(topMVCData, donutDefaults);
-  createLegend(topMVC);
-
-  // Top Analytics
-  var topAnalytics = new Chart(document.getElementById("topAnalytics").getContext("2d")).Doughnut(topAnalyticsData, donutDefaults);
-  createLegend(topAnalytics);
-
-  // Top AB Testing
-  var topAB = new Chart(document.getElementById("topAB").getContext("2d")).Bar(topABData, barDefaults);
-
-  topAB.datasets[0].bars[0].fillColor = "#1a6792";
-  topAB.datasets[0].bars[1].fillColor = "#257bab";
-  topAB.update(); 
-
-  // Live Chat 
-  var topChat = new Chart(document.getElementById("topChat").getContext("2d")).Bar(topChatData, barDefaults);
-
-  topChat.datasets[0].bars[0].fillColor = "#1a6792";
-  topChat.datasets[0].bars[1].fillColor = "#257bab"; 
-  topChat.datasets[0].bars[2].fillColor = "#399fb9"; 
-  topChat.update();
-
-  // CMS
-  var topCMS = new Chart(document.getElementById("topCMS").getContext("2d")).Bar(topCMSData, barDefaults);
-
-  topCMS.datasets[0].bars[0].fillColor = "#1a6792";
-  topCMS.datasets[0].bars[1].fillColor = "#257bab"; 
-  topCMS.datasets[0].bars[2].fillColor = "#399fb9"; 
-  topCMS.datasets[0].bars[3].fillColor = "#45aec8";
-  topCMS.update();
+    return false;
+  });
 
 })();
