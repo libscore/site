@@ -21,7 +21,7 @@
     chart: {
       type: 'column',
       backgroundColor: 'transparent',
-      height: 480,
+      height: 460,
       spacing: [10, 10, 15, 10],
       style: {
         fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif', 
@@ -336,7 +336,7 @@
     //change chart data based on above conditional
     function reDraw() {
       var series = chart.series[0],
-      MaximumBarWidth = 100;
+      MaximumBarWidth = 80;
       series.update({type: newType});
 
       series.setData(newData);
