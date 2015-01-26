@@ -222,7 +222,8 @@
         ['Carousel', 7.3]
       ],
       newLabels = ['jQuery', 'jQuery UI', 'Modernizr', 'Ajax Form', 'Fancy Box', 'Carousel'],
-      newTitle = "Most Popular Libraries (% penetration)"
+      newTitle = "Most Popular Libraries (% penetration)",
+      newType = "column"
     } 
 
     else if (newChart == 'topCMS'){
@@ -233,7 +234,8 @@
         ['Squarespace', .14]
       ],
       newLabels = ["Wordpress", "Blogger", "Shopify", "Squarespace"],
-      newTitle = "CMS Comparison (Homepage % Penetration)"
+      newTitle = "CMS Comparison (Homepage % Penetration)",
+      newType = "column"
     }
 
     else if (newChart == 'topChat'){
@@ -243,7 +245,8 @@
         ['LiveChat', .34]
       ],
       newLabels = ["Zopim", "Olark", "LiveChat"],
-      newTitle = "Live Chat Comparison (% penetration)"
+      newTitle = "Live Chat Comparison (% penetration)",
+      newType = "column"
     } 
 
     else if (newChart == 'topAB'){
@@ -252,27 +255,46 @@
         ['Visual Website Opt.', .59]
       ],
       newLabels = ["Optimizely", "Visual Website Opt."],
-      newTitle = "A/B Testing Comparison (% penetration)"
+      newTitle = "A/B Testing Comparison (% penetration)",
+      newType = "column"
+    } 
+
+    //start pies
+    else if (newChart == 'topScript'){
+      var newData = [
+        ['Google Analytics', 55.9],
+        ['Facebook Like Button', 18.6],
+        ['Twitter Tweet Button', 12.1],
+        ['Google Maps Widget', 2.7],
+        ['New Relic', 2.0],
+        ['Pinterest Pin Button', 2.0],
+        ['Adroll', 1.3],
+        ['Typekit', 1.2]
+      ],
+      newLabels = ["Google Analytics", "Facebook Like Button", "Twitter Tweet Button", "Google Maps Widget", "New Relic", "Pinterest Pin Button", "Adroll", "Typekit"],
+      newTitle = "Most Popular Scripts (% penetration)",
+      newType = "pie"
     } 
     
     //change chart data based on above conditional
     function reDraw() {
 
       var series = chart.series[0],
-      MaximumBarWidth = 80;
+      MaximumBarWidth = 100;
+      series.update({type: newType});
 
       series.setData(newData);
       chart.xAxis[0].setCategories(newLabels);
       chart.setTitle({text: newTitle});
 
-      //set max value for chart bar width
-      if (series && series.data.length) {
-          if (series.data[0].pointWidth  >  MaximumBarWidth) {
-              for(var i=0;i< chart.series.length;i++)
-                  chart.series[i].update({
-                  pointWidth:MaximumBarWidth
-              });
-          }
+      //set max value for chart bar width only for columns
+      if (series && series.data.length && newType == 'column') {
+        if (series.data[0].pointWidth  >  MaximumBarWidth) {
+          for(var i=0;i< chart.series.length;i++)
+            chart.series[i].update({
+            pointWidth:MaximumBarWidth
+          });
+        }
       }
     }
 
