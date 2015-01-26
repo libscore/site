@@ -36,7 +36,7 @@
     },
     xAxis: {
       type: 'category',
-      lineColor: '#d5d5d5',
+      lineColor: 'transparent',
       categories:   ['jQuery', 'jQuery UI', 'Modernizr', 'Ajax Form', 'Fancy Box', 'Carousel'],
       labels: {
         rotation: -45,
@@ -189,6 +189,23 @@
             fontWeight: 600
           }
         }
+      },
+      pie: {
+        allowPointSelect: true,
+        innerSize: '60%',
+        borderWidth: 0,
+        size: '75%',
+        dataLabels: {
+          connectorColor: '#DBDBDB',
+          connectorPadding: 10,
+          connectorWidth: 2,
+          distance: 40,
+          y: -3,
+          style: {
+            fontSize: '13px',
+            color: '#606060'
+          }
+        }
       }
     },
     series: [{
@@ -203,13 +220,25 @@
     }]
   }
 
-  $('.tab-content').highcharts(barOptions);
+  Highcharts.getOptions().plotOptions.pie.colors = (function () {
+      var colors = [],
+          base = '#29BD66',
+          i;
+
+      for (i = 0; i < 10; i += 1) {
+        colors.push(Highcharts.Color(base).brighten((i - 3) / 17).get());
+      }
+      
+      return colors;
+  }());
+
+  $('.tab-content .padder').highcharts(barOptions);
 
   $('.nav-tabs a').click(function () {
     $('.nav-tabs li.active').removeClass();
     $(this).parent('li').addClass('active');
 
-    var chart = $('.tab-content').highcharts(),
+    var chart = $('.tab-content .padder').highcharts(),
       newChart = $(this).data('trigger');
 
     if ( newChart == 'topLib') {
@@ -275,10 +304,37 @@
       newTitle = "Most Popular Scripts (% penetration)",
       newType = "pie"
     } 
+
+    else if (newChart == 'topMVC'){
+      var newData = [
+        ['Backbone', .79],
+        ['Angular', .49],
+        ['Knockout', .2],
+        ['React', .002]
+      ],
+      newLabels = ["Backbone (Backbone)", "Angular (angular)", "Knockout (KO)", "React (React)"],
+      newTitle = "Most Popular MVCs (Homepage % Penetration)",
+      newType = "pie"
+    } 
+
+    else if (newChart == 'topAnalytics'){
+      var newData = [
+        ['Google Analytics', 55.9],
+        ['Scorecard Research', 2.2],
+        ['StatCounter', 1.9],
+        ['Histats', 1.4],
+        ['Alexa', .75],
+        ['Clicky', .62],
+        ['Chartbeat', .56],
+        ['Mixpanel', .36]
+      ],
+      newLabels = ["Google Analytics", "Scorecard Research", "StatCounter", "Histats", "Alexa", "Clicky", "Chartbeat", "Mixpanel"],
+      newTitle = "Most Popular Analytics (% penetration)",
+      newType = "pie"
+    } 
     
     //change chart data based on above conditional
     function reDraw() {
-
       var series = chart.series[0],
       MaximumBarWidth = 100;
       series.update({type: newType});
@@ -296,9 +352,17 @@
           });
         }
       }
+
+      var $container = $(".tab-content .padder");
+      $container.velocity("transition.slideLeftBigIn", {duration: 700});
     }
 
-    reDraw();
+    var $container = $(".tab-content .padder");
+    $container.velocity("transition.slideRightBigOut", {duration: 700});
+
+    setTimeout(function(){
+      reDraw();
+    }, 700);
     
     return false;
   });

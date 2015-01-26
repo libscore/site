@@ -1,11 +1,13 @@
 .chart-wrapper {
   width: 100%;
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
+  position: relative;
+  left: -80px;
 }
 
 #chart-nav {
-  width: 12%;
+  width: 150px;
   float: left;
   padding-top: 90px;
 
@@ -21,19 +23,15 @@
       float: left;
       width: 100%;
       border-left: 2px solid transparent;
-      border-bottom: 1px solid #DBDBDB;
+      margin-bottom: 3px;
 
       a {
-        padding: 10px;
+        padding: 3px 10px;
         font-size: 13px;
         display: block;
         cursor: pointer;
         color: #909090;
         font-family: "Avenir Medium";
-      }
-
-      &:last-child {
-        border-bottom: 1px solid #DBDBDB;
       }
 
       &.active {
@@ -52,7 +50,7 @@
 
       &.label {
         border: 0;
-        padding: 0 3px 4px 2px;
+        padding: 0 3px 7px 2px;
         margin-top: 33px;
 
         label {
@@ -70,6 +68,7 @@
 
 .tab-content {
   float: left;
-  width: 88%;
+  width: 750px;
   padding: 40px;
+  border: 1px solid #CFCFCF;
 }
