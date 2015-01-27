@@ -993,41 +993,6 @@ footer {
 	display: block;
 }
 
-/***************
-  Charts
-***************/
-
-.charts {
-	background-color: #eaeaea;
-	border: 0;
-
-	#header {
-		padding: 0;
-		margin: 30px 0 26px 0;
-
-		h1 {
-			margin: -1px 0 0 0;
-			font-size: 17px;
-			font-family: "Avenir Light";
-			color: #9E9E9E;
-			text-transform: none;
-			font-weight: normal;
-		}
-
-		#header-logo {
-			margin: 0;
-
-			o {
-				@extend .text-green;
-			}
-		}
-	}
-
-	footer {
-		background-color: #EAEAEA;
-	}
-}
-
 
 /***************
   Media Queries

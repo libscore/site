@@ -21,7 +21,6 @@
     chart: {
       type: 'column',
       backgroundColor: 'transparent',
-      height: 460,
       spacing: [10, 10, 15, 10],
       style: {
         fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif', 
@@ -32,7 +31,11 @@
       enabled: false
     },
     title: {
-      text: 'Most Popular Libraries (% penetration)'
+      text: 'Most Popular Libraries (% penetration)',
+      style: {
+        fontSize: '22px'
+      },
+      y: 5
     },
     xAxis: {
       type: 'category',
@@ -44,24 +47,11 @@
           fontSize: '13px',
         }
       },
-      // title: {
-      //   text: 'Lib / Script',
-      //   style: {
-      //     "font-size":"16px",
-      //     "color":"#bdbdbd"
-      //   },
-      //   margin: 15
-      // },
     },
     yAxis: {
       min: 0,
       title: {
         text: '',
-        // style: {
-        //   "font-size":"16px",
-        //   "color":"#bdbdbd"
-        // },
-        // margin: 15
       },
       // alternateGridColor: 'rgba(255,255,255,.15)',
       gridLineColor: '#d5d5d5',
