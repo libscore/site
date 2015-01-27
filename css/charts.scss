@@ -1,15 +1,70 @@
-.chart-wrapper {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  position: relative;
-  left: -80px;
+.text-green {
+  color: #29bd66;
+}
+
+.charts {
+  background-color: #F4F4F4;
+  border: 0;
+
+  #header {
+    padding: 0;
+    float: left;
+    height: 55px;
+    width: 100%;
+    background-color: white;
+    margin: 0 0 40px 0;
+
+    h1 {
+      margin: 55px;
+      font-size: 20px;
+      color: #DADADA;
+      font-weight: normal;
+      text-transform: uppercase;
+      position: absolute;
+      left: 0;
+      letter-spacing: 2.2px;
+      width: 100%;
+      text-align: center;
+      font-family: "Avenir Medium";
+    }
+
+    #header-logo {
+      float: left;
+      margin: 0 0 0 17px;
+      line-height: 55px;
+      font-size: 26px;
+
+      o {
+        @extend .text-green;
+      }
+    }
+
+    a.back {
+      background-color: #29BD66;
+      font-size: 13px;
+      padding: 8px 15px;
+      border-radius: 3px;
+      color: white;
+      float: right;
+      display: block;
+      margin-right: 17px;
+      margin-top: 11px;
+    }
+  }
+
+  footer {
+    background-color: #F4F4F4;
+    border-top: 1px solid #E4E4E4;
+  }
 }
 
 #chart-nav {
   width: 150px;
-  float: left;
-  padding-top: 30px;
+  position: absolute;
+  left: 30px;
+  top: 97px;
+  z-index: 1000;
+
 
   ul.nav {
     padding: 0;
@@ -25,6 +80,15 @@
       border-left: 2px solid transparent;
       margin-bottom: 3px;
 
+      span.coming-soon {
+        font-style: italic;
+        padding: 3px 10px;
+        font-size: 13px;
+        color: #A9A9A9;
+        font-family: "Avenir Medium";
+        display: inline-block;
+      }
+
       a {
         padding: 3px 10px;
         font-size: 13px;
@@ -34,7 +98,7 @@
         display: inline-block;
 
         &:hover {
-          background: #E2E2E2;
+          background: #ECECEC;
           border-radius: 3px;
         }
       }
@@ -75,10 +139,13 @@
   }
 }
 
-.tab-content {
-  float: left;
-  width: 750px;
-  padding: 40px;
-  border: 1px solid #CFCFCF;
-  background: rgba(255, 255, 255, 0.2);
+#chart-wrap {
+  position: relative;
+  padding-left: 250px;
+  max-width: 1200px;
+
+  .tab-content {
+    float: left;
+    width: 100%;
+  }
 }
