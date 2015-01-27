@@ -171,8 +171,8 @@
           align: 'center',
           enabled: true,
           backgroundColor: '#F4F4F4',
-          padding: 6,
-          y: -30,
+          padding: 5,
+          y: -27,
           format: '{y}%',
           inside: false,
           borderRadius: 3,
@@ -306,7 +306,7 @@
         ['Knockout', .2],
         ['React', .002]
       ],
-      newLabels = ["Backbone (Backbone)", "Angular (angular)", "Knockout (KO)", "React (React)"],
+      newLabels = ["Backbone", "Angular", "Knockout", "React"],
       newTitle = "Most Popular MVCs (Homepage % Penetration)",
       newType = "column"
     } 
