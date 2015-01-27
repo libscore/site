@@ -13,6 +13,8 @@
     width: 100%;
     background-color: white;
     margin: 0 0 40px 0;
+    position: relative;
+    z-index: 100;
 
     h1 {
       margin: 55px;
@@ -41,14 +43,14 @@
 
     a.back {
       background-color: #29BD66;
-      font-size: 13px;
-      padding: 8px 15px;
+      font-size: 12px;
+      padding: 7px 12px;
       border-radius: 3px;
-      color: white;
+      color: #FFF;
       float: right;
       display: block;
-      margin-right: 17px;
-      margin-top: 11px;
+      margin-right: 13px;
+      margin-top: 13px;
     }
   }
 
@@ -62,7 +64,7 @@
   width: 150px;
   position: absolute;
   left: 30px;
-  top: 97px;
+  top: 110px;
   z-index: 1000;
 
 
@@ -140,12 +142,22 @@
 }
 
 #chart-wrap {
-  position: relative;
-  padding-left: 250px;
-  max-width: 1200px;
-
+  position: absolute;
+  left: 230px;
+  right: 40px;
+  height: 100%;
+  padding-top: 97px;
+  
   .tab-content {
-    float: left;
-    width: 100%;
+
+    .padder {
+      position: absolute;
+      right: 0;
+      width: 100%;
+      bottom: 50px;
+      top: 100px;
+      max-height: 600px;
+      max-width: 1200px;
+    }
   }
 }

@@ -21,7 +21,7 @@
     chart: {
       type: 'column',
       backgroundColor: 'transparent',
-      spacing: [10, 10, 15, 10],
+      spacing: [20, 10, 15, 10],
       style: {
         fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif', 
         fontSize: '12px'
@@ -33,7 +33,8 @@
     title: {
       text: 'Most Popular Libraries (% penetration)',
       style: {
-        fontSize: '22px'
+        fontSize: '28px',
+        color: '#29BD66'
       },
       y: 5
     },
@@ -169,13 +170,16 @@
         dataLabels: {
           align: 'center',
           enabled: true,
-          y: 3,
+          backgroundColor: '#F4F4F4',
+          padding: 6,
+          y: -30,
           format: '{y}%',
-          inside: true,
-          color: '#FFFFFF',
+          inside: false,
+          borderRadius: 3,
+          color: '#29BD66',
           verticalAlign: 'top',
           style: {
-            fontSize: '12px',
+            fontSize: '13px',
             fontWeight: 600
           }
         }
@@ -210,17 +214,17 @@
     }]
   }
 
-  Highcharts.getOptions().plotOptions.pie.colors = (function () {
-      var colors = [],
-          base = '#29BD66',
-          i;
+  // Highcharts.getOptions().plotOptions.pie.colors = (function () {
+  //     var colors = [],
+  //         base = '#29BD66',
+  //         i;
 
-      for (i = 0; i < 10; i += 1) {
-        colors.push(Highcharts.Color(base).brighten((i - 3) / 17).get());
-      }
+  //     for (i = 0; i < 10; i += 1) {
+  //       colors.push(Highcharts.Color(base).brighten((i - 3) / 17).get());
+  //     }
       
-      return colors;
-  }());
+  //     return colors;
+  // }());
 
   $('.tab-content .padder').highcharts(barOptions);
 
@@ -278,7 +282,7 @@
       newType = "column"
     } 
 
-    //start pies
+    //start pies --> changed to columns
     else if (newChart == 'topScript'){
       var newData = [
         ['Google Analytics', 55.9],
@@ -292,7 +296,7 @@
       ],
       newLabels = ["Google Analytics", "Facebook Like Button", "Twitter Tweet Button", "Google Maps Widget", "New Relic", "Pinterest Pin Button", "Adroll", "Typekit"],
       newTitle = "Most Popular Scripts (% penetration)",
-      newType = "pie"
+      newType = "column"
     } 
 
     else if (newChart == 'topMVC'){
@@ -304,7 +308,7 @@
       ],
       newLabels = ["Backbone (Backbone)", "Angular (angular)", "Knockout (KO)", "React (React)"],
       newTitle = "Most Popular MVCs (Homepage % Penetration)",
-      newType = "pie"
+      newType = "column"
     } 
 
     else if (newChart == 'topAnalytics'){
@@ -320,7 +324,7 @@
       ],
       newLabels = ["Google Analytics", "Scorecard Research", "StatCounter", "Histats", "Alexa", "Clicky", "Chartbeat", "Mixpanel"],
       newTitle = "Most Popular Analytics (% penetration)",
-      newType = "pie"
+      newType = "column"
     } 
     
     //change chart data based on above conditional
