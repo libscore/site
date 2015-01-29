@@ -348,15 +348,15 @@
       }
 
       var $container = $(".tab-content .padder");
-      $container.velocity("transition.slideLeftBigIn", {duration: 700});
+      $container.velocity("transition.expandIn", {duration: 450});
     }
 
     var $container = $(".tab-content .padder");
-    $container.velocity("transition.slideRightBigOut", {duration: 700});
+    $container.velocity("transition.expandOut", {duration: 450});
 
     setTimeout(function(){
       reDraw();
-    }, 700);
+    }, 450);
     
     return false;
   });
