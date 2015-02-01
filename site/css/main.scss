@@ -1018,10 +1018,14 @@ footer {
     }
 }
 
-@media screen and ( max-height: 690px ){
+@media screen and ( max-height: 530px ){
 	#subscribe_ {
 		display: none!important;	
 	}
+
+  .directions {
+    bottom: 35px;
+  }
 }
 
 @media screen and ( max-width: 1200px ){
@@ -1280,8 +1284,39 @@ footer {
 
 @media screen and ( max-width: 550px ){
 	#header {
-		margin-top: 60px;
+		margin-top: 35px;
+
+    #header-logo {
+     font-size: 40px;
+    }
+
+    #header-code {
+      right: 76px;
+    }
 	}
+
+  #slogan {
+    font-size: 17px;
+    margin-bottom: 22px
+  }
+
+  #howTo {
+    margin: 78px 0 0;
+    padding-top: 40px;
+    opacity: 0 ;
+    visibility: hidden;
+
+    &.reveal {
+      visibility: visible;
+      opacity: 1!important;
+    }
+  }
+
+  .directions {
+    display: block;
+    opacity: 1 !important;
+    bottom: 85px;
+  }
 }
 
 @media screen and ( max-width: 500px ){
