@@ -2,6 +2,25 @@
   color: #29bd66;
 }
 
+.nav-trigger {
+  display: none;
+  position: absolute;
+  right: 40px;
+  top: 110px;
+  z-index: 100;
+  width: 24px;
+  height: 19px;
+  background: url("../images/navicon.svg");
+  background-size: 24px 19px;
+  opacity: .2;
+  transition: opacity 300ms;
+  cursor: pointer;
+
+  &:hover {
+    opacity: .4;
+  }
+}
+
 .charts {
   background-color: #F4F4F4;
   border: 0;
@@ -64,7 +83,7 @@
   left: 30px;
   top: 110px;
   z-index: 1000;
-
+  transition: opacity 300ms;
 
   ul.nav {
     padding: 0;
@@ -157,5 +176,114 @@
       /*max-height: 600px;
       max-width: 1200px;*/
     }
+  }
+}
+
+
+
+@media screen and ( min-width: 1450px ){
+  .wrapper {
+    width: 1100px;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    margin-left: -550px;
+    top: 0;
+    bottom: 60px;
+    max-height: 850px;
+  }
+
+  #chart-nav {
+    width: 150px;
+    float: left;
+    position: static;
+    margin-top: 110px;
+  }
+
+  #chart-wrap {
+    position: absolute;
+    left: 230px;
+    right: 0;
+
+    .tab-content .padder {
+      position: absolute;
+      right: 0;
+      width: 100%;
+      bottom: 0;
+      top: 100px;
+    }
+  }
+}
+
+@media screen and ( max-width: 1050px ){
+  #chart-wrap {
+    left: 190px;
+    right: 30px;
+  }
+}
+
+@media screen and ( max-width: 850px ){
+  #chart-wrap {
+    left: 30px;
+  }
+
+  .nav-trigger {
+    display: block;
+  }
+
+  #chart-nav {
+    visibility: hidden;
+    opacity: 0;
+    background: #F4F4F4;
+    padding: 20px;
+    border-radius: 3px;
+    left: auto;
+    right: 30px;
+    top: 152px;
+    width: 150px;
+    border: 1px solid #ccc;
+
+    &:before, &:after {
+      content: '';
+      width: 0; 
+      height: 0;
+      position: absolute;
+    }
+
+    &:after {
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-bottom: 4px solid #F4F4F4;
+      top: -4px;
+      right: 27px;
+    }
+
+    &:before {
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 5px solid #CCC;
+      top: -5px;
+      right: 26px;
+    }
+
+    &.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .soon {
+      display: none;
+    }
+  }
+}
+
+@media screen and ( max-width: 650px ){
+  #chart-wrap {
+    left: 13px;
+    right: 13px;
+  }
+
+  #chart-nav {
+    right: 20px;
   }
 }

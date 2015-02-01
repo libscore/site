@@ -228,6 +228,12 @@
 
   $('.tab-content .padder').highcharts(barOptions);
 
+  $(".nav-trigger").on('click', function(){
+    $("#chart-nav").toggleClass('show');
+
+    return false;
+  });
+
   $('.nav-tabs a').click(function () {
     $('.nav-tabs li.active').removeClass();
     $(this).parent('li').addClass('active');
@@ -360,5 +366,6 @@
     
     return false;
   });
+
 
 })();
