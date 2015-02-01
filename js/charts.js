@@ -55,12 +55,12 @@
         text: '',
       },
       // alternateGridColor: 'rgba(255,255,255,.15)',
-      gridLineColor: '#d5d5d5',
+      gridLineColor: '#dcdcdc',
       labels: {
         align: 'right',
         step: 2,
         style: {
-          "font-size":"14px"
+          fontSize:"14px"
         }
       },
 
@@ -233,6 +233,36 @@
 
     return false;
   });
+
+  // when below 800px, resize headers down. if page loads under this size, change also:
+  
+  var breakpoint = 800,
+  chart = $('.tab-content .padder').highcharts();
+
+  function reduceTitle(){
+    chart.setTitle(
+      { style: { fontSize: '22px' }}
+    );
+  }
+
+  function increaseTitle(){
+    chart.setTitle(
+      { style: { fontSize: '28px' }}
+    );
+  }
+
+  if ($(window).width() < breakpoint){
+    reduceTitle();
+  }
+
+  $(window).resize( function(e){
+    if ($(window).width() < breakpoint){
+      reduceTitle();
+    } else {
+      increaseTitle();
+    }
+  });
+
 
   $('.nav-tabs a').click(function () {
     $('.nav-tabs li.active').removeClass();
