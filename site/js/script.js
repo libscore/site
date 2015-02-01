@@ -421,10 +421,9 @@ $(document).ready(function() {
       }
     });
 
-    // $('#domain-tip').tooltipster('show');
-
     $(".directions").on('click', function(){
     	$(this).next('#howTo').addClass('reveal');
+    	$("#subscribe_").addClass("revealedHowTo");
     	$(this).remove();
     	return false;
     });	

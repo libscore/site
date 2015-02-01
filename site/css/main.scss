@@ -1380,6 +1380,16 @@ footer {
   }
 }
 
+@media screen and ( max-height: 675px ){
+  .results {
+    #subscribe_ {
+      &.revealedHowTo {
+        display: none;
+      }
+    }
+  }
+}
+
 @media screen and ( max-width: 530px ){
 	.results {
 		footer {
