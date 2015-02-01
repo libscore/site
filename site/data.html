@@ -2,9 +2,12 @@
 <html>
 <head>
 	<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Libscore - The state of JavaScript</title>
 	<link href="css/normalize.css" rel="stylesheet">
 	<link href="css/main.css" rel="stylesheet">
+  <link href="css/charts.css" rel="stylesheet">
+
 </head>
 <body class="charts">
 
@@ -12,61 +15,50 @@
     <div id="header-logo">
       <a href="index.html">Libsc<o>o<span></span></o>re</a>
     </div>
-    <h1>The current state of Javascript</h1>
+    <a class="back" href="../">Back to Search</a>
   </header>
 
-  <div id="chartWrap">
-    <ul>
-      <li class="holder-parent">
-        <h4>Most Popular Libraries<br> (% penetration)</h4>
-        <div class="holder bar">
-          <canvas id="topLib" width="300" height="235"/>
-        </div>
-      </li>
+  <div class="wrapper">
+    <a class="nav-trigger" href="#"></a>
+    <div id="chart-nav">
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="label"><label>Popularity</label></li>
+        <li role="presentation" class="active below-label">
+          <a href="#pop1" data-trigger="topLib">
+            Libraries</a>
+        </li>
+        <li role="presentation">
+          <a href="#pop2" data-trigger="topScript">Scripts</a>
+        </li>
+        <li role="presentation">
+          <a href="#pop3" data-trigger="topMVC">MVCs</a>
+        </li>
+        <li role="presentation">
+          <a href="#pop4" data-trigger="topAnalytics">Analytics</a>
+        </li>
+        <li role="presentation">
+          <a href="#comp1" data-trigger="topCMS">
+            CMS</a>
+        </li>
+        <li role="presentation">
+          <a href="#comp2" data-trigger="topChat">Live Chat</a>
+        </li>
+        <li role="presentation">
+          <a href="#comp3" data-trigger="topAB">A/B Testing</a>
+        </li>
 
-      <li class="holder-parent">
-        <h4>Most Popular MVCs <br> (Homepage % Penetration)</h4>
-        <div class="holder">
-          <canvas id="topMVC" width="185" height="185"/>
-        </div>
-      </li>
+        <li class="label soon"><label>Monthly Data</label></li>
+        <li class="below-label soon">
+          <span class="coming-soon">Coming Soon</span>
+        </li>
+      </ul>
+    </div>
 
-      <li class="holder-parent">
-        <h4>Most Popular Scripts<br> (% penetration)</h4>
-        <div class="holder">
-          <canvas id="topScript" width="185" height="185 "/>
-        </div>
-      </li>
-     
-      <li class="holder-parent">
-        <h4>Most Popular Analytics<br> (% penetration)</h4>
-        <div class="holder">
-          <canvas id="topAnalytics" width="185" height="185"/>
-        </div>
-      </li>
-
-      <li class="holder-parent">
-        <h4>CMS Comparison<br> (Homepage % Penetration)</h4>
-        <div class="holder bar">
-          <canvas id="topCMS" width="255" height="255"/>
-        </div>
-      </li>
-
-      <li class="holder-parent">
-        <h4>Live Chat Comparison<br> (% penetration)</h4>
-        <div class="holder bar">
-          <canvas id="topChat" width="255" height="255"/>
-        </div>
-      </li>
-
-      <li class="holder-parent">
-        <h4>A/B Testing Comparison<br> (% penetration)</h4>
-        <div class="holder bar">
-          <canvas id="topAB" width="255" height="255"/>
-        </div>
-      </li>
-      
-    </ul>
+    <div id="chart-wrap">
+      <div class="tab-content">
+        <div class="padder"></div>
+      </div>
+    </div>
   </div>
 
   <footer>
@@ -86,11 +78,12 @@
   </footer> 
 
 	<script src="js/jquery.min.js"></script>
-  <script src="js/Chart.min.js"></script>
 	<script src="js/velocity.min.js"></script>
 	<script src="js/velocity.ui.min.js"></script>
 	<script src="js/velocity.ui.custom.min.js"></script>
 	<script src="js/numeral.min.js"></script>
+  
+  <script src="js/highcharts.js"></script>
   <script src="js/charts.js"></script>
 
   <script>
