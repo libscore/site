@@ -1339,6 +1339,10 @@ footer {
 	#data #data_cols div a {
 		display: none;
 	}
+
+  .results .directions {
+    display: none;
+  }
 }
 
 @media screen and ( max-width: 530px ){
