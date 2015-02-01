@@ -1018,10 +1018,14 @@ footer {
     }
 }
 
-@media screen and ( max-height: 690px ){
+@media screen and ( max-height: 530px ){
 	#subscribe_ {
 		display: none!important;	
 	}
+
+  .directions {
+    bottom: 35px;
+  }
 }
 
 @media screen and ( max-width: 1200px ){
