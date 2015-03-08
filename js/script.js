@@ -51,6 +51,7 @@ var $html = $("html"),
 	$data_table = $("#data table"),
 	$data_cols = $("#data_cols"),
 	$data_scroll = $("#data_scroll"),
+	$data_lib = $("#data-lib"),
 	$about = $("#about"),
 	$sectionHeader_search = $("#sectionHeader--search"),
 	$search_ = $("#search_"),
@@ -133,6 +134,7 @@ var UI = {
         		$body.removeClass("results");
 				$data_table.empty();
 				$data_table.removeClass("show");
+				$data_lib.removeClass("show");
 				$data_cols.removeClass("show");
 				$searchSymbols.removeClass("show");
 			}
@@ -151,6 +153,7 @@ var UI = {
 				$search.removeClass('error');
 				UI.loading = true;
 				$data_table.removeClass('show');
+				$data_lib.removeClass("show");
 				$data_cols.removeClass("show");
 				$body.addClass("results");
 				$searchSymbols.addClass("show");
@@ -172,6 +175,7 @@ var UI = {
 								$(window).scrollTop(0);
 								callback(response);
 								$data_table.addClass('show');
+								$data_lib.addClass("show");
 								$data_cols.addClass("show");
 							} else {
 								UI.error();

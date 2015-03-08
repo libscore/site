@@ -482,6 +482,22 @@ body {
 	opacity: 1;
 }
 
+#data-lib {
+	position: fixed;
+	left: 400px;
+	top: 0;
+	width: 550px;
+	height: 100%;
+	border-right: 1px solid #ECECEC;
+	padding: 34px 32px;
+	margin-left: 0;
+	background-color: #FFF;
+	z-index: 999;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 800ms ease-in-out;
+}
+
 #data {
 	font-size: 13px;
 	z-index: 0;
@@ -492,7 +508,7 @@ body {
 		line-height: 130px;
 		background: #fff;
 		z-index: 1001;
-		position: fixed;
+		position: relative;
 		width: 100%;
 		left: 0;
 		top: 0;
@@ -508,6 +524,7 @@ body {
 		transition: all 400ms ease-in-out;
 		
 		h3.middle {
+			display: none;
 			position: absolute;
 			font-family: "Avenir Medium";
 			font-weight: normal;
@@ -519,7 +536,7 @@ body {
 			left: 0;
 			width: 100%;
 			margin: 0;
-			padding: 0 0 0 400px;
+			padding: 0;
 			text-align: center;
 			z-index: 0;
 			text-transform: none;
@@ -537,7 +554,7 @@ body {
 
 		div {
 			position: absolute;
-			left: 480px;
+			left: 0;
 			font-family: "Avenir Black";
 			letter-spacing: 0.05rem;
 			text-transform: uppercase;
@@ -546,7 +563,7 @@ body {
 			z-index: 1;
 
 			&:nth-child(odd) {
-				right: 80px;
+				right: 0;
 				left: auto;
 				top: 0;
 			}
@@ -581,12 +598,12 @@ body {
 		position: relative;
 		overflow-y: scroll;
 		clear: both;
-		font-size: 26px;
+		font-size: 21px;
 		width: 100%;
 		padding: 0;
     opacity: 0;
     transition: all 500ms;
-    top: 100px;
+    top: 0;
 
 		tbody {
 			display: table;
@@ -598,6 +615,7 @@ body {
 
 			&:nth-child(odd) {
 				letter-spacing: 0.03rem;
+				word-break: break-word;
 			}
 
 			&:nth-child(even) {
@@ -617,10 +635,10 @@ body {
 			&:hover {
 				background-color: #f2f2f2;
 
-        td {
-          padding-right: 9px;
-          padding-left: 10px;
-        }
+        // td {
+        //   padding-right: 9px;
+        //   padding-left: 10px;
+        // }
 			}
 		}
 
@@ -735,9 +753,9 @@ body {
 	display: none;
 	z-index: 1;
 	position: fixed;
-	left: 50%;
-	margin-left: 200px;
-	bottom: 50px;
+	left: 67%;
+	margin-left: 208px;
+	bottom: 60px;
 	color: #373737;
 	font-size: 32px;
 	background: url("../images/arrow-down.svg");
@@ -889,8 +907,16 @@ footer {
 		z-index: 1001;
 	}
 
+	#data-lib {
+		&.show {
+			opacity: 1;
+			visibility: visible;
+			background-color: red;
+		}
+	}
+
 	#data {
-		padding: 0 80px 0 480px;
+		padding: 0 40px 0 990px;
 
 		#col_wrap {
 			background: #F7F7F7;
@@ -898,7 +924,7 @@ footer {
 	}
 
 	footer {
-		padding: 8px 80px 8px 480px;
+		padding: 8px 40px 8px 440px;
 		background-color: #F7F7F7;
 		border-top: 1px solid #E5E5E5;
 
@@ -1082,13 +1108,13 @@ footer {
 		table {
 			font-size: 18px;
 
-			tr {
-				&:hover {
-					td {
-						padding: 10px 9px 7px 10px;
-					}
-				}
-			}
+			// tr {
+			// 	&:hover {
+			// 		td {
+			// 			padding: 10px 9px 7px 10px;
+			// 		}
+			// 	}
+			// }
 
 			td {
 				padding: 10px 0 7px 0;
