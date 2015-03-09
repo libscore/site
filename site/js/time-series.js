@@ -2,6 +2,7 @@ $(function () {
   $('#time-series').highcharts({
     chart: {
       type: 'area',
+      height: 350,
       backgroundColor: 'transparent',
       style: {
         fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif', 
@@ -12,10 +13,12 @@ $(function () {
       text: ''
     },
     xAxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr'],
+      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       title: {
         enabled: false
       },
+      lineColor: '#dcdcdc',
+      lineWidth: 1,
       labels: {
         align: 'center',
         style: {
@@ -25,14 +28,21 @@ $(function () {
           letterSpacing: '1px',
           fontWeight: 'bold'
         }
-      }
+      },
+      tickInterval: null,
+      tickPosition: "outside",
+      pointPadding: null,
+      groupPadding: null,
+      borderWidth: null,
     },
     yAxis: {
       min: 0,
       title: {
         text: '',
       },
-      gridLineColor: '#dcdcdc',
+      gridLineColor: 'transparent',
+      lineColor: '#dcdcdc',
+      lineWidth: 1,
       labels: {
         align: 'right',
         step: 1,
@@ -53,6 +63,7 @@ $(function () {
     },
     legend: {
       align: 'center',
+      enabled: true,
       itemDistance: 20,
       floating: false,
       itemMarginTop: 5,
@@ -67,15 +78,12 @@ $(function () {
     },
     series: [{
       name: 'jQuery',
-      data: [.3, .4, .6, .65]
-    },{
-      name: 'mooTools',
-      data: [.1, .13, .2, .13]
+      data: [.3, .4, .6]
     }],
     tooltip: {
       useHTML: true,
       headerFormat: '<h4 style="font-size: 11px; margin: 5px 0 7px 0; text-transform: uppercase; letter-spacing: 1px; color: #bcbcbc;">Penetration Percentage</h4>',
-      pointFormat: '<h2 style="font-size:16px; margin: 0; display: inline; color: #3a3a3a">{point.name} <span style="color: #29BD66;">{point.y}%</span></h2>',
+      pointFormat: '<h2 style="font-size:16px; margin: 0; display: inline; color: #3a3a3a">{series.name} <span style="color: #29BD66;">{point.y}%</span></h2>',
       borderColor: '#29BD66',
       borderWidth: 2,
       backgroundColor: '#ffffff',
@@ -177,10 +185,23 @@ $(function () {
             }
           }
         },
-        point: {
-          pointStart: Date.UTC(2010, 0, 1)
-        }
+        pointPlacement: "on"
       }
     }
+  });
+
+  function setData() {
+    var chart = $('#time-series').highcharts(),
+     series = chart.series[0];
+
+    chart.addSeries({
+        name: 'mooTools',
+        data: [.1, .13, .2]
+    });
+  }
+
+  $(".addData").on("click", function(){
+    setData();
+    return false;
   });
 });

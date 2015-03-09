@@ -506,6 +506,17 @@ body {
 	#time-series {
 		width: 100%;
 	}
+
+	.addData {
+		display: inline-block;
+		border-radius: 4px;
+		background-color: #29BD66;
+		color: #FFF;
+		padding: 14px 16px 10px 16px;
+		font-weight: bold;
+		margin: 30px 0 0 46px;
+		font-size: 15px;
+	}
 }
 
 #data {
