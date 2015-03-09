@@ -178,6 +178,10 @@ var UI = {
 								$data_table.addClass('show');
 								$data_lib.addClass("show");
 								$data_cols.addClass("show");
+
+								//refresh the time series graph
+								reDraw();
+
 							} else {
 								UI.error();
 							}
