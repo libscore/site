@@ -52,6 +52,7 @@ var $html = $("html"),
 	$data_cols = $("#data_cols"),
 	$data_scroll = $("#data_scroll"),
 	$data_lib = $("#data-lib"),
+	$data_name = $("#data-name"),
 	$about = $("#about"),
 	$sectionHeader_search = $("#sectionHeader--search"),
 	$search_ = $("#search_"),
@@ -298,7 +299,8 @@ var UI = {
 
 				switch (UI.requestTarget) {
 					case "site":
-						$columns = "<h3 class='middle'><span>Site: </span> " + data + " </h3><div>library</div>" + data + "<div>site count</div>";
+						$data_name.text(data);
+						$columns = "<div>library</div>" + data + "<div>site count</div>";
 
 						var isScript = /^script:/.test(match.name);
 
@@ -313,31 +315,36 @@ var UI = {
 						break
 
 					case "sites":
+						$data_name.text("Top Sites");
 						$columns = "<h3 class='middle'><span>Top Sites</span></h3><div>site</div><div>site rank</div>";
 						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "lib":
-						$columns = "<h3 class='middle'><span>Library: </span> " + data + " </h3><div><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div>site rank</div>";
+						$data_name.text(data);
+						$columns = "<div><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "libs":
-						$columns = "<h3 class='middle'><span>Top Libs</span></h3><div>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div>site count</div>";
+						$data_name.text("Top Libs");
+						$columns = "<div>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div>site count</div>";
 						$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.'>" + prettifyName(match.library) + "</a> <span class='text-blue'></span></a>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
 
 					case "script":
-						$columns = "<h3 class='middle'><span>Script: </span> " + data + " </h3><div>" + prettifyNumber(response.count) + " sites</div><div>site rank</div>";
+						$data_name.text(data);
+						$columns = "<div>" + prettifyNumber(response.count) + " sites</div><div>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "scripts":
-						$columns = "<h3 class='middle'><span>Top Scripts</span></h3><div>script</div><div>site count</div>";
+						$data_name.text("Top Scripts");
+						$columns = "<div>script</div><div>site count</div>";
 						$matchData = "<td><span data-query='script:" + match.script + "'>" + prettifyName(match.script) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
