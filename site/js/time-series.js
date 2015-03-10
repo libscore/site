@@ -2,8 +2,9 @@ $(function () {
   $('#time-series').highcharts({
     chart: {
       type: 'area',
-      height: 350,
+      height: 330,
       backgroundColor: 'transparent',
+      spacingBottom: 40,
       style: {
         fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif', 
         fontSize: '12px'
@@ -62,13 +63,16 @@ $(function () {
 
     },
     legend: {
-      align: 'center',
+      align: 'right',
       enabled: true,
       itemDistance: 20,
-      floating: false,
+      floating: true,
+      y: 38,
+      x: 10,
+      verticalAlign: 'bottom',
       itemMarginTop: 5,
       itemStyle: {
-        color: '#a3a3a3',
+        color: '#29BD66',
         fontSize: 15,
         fontWeight: '400'
       },
@@ -195,6 +199,8 @@ $(function () {
     var chart = $('#time-series').highcharts(),
      series = chart.series[0];
 
+    chart.options.legend.itemStyle.color = '#4973d6';
+
     chart.addSeries({
       name: 'mooTools',
       data: [.5, .35, .2],
@@ -211,8 +217,6 @@ $(function () {
         lineColor: '#4973d6'
       }
     });
-
-   
   }
 
   $(".addData").on("click", function(){
