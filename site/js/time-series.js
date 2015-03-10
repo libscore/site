@@ -68,17 +68,19 @@ $(function () {
       floating: false,
       itemMarginTop: 5,
       itemStyle: {
-        color: '#29BD66',
-        fontWeight: '600'
+        color: '#a3a3a3',
+        fontSize: 15,
+        fontWeight: '400'
       },
       symbolRadius: 5,
-      symbolHeight: 10,
-      symbolWidth: 10,
-      symbolPadding: 10
+      symbolHeight: 8,
+      symbolWidth: 8,
+      symbolPadding: 6
     },
     series: [{
       name: 'jQuery',
-      data: [.3, .4, .6]
+      data: [.3, .4, .6],
+      color: '#29BD66'
     }],
     tooltip: {
       useHTML: true,
@@ -164,7 +166,6 @@ $(function () {
     },
     plotOptions: {
       area: {
-        stacking: 'normal',
         lineColor: '#29BD66',
         lineWidth: 2,
         fillColor: {
@@ -195,9 +196,23 @@ $(function () {
      series = chart.series[0];
 
     chart.addSeries({
-        name: 'mooTools',
-        data: [.1, .13, .2]
+      name: 'mooTools',
+      data: [.5, .35, .2],
+      color: '#4973d6',
+      lineColor: '#4973d6',
+      fillColor: {
+        linearGradient: [0, 0, 0, 300],
+        stops: [
+          [0, 'rgba(73,115,214,.15)'],
+          [1, 'rgba(73,115,214,.07)']
+        ]
+      },
+      marker: {
+        lineColor: '#4973d6'
+      }
     });
+
+   
   }
 
   $(".addData").on("click", function(){
