@@ -131,9 +131,9 @@ var UI = {
 		
 		$("#header-logo").on("click", function (){
 			if ($("body").hasClass("results")) {
-      			window.location.hash = "";
-      			$data_scroll.hide();
-        		$body.removeClass();
+  			window.location.hash = "";
+  			$data_scroll.hide();
+    		$body.removeClass();
 				$data_table.empty();
 				$data_table.removeClass("show");
 				$data_lib.removeClass("show");
@@ -182,12 +182,8 @@ var UI = {
 								$data_lib.addClass("show");
 								$data_cols.addClass("show");
 
-
 								var tableHeight = $("#data table").outerHeight();
 								var docHeight = $(window).height() - $("footer").outerHeight();
-								
-								console.log("Table Height: " + tableHeight);
-								console.log("Doc Height: " + docHeight);
 
 								if(tableHeight > docHeight) {
 									$data_scroll.velocity("transition.fadeIn", { delay: 1000, duration: 1000 });
