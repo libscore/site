@@ -133,7 +133,7 @@ var UI = {
 			if ($("body").hasClass("results")) {
       			window.location.hash = "";
       			$data_scroll.hide();
-        		$body.removeClass("results");
+        		$body.removeClass();
 				$data_table.empty();
 				$data_table.removeClass("show");
 				$data_lib.removeClass("show");
@@ -163,6 +163,8 @@ var UI = {
 				
 				//giving a lag to let the animation complete
 				setTimeout(function(){
+					$body.removeClass('slim');
+
 					$.ajax({
 						url: API.hostname + url,
 						dataType: "json",
@@ -179,6 +181,17 @@ var UI = {
 								$data_table.addClass('show');
 								$data_lib.addClass("show");
 								$data_cols.addClass("show");
+
+
+								var tableHeight = $("#data table").outerHeight();
+								var docHeight = $(window).height() - $("footer").outerHeight();
+								
+								console.log("Table Height: " + tableHeight);
+								console.log("Doc Height: " + docHeight);
+
+								if(tableHeight > docHeight) {
+									$data_scroll.velocity("transition.fadeIn", { delay: 1000, duration: 1000 });
+								}
 
 								//refresh the time series graph
 								//reDraw();
@@ -306,8 +319,9 @@ var UI = {
 
 				switch (UI.requestTarget) {
 					case "site":
+
 						$data_name.text(data);
-						$columns = "<div>library</div>" + data + "<div>site count</div>";
+						$columns = "<h3 class='middle'><span>Site: </span> " + data + " </h3><div class='left'>library</div><div class='right'>site count</div>";
 
 						var isScript = /^script:/.test(match.name);
 
@@ -323,37 +337,39 @@ var UI = {
 
 					case "sites":
 						$chartLabel = 'Top Sites';
-						$columns = "<h3 class='middle'><span>Top Sites</span></h3><div>site</div><div>site rank</div>";
+						$columns = "<h3 class='middle'><span>Top Sites</span></h3><div class='left'>site</div><div class='right'>site rank</div>";
 						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "lib":
+						$body.addClass("slim");
 						$chartLabel = data;
             $chartSubLabel = response.count;
-						$columns = "<div><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div>site rank</div>";
+						$columns = "<div class='left'><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div class='right'>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "libs":
 						$chartLabel = 'Top Libs';
-						$columns = "<div>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div>site count</div>";
+						$columns = "<div class='left'>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div class='right'>site count</div>";
 						$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.'>" + prettifyName(match.library) + "</a> <span class='text-blue'></span></a>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
 
 					case "script":
+						$body.addClass("slim");
 						$chartLabel = data;
             $chartSubLabel = response.count;
-						$columns = "<div>" + prettifyNumber(response.count) + " sites</div><div>site rank</div>";
+						$columns = "<div class='left'>" + prettifyNumber(response.count) + " sites</div><div class='right'>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "scripts":
 						$chartLabel = 'Top Scripts';
-						$columns = "<div>script</div><div>site count</div>";
+						$columns = "<div class='left'>script</div><div class='right'>site count</div>";
 						$matchData = "<td><span data-query='script:" + match.script + "'>" + prettifyName(match.script) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
@@ -602,9 +618,6 @@ var UI = {
 
 			$data_table
 				.scrollTop = 0;
-
-			$data_scroll
-				.velocity("transition.fadeIn", { delay: 1000, duration: 1000 });
 
 			if ($html) {
 				$data_cols.html($columns);
