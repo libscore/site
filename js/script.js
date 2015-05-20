@@ -759,6 +759,16 @@ if ($(window).width() < 850) {
 	$(window).on('scroll', function() {
 		stickyNav();
 	});
+
+	$(".footer-chart").on('click', function (){
+		$("#data-lib").toggleClass("slideUp");
+		return false;
+	});
+
+	$(".close").on('click', function (){
+		$("#data-lib").removeClass("slideUp");
+		return false;
+	});
 }
 
 $(window).resize( function(e){
