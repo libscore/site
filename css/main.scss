@@ -200,7 +200,7 @@ body {
 		font-size: 10px;
 		letter-spacing: 1px;
 		text-transform: none;
-		right: 143px;
+		right: 142px;
 
 		#header-code-property {
 			display: inline-block;
@@ -392,23 +392,22 @@ body {
 
   &:hover {
     cursor: default;
-
-    span {
-    	background: white;
-    }
   }
 
   span {
     border: 1px solid #7CCF9D;
-    text-align: center;
-    padding: 7px 13px 6px;
-    font-size: 13px;
-    color: #29BD66;
-    font-family: "Avenir Medium";
-      &:hover {
-      border-color: #29BD66;
-      color: #1CAD57;
-      cursor: pointer;
+	  text-align: center;
+	  padding: 8px 14px 7px;
+	  font-size: 14px;
+	  color: #29BD66;
+	  font-family: "Avenir Medium";
+	  background: #FFF;
+	  cursor: pointer;
+	  border-radius: 2px;
+    
+    &:hover {
+    	border-color: #29BD66;
+    	color: #1CAD57;
     }
   }
 }
@@ -1053,7 +1052,7 @@ footer {
 		margin-bottom: 20px;
 
 		#header-code {
-			right: 78px;
+			right: 81px;
 		}
 
 		#header-logo {
@@ -1316,6 +1315,7 @@ footer {
 	.results {
 		#searchWrap {
 			z-index: 998;
+			transition: all, .3s, ease;
 		}
 	}
 
@@ -1356,13 +1356,19 @@ footer {
 
 			input#mobile-submit {
 				display: block;
-				background-color: #29bd66;
+				border: 0;
+				background-color: #00D075;
 				color: white;
 				letter-spacing: .7px;
 				width: 20%; 
 				float: left;
 				margin-right: 0;
 				border-radius: 3px;
+				transition: all 300ms ease-in-out;
+
+				&:hover {
+					background-color: #00c06c;
+				}
 			}
 		}
 
@@ -1386,8 +1392,9 @@ footer {
 		}
 
 		#slogan {
-			max-width: 461px;
-			margin: 0 auto 26px auto;
+			// max-width: 461px;
+			// margin: 0 auto 26px auto;
+			display: none!important;
 		}
 
 	  input {
@@ -1417,9 +1424,7 @@ footer {
 			left: 0;
 			top: 0;
 			width: 100%;
-			box-shadow: 0 1px 7px rgba(104, 104, 104, 0.16);
 			z-index: 101;
-			transition: none;
 
 			#header {
 				display: none;
@@ -1431,19 +1436,14 @@ footer {
 		}
 
 		#data.sticky {
-			top: 95px;
-			transition: none;
+			top: 160px;
       padding-bottom: 80px;
-
-      #data_cols {
-        display: none;
-      }
 		}
 	}
 
 	#data {
 		table {
-			top: 30px;
+			margin-top: 30px;
 			position: relative;
 		}
 	}
@@ -1634,7 +1634,7 @@ footer {
 		}
 
 		#searchWrap {
-			padding: 15px 25px 35px 25px;
+			padding: 25px 25px 35px 25px;
 		}
 
 		#searchWrap.sticky {
