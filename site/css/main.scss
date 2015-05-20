@@ -868,6 +868,7 @@ footer {
 
   .footer-chart {
   	display: none;
+  	opacity: 0;
 		background-color: #00D075;
 		background-image: url("../images/chart.svg");
 		background-size: 22px;
@@ -1012,7 +1013,7 @@ footer {
 		padding: 34px 32px;
 		margin-left: 0;
 		background-color: #f9f9f9;
-		z-index: 998;
+		z-index: 1001;
 	}
 
 	#data-lib {
@@ -1292,14 +1293,29 @@ footer {
 	  	}
 	  }
 
-	  &.results #data {
-		  padding: 0 35px;
-		  height: inherit;
-		  position: relative;
-		  width: 100%;
-		  bottom: auto;
-		  top: auto;
-		  overflow: scroll;
+	  &.results {
+	  	#data {
+			  padding: 0 35px;
+			  height: inherit;
+			  position: relative;
+			  width: 100%;
+			  bottom: auto;
+			  top: auto;
+			  overflow: scroll;
+			}
+
+			footer {
+				.footer-chart {
+					display: block;
+					opacity: 1;
+				}
+			}
+		}
+	}
+
+	.results {
+		#searchWrap {
+			z-index: 998;
 		}
 	}
 
@@ -1331,10 +1347,6 @@ footer {
 		footer {
 			padding: 12px 35px 12px 35px;
 			background: #F7F7F7;
-
-			.footer-chart {
-				display: block;
-			}
 		}
 
 		#query {
