@@ -743,7 +743,7 @@ $(window).load(function() {
 
 function stickyNav(){
 	var scrollTop     = $(window).scrollTop(),
-  elementOffset = $('#query').offset().top + 90,
+  elementOffset = $('#query').offset().top + 30,
   distance      = (elementOffset - scrollTop);
 
 	if(scrollTop > distance){
