@@ -295,6 +295,7 @@ body {
 
 	input#mobile-submit {
 		display: none;
+		font-family: "Avenir Medium";
 	}
 
 	#queryButtons {
@@ -726,6 +727,17 @@ body {
 
 		#data_more {
       margin-top: 15px;
+		  transform: none;
+		  width: 100%;
+		  background: none;
+		  position: static;
+		  text-transform: none;
+		  letter-spacing: 0;
+		  line-height: inherit;
+		  margin: 20px 0 0 0;
+		  text-align: left;
+		  height: inherit;
+		  display: block;
 
       span {
   			font-family: "Avenir Medium";
@@ -738,7 +750,14 @@ body {
         display: block;
 
   			a {
-  				border-bottom: 1px dotted black;
+					background: #29BD66;
+					color: #FFF;
+					border: 0;
+					font-family: "Avenir Black";
+					font-size: 10px;
+					padding: 3px 7px 2px 7px;
+					margin-right: 3px;
+					letter-spacing: 1px;
   			}
       }
 		}
@@ -967,7 +986,7 @@ footer {
 	}
 
 	#data {
-		padding: 0 40px 0 440px;
+		padding: 0 45px 0 445px;
 
 		// #col_wrap {
 		// 	background: #F7F7F7;
@@ -1075,13 +1094,13 @@ footer {
 ***************/
 
 @media screen and ( max-height: 850px ){
-    #howTo {
-    	margin-top: 100px;
-    }
+	#howTo {
+		margin-top: 100px;
+	}
 
-    #header {
-    	margin-top: 90px;
-    }
+	#header {
+		margin-top: 90px;
+	}
 }
 
 @media screen and ( max-height: 735px ){
@@ -1106,22 +1125,10 @@ footer {
 
 @media screen and ( max-width: 1200px ){
 	.results #data {
-		padding: 0 70px 0 470px;
 
 		table {
 			font-size: 22px;
       margin-bottom: 75px;
-		}
-
-		#data_cols {
-			div {
-				left: 470px;
-
-				&:nth-child(odd) {
-					right: 40px;
-					left: auto;
-				}
-			}
 		}
 	}
 
@@ -1136,13 +1143,6 @@ footer {
 @media screen and ( max-width: 1050px ){
 	.results #data {
 		padding: 0 40px 0 440px;
-
-		#data_cols {
-			div {
-				left: 440px;
-				font-size: 16px;
-			}
-		}
 
 		table {
 			font-size: 18px;
@@ -1162,16 +1162,6 @@ footer {
 
 				.text-green {
 					font-size: 18px;
-				}
-			}
-		}
-
-		#data_cols {
-			div {
-				left: 440px;
-
-				&:nth-child(even) {
-					right: 40px;
 				}
 			}
 		}
@@ -1203,7 +1193,7 @@ footer {
 			position: relative;
 			height: auto;
 			border: 0;
-			padding: 15px 35px 35px 35px;
+			padding: 30px 35px;
 			float: left;
 		}
 
@@ -1225,6 +1215,7 @@ footer {
 				width: 20%; 
 				float: left;
 				margin-right: 0;
+				border-radius: 3px;
 			}
 		}
 
@@ -1252,12 +1243,22 @@ footer {
 			margin: 0 auto 26px auto;
 		}
 
+	  input {
+	  	padding: 16px 20px 12px 20px;
+	  }
+
 		#data {
 			padding: 0 35px;
 			position: relative;
 			top: auto;
 			bottom: auto;
 			z-index: 100;
+			clear: left;
+
+			#col_wrap {
+	  		height: 45px;
+	  		line-height: 90px;
+	  	}
 
       table {
         margin-bottom: 20px;
@@ -1269,7 +1270,6 @@ footer {
 			left: 0;
 			top: 0;
 			width: 100%;
-			padding: 25px 35px;
 			box-shadow: 0 1px 7px rgba(104, 104, 104, 0.16);
 			z-index: 101;
 			transition: none;
@@ -1298,16 +1298,6 @@ footer {
 		table {
 			top: 30px;
 			position: relative;
-		}
-
-		#data_cols {
-			div {
-				left: 35px;
-
-				&:nth-child(even) {
-					right: 33px;
-				}
-			}
 		}
 	}
 
@@ -1457,6 +1447,10 @@ footer {
 				float: none;
 			}
 		}
+	}
+
+	#data div, #data #data_cols h3.middle span {
+		font-size: 15px;
 	}
 }
 
