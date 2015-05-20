@@ -320,11 +320,12 @@ var UI = {
 
 						var isScript = /^script:/.test(match.name);
 
+						//$matchData = "<td><span data-query='" + match.library + "'>" + prettifyName(match.library) + "</span><span class='text-green'></span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'>Visit GitHub</a></td>";
+
 						if (isScript) {
-							$matchData = "<td><a href='//" + match.name.replace(/^script:/, "") + "'>" + prettifyName(match.name, match.type) + "</a> <span class='text-blue'></span></td>";
+						  $matchData = "<td><span data-query='script:" + match.name.replace(/^script:/, "") + "'>" + prettifyName(match.name, match.type) + "</span> <span class='text-green'></span></td>";
 						} else {
-							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.name, match.type);
-							$matchData += " <span class='text-blue'></span></a>";
+							$matchData = "<td><span data-query='" + match.name + "'>" + prettifyName(match.name, match.type) + "</span><span class='text-green'></span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'>Visit GitHub</a></td>";
 						}
 
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
@@ -340,7 +341,7 @@ var UI = {
 					case "lib":
 						$body.addClass("slim");
 						$chartLabel = data;
-            			$chartSubLabel = response.count;
+            $chartSubLabel = response.count;
 						$columns = "<div class='left'><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div class='right'>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
@@ -349,15 +350,14 @@ var UI = {
 					case "libs":
 						$chartLabel = 'Top Libs';
 						$columns = "<div class='left'>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div class='right'>site count</div>";
-						//$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.'>" + prettifyName(match.library) + "</a> <span class='text-blue'></span></a>";
-						$matchData = "<td><span data-query='" + match.library + "'>" + prettifyName(match.library) + "</span> <span class='text-green'></span></td>";
+						$matchData = "<td><span data-query='" + match.library + "'>" + prettifyName(match.library) + "</span><span class='text-green'></span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'>Visit GitHub</a></td>";
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break;
 
 					case "script":
 						$body.addClass("slim");
 						$chartLabel = data;
-            			$chartSubLabel = response.count;
+            $chartSubLabel = response.count;
 						$columns = "<div class='left'>" + prettifyNumber(response.count) + " sites</div><div class='right'>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
