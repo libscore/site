@@ -323,7 +323,7 @@ var UI = {
 						if (isScript) {
 						  $matchData = "<td><span data-query='script:" + match.name.replace(/^script:/, "") + "'>" + prettifyName(match.name, match.type) + "</span> <span class='text-green'></span></td>";
 						} else {
-							$matchData = "<td><span data-query='" + match.name + "'>" + prettifyName(match.name, match.type) + "</span><span class='text-green'></span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'>Visit GitHub</a></td>";
+							$matchData = "<td><span data-query='" + match.name + "'>" + prettifyName(match.name, match.type) + "</span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
 						}
 
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
@@ -743,7 +743,7 @@ $(window).load(function() {
 
 function stickyNav(){
 	var scrollTop     = $(window).scrollTop(),
-  elementOffset = $('#query').offset().top + 65,
+  elementOffset = $('#query').offset().top + 90,
   distance      = (elementOffset - scrollTop);
 
 	if(scrollTop > distance){
