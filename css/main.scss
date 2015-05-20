@@ -398,14 +398,14 @@ body {
   }
 
   span {
-    border: 1px solid #BFE7CF;
+    border: 1px solid #7CCF9D;
     text-align: center;
     padding: 7px 13px 6px;
     font-size: 13px;
     color: #29BD66;
     font-family: "Avenir Medium";
       &:hover {
-      border-color: #7CCF9D;
+      border-color: #29BD66;
       color: #1CAD57;
       cursor: pointer;
     }
@@ -691,7 +691,7 @@ body {
 			}
 		}
 
-		.text-blue {
+		.github {
 			font-size: 15px;
 			padding: 0;
 			line-height: 15px;
@@ -700,19 +700,11 @@ body {
 			top: -1px;
 			left: 1px;
 			position: relative;
+			margin-left: 10px;
 			background: url("../images/arrow-up.svg");
 			width: 10px;
 		  height: 10px;
 		  background-size: 10px 10px;
-		}
-
-		.github {
-			margin-left: 20px;
-			font-size: 14px;
-
-			&:hover {
-				color: #29BD66;
-			}
 		}
 
 		.text-green {
