@@ -76,7 +76,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
             }
           });
         });
-      });      
+      });
     });
   });
   // TODO - THIS IS REPEATED CODE AND ugly
@@ -117,7 +117,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
           });
           res.redirect(301, 'http://img.shields.io/badge/libscore-' + lib.count + '-brightgreen.svg?style=flat-square')
         });
-      });      
+      });
     });
   });
   app.get('/v1/libraries', function(req, res){
@@ -150,7 +150,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
           }
         });
 
-      });      
+      });
     });
   });
 
@@ -200,7 +200,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
             }
           });
         });
-      });      
+      });
     });
   });
 
@@ -233,7 +233,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
           }
         });
 
-      });      
+      });
     });
   });
 
@@ -251,7 +251,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
 
       // Find some documents
       sitesCollection.find({url: site, crawlTime: mostRecentCrawlTime}, {limit: 1, skip: skip, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
-        
+
         var site = sites[0];
         console.log(site);
         var desktop = _.filter(site.libraries, function(lib){ return lib.type === 'desktop'; });
@@ -273,7 +273,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
           }
         });
 
-      });      
+      });
     });
   });
 
@@ -306,7 +306,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
           }
         });
 
-      });      
+      });
     });
   });
 

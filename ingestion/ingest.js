@@ -36,14 +36,14 @@ var ingest = function (dumpFilePath, db) {
           libraryUsage[lib] = 1;
         } else {
           libraryUsage[lib] += 1;
-        } 
+        }
       });
       _.each(site.data.libs.mobile, function (lib) {
         if(typeof libraryUsage[lib] === 'undefined') {
           libraryUsage[lib] = 1;
         } else {
           libraryUsage[lib] += 1;
-        } 
+        }
       });
     });
 
@@ -65,7 +65,7 @@ var ingest = function (dumpFilePath, db) {
           scriptUsage[script] = 1;
         } else {
           scriptUsage[script] += 1;
-        } 
+        }
       });
 
       _.each(site.data.scripts.mobile, function (script) {
@@ -73,7 +73,7 @@ var ingest = function (dumpFilePath, db) {
           scriptUsage[script] = 1;
         } else {
           scriptUsage[script] += 1;
-        } 
+        }
       });
     });
 
@@ -160,12 +160,12 @@ var ingest = function (dumpFilePath, db) {
       sitesCollection.insert(siteSnapshot, function(err, result) {
         console.log('Logged site', rankCounter);
         callback();
-      
+
       });
 
     }, function(err){
 
-      // Insert library usage lookup 
+      // Insert library usage lookup
       var libraryUsageCollection = db.collection('libraryUsage');
 
       libraryUsageCollection.insert(libraryUsageArray, function(err, result) {
@@ -173,7 +173,7 @@ var ingest = function (dumpFilePath, db) {
       });
 
 
-      // Insert script usage lookup 
+      // Insert script usage lookup
       var scriptUsageCollection = db.collection('scriptUsage');
 
       scriptUsageCollection.insert(scriptUsageArray, function(err, result) {
@@ -191,7 +191,7 @@ var ingest = function (dumpFilePath, db) {
 
     });
 
-    
+
 
 
   });
