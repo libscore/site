@@ -152,7 +152,7 @@ var ingest = function (dumpFilePath, db) {
       var siteSnapshot = {
         crawlTime: crawlTime,
         url: site.url,
-        rank: site.rank,
+        rank: parseInt(site.rank),
         total: libraries.length, // TODO - This includes duplicate scripts across mobile and desktop
         libraries: libraries,
         scripts: scripts
