@@ -486,8 +486,7 @@ var UI = {
           series: [{
             name: $chartLabel,
             data: $chartSubLabel,
-            color: '#29BD66',
-            borderWidth: 2
+            color: '#29BD66'
           }],
           tooltip: {
             useHTML: true,
@@ -589,8 +588,16 @@ var UI = {
                 fillColor: '#fafafa',
                 states: {
                   hover: {
-                    enabled: false
+                    enabled: true,
+                    radiusPlus: 3,
+                    lineWidth: 0,
+                    lineWidthPlus: 0
                   }
+                }
+              },
+              states: {
+                hover: {
+                  lineWidthPlus: 0
                 }
               },
               pointPlacement: "on"
