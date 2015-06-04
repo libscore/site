@@ -490,8 +490,8 @@ var UI = {
           }],
           tooltip: {
             useHTML: true,
-            headerFormat: '<h4 style="font-size: 11px; margin: 5px 0 7px 0; text-transform: uppercase; letter-spacing: 1px; color: #bcbcbc;">Penetration Percentage</h4>',
-            pointFormat: '<h2 style="font-size:16px; margin: 0; display: inline; color: #3a3a3a">{series.name} <span style="color: #29BD66;">{point.y} Sites</span></h2>',
+            headerFormat: '<h4 style="font-size: 11px; margin: 5px 0 7px 0; text-transform: uppercase; letter-spacing: 1px; color: #bcbcbc;">{point.key} Penetration</h4>',
+            pointFormat: '<h2 style="font-size:16px; margin: 0; display: inline; color: #3a3a3a">{series.name}: <span style="color: #29BD66;">{point.y} Sites</span></h2>',
             borderColor: '#29BD66',
             borderWidth: 2,
             backgroundColor: '#ffffff',
