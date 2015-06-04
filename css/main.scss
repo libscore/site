@@ -33,11 +33,11 @@
 }
 
 .text-red {
-	color: #d51407;
+	color: #FA2F21;
 }
 
 .background-red {
-	background-color: #d51407;
+	background-color: #FA2F21;
 }
 
 
@@ -541,11 +541,15 @@ body {
 		margin-top: 24px;
 
 		span.negative {
-			color: #d51407;
+			color: #FA2F21;
 		}
 
 		span.positive {
 			color: #29BD66;
+		}
+
+		span.sinceLast {
+			font-size: 18px;
 		}
 	}
 
