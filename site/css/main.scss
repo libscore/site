@@ -1208,7 +1208,7 @@ footer {
 		#data-lib {
 			top: 0;
 			bottom: auto;
-			height: 55%;
+			height: 57%;
 			width: 100%;
 			left: 0;
 			border-right: 0;
@@ -1226,7 +1226,7 @@ footer {
 		&.results{
 			#data {
 			  padding: 0 40px 0 440px;
-			  height: 45%;
+			  height: 44%;
 			  position: absolute;
 			  width: 100%;
 			  bottom: 0;
@@ -1248,6 +1248,17 @@ footer {
 				}
 			}
 		}
+	}
+
+	#data {
+		#col_wrap {
+  		height: 70px;
+  		line-height: 90px;
+  	}
+	}
+
+	[data-query] {
+		display: inline;
 	}
 }
 
