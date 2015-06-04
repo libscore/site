@@ -616,6 +616,7 @@ var UI = {
 				
 				//check to see if user already searched for item (exists in chart) to avoid dupes
 				if(jQuery.inArray(newQuery, searchedQueries) == -1) {
+					searchInput.val('');
 			 		getData();
 			 	} else {
 			 		searchInput.val(newQuery + " already exists on the chart!")
@@ -636,19 +637,23 @@ var UI = {
 					url: API.hostname + 'libraries/' + newQuery + '?limit=1000',
 					dataType: "json",
 					success: function (response) {
+						console.log(response);
 						if (response && response.meta) {
 
 							chartData = response.count;
-							//console.log(searchedQueries);
-
-							setData();
+							if(chartData.length === 0){
+								searchError();
+							} else {
+								setData();	
+							}
 							$('.addData .loader').removeClass('show');
-						} else {
-							UI.error();
 						}
-					},
-					error: UI.error
+					}
 				});
+      }
+
+      function searchError() {
+      	$('.addData input').val("Not a valid search, try again!")
       }
 
       function setData() {
