@@ -338,20 +338,20 @@ var UI = {
 						break;
 
 					case "lib":
-						var diff = (response.count[0] - response.count[1]) / response.count[1];
+						var diff = (response.count[1] - response.count[0]) / response.count[0];
 						var percentChange = (diff * 100).toFixed(2);
 
 						if(percentChange < 0) {
-							$data_name.html($search.val() + ": <span class='negative'>"+ percentChange + "%</span>");
+							$data_name.html($search.val() + ": <span class='negative'>"+ percentChange + "% <span class='sinceLast'>decrease since last crawl</span></span>");
 						} else {
-							$data_name.html($search.val() + ": <span class='positive'>"+ percentChange + "%</span>");
+							$data_name.html($search.val() + ": <span class='positive'>"+ percentChange + "% <span class='sinceLast'>increase since last crawl</span></span>");
 						}
 						
 						$body.addClass("slim");
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'><span id='data_badge'>" + prettifyNumber(response.count[0]) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div class='right'>site rank</div>";
-						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-green'></span></a></td>";
+						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 
 						break;
@@ -364,13 +364,13 @@ var UI = {
 						break;
 
 					case "script":
-						var diff = (response.count[0] - response.count[1]) / response.count[1];
+						var diff = (response.count[1] - response.count[0]) / response.count[0];
 						var percentChange = (diff * 100).toFixed(2);
 
 						if(percentChange < 0) {
-							$data_name.html($search.val() + ": <span class='negative'>"+ percentChange + "%</span>");
+							$data_name.html($search.val() + ": <span class='negative'>"+ percentChange + "% <span class='sinceLast'>decrease since last crawl</span></span>");
 						} else {
-							$data_name.html($search.val() + ": <span class='positive'>"+ percentChange + "%</span>");
+							$data_name.html($search.val() + ": <span class='positive'>"+ percentChange + "% <span class='sinceLast'>increase since last crawl</span></span>");
 						}
 
 						$body.addClass("slim");
@@ -486,7 +486,8 @@ var UI = {
           series: [{
             name: $chartLabel,
             data: $chartSubLabel,
-            color: '#29BD66'
+            color: '#29BD66',
+            borderWidth: 2
           }],
           tooltip: {
             useHTML: true,
