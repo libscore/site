@@ -144,7 +144,7 @@ var UI = {
 
 		function request (query, callback) {
 			var API = {
-					hostname: "http://api.libscore.com/v1/",
+					hostname: "http://104.131.144.192:3000/v1/",
 					librariesPath: "libraries/",
 					sitesPath: "sites/",
 					scriptsPath: "scripts/"
@@ -339,7 +339,7 @@ var UI = {
 					case "lib":
 						$body.addClass("slim");
 						$chartLabel = data;
-            $chartSubLabel = response.count;
+            			$chartSubLabel = response.count;
 						$columns = "<div class='left'><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div class='right'>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-green'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
@@ -349,13 +349,13 @@ var UI = {
 						$chartLabel = 'Top Libs';
 						$columns = "<div class='left'>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div class='right'>site count</div>";
 						$matchData = "<td><span data-query='" + match.library + "'>" + prettifyName(match.library) + "</span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
-						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
+						$matchData += "<td>" + prettifyNumber(match.count[0]) + "</td>";
 						break;
 
 					case "script":
 						$body.addClass("slim");
 						$chartLabel = data;
-            $chartSubLabel = response.count;
+            			$chartSubLabel = response.count;
 						$columns = "<div class='left'>" + prettifyNumber(response.count) + " sites</div><div class='right'>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-green'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
@@ -365,7 +365,7 @@ var UI = {
 						$chartLabel = 'Top Scripts';
 						$columns = "<div class='left'>script</div><div class='right'>site count</div>";
 						$matchData = "<td><span data-query='script:" + match.script + "'>" + prettifyName(match.script) + "</span> <span class='text-green'></span></td>";
-						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
+						$matchData += "<td>" + prettifyNumber(match.count[0]) + "</td>";
 						break;
 				}
 
