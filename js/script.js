@@ -122,8 +122,6 @@ var UI = {
 	error: function() {
 		$search.addClass('error');
 
-		alert("this error should trigger the shake!");
-
 		$.Velocity.RunSequence([
 			{ elements: $search_, properties: "callout.shake", options: { delay: 800, duration: 450, sequenceQueue: false } }
 		]);
@@ -174,6 +172,7 @@ var UI = {
 							// UI.loading = false;
 							$searchSymbols.removeClass("show");
 							$html.css("cursor", "default");
+							console.log(url);
 						},
 						success: function (response) {
 							if (response && response.meta) {
@@ -606,34 +605,77 @@ var UI = {
         });
       };
 
-      // function setData() {
-      //   var chart = $('#time-series').highcharts(),
-      //    series = chart.series[0];
+      var chartData = [];
+      var searchedQueries = [];
+      var newQuery = '';
+      
 
-      //   chart.options.legend.itemStyle.color = '#4973d6';
+      $(document).on('submit','form.addData',function(){
+      	var searchInput = $(this).find('input');
+				newQuery = searchInput.val();
+				
+				//check to see if user already searched for item (exists in chart) to avoid dupes
+				if(jQuery.inArray(newQuery, searchedQueries) == -1) {
+			 		getData();
+			 	} else {
+			 		searchInput.val(newQuery + " already exists on the chart!")
+			 	}
 
-      //   chart.addSeries({
-      //     name: 'mooTools',
-      //     data: [300000],
-      //     color: '#4973d6',
-      //     lineColor: '#4973d6',
-      //     fillColor: {
-      //       linearGradient: [0, 0, 0, 300],
-      //       stops: [
-      //         [0, 'rgba(73,115,214,.15)'],
-      //         [1, 'rgba(73,115,214,.07)']
-      //       ]
-      //     },
-      //     marker: {
-      //       lineColor: '#4973d6'
-      //     }
-      //   });
-      // }
+			 	searchedQueries.push(newQuery);
+	    	return false
+	    });
 
-      // $(".addData").on("click", function(){
-      //   setData();
-      //   return false;
-      // });
+      function getData() {
+      	var API = {
+					hostname: "http://104.131.144.192:3000/v1/",
+				}
+
+				$('.addData .loader').addClass('show');
+
+      	$.ajax({
+					url: API.hostname + 'libraries/' + newQuery + '?limit=1000',
+					dataType: "json",
+					success: function (response) {
+						if (response && response.meta) {
+
+							chartData = response.count;
+							//console.log(searchedQueries);
+
+							setData();
+							$('.addData .loader').removeClass('show');
+						} else {
+							UI.error();
+						}
+					},
+					error: UI.error
+				});
+      }
+
+      function setData() {
+        var chart = $('#time-series').highcharts(),
+         series = chart.series[0];
+
+        chart.options.legend.itemStyle.color = '#4973d6';
+
+        chart.addSeries({
+          name: newQuery,
+          data: chartData,
+          color: '#4973d6',
+          lineColor: '#4973d6',
+          fillColor: {
+            linearGradient: [0, 0, 0, 300],
+            stops: [
+              [0, 'rgba(73,115,214,.15)'],
+              [1, 'rgba(73,115,214,.07)']
+            ]
+          },
+          marker: {
+            lineColor: '#4973d6'
+          }
+        });
+      }
+
+    
 
 			// $data_name.text($chartLabel);
       $chartSubLabel = '';
