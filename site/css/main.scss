@@ -35,6 +35,7 @@
 .text-red {
 	color: #d51407;
 }
+
 .background-red {
 	background-color: #d51407;
 }
@@ -540,7 +541,7 @@ body {
 		margin-top: 24px;
 
 		span.negative {
-			color: #EA473A;
+			color: #d51407;
 		}
 
 		span.positive {
@@ -564,6 +565,16 @@ body {
 	}
 }
 
+tr.noHover {
+	border: 0!important;
+  font-size: 28px;
+  text-align: center;
+
+	&:hover {
+		background-color: #FCFCFC!important;
+	}
+}
+
 #data {
 	font-size: 13px;
 	z-index: 0;
@@ -572,7 +583,6 @@ body {
 	#col_wrap {
 		height: 100px;
 		line-height: 130px;
-		// background: #fff;
 		z-index: 1001;
 		position: relative;
 		width: 100%;

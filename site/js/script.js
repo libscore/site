@@ -122,6 +122,8 @@ var UI = {
 	error: function() {
 		$search.addClass('error');
 
+		alert("this error should trigger the shake!");
+
 		$.Velocity.RunSequence([
 			{ elements: $search_, properties: "callout.shake", options: { delay: 800, duration: 450, sequenceQueue: false } }
 		]);
@@ -217,7 +219,6 @@ var UI = {
 			}
 
 			$search.val(query);
-			// disabling this for dev
 			window.location.hash = query;
 
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
@@ -363,9 +364,18 @@ var UI = {
 						break;
 
 					case "script":
+						var diff = (response.count[0] - response.count[1]) / response.count[1];
+						var percentChange = (diff * 100).toFixed(2);
+
+						if(percentChange < 0) {
+							$data_name.html($search.val() + ": <span class='negative'>"+ percentChange + "%</span>");
+						} else {
+							$data_name.html($search.val() + ": <span class='positive'>"+ percentChange + "%</span>");
+						}
+
 						$body.addClass("slim");
 						$chartLabel = data;
-            			$chartSubLabel = response.count;
+            $chartSubLabel = response.count;
 						$columns = "<div class='left'>" + prettifyNumber(response.count[0]) + " sites</div><div class='right'>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-green'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
@@ -474,8 +484,8 @@ var UI = {
             symbolPadding: 6
           },
           series: [{
-            name: 'jQuery',
-            data: [$chartSubLabel],
+            name: $chartLabel,
+            data: $chartSubLabel,
             color: '#29BD66'
           }],
           tooltip: {
@@ -588,34 +598,34 @@ var UI = {
         });
       };
 
-      function setData() {
-        var chart = $('#time-series').highcharts(),
-         series = chart.series[0];
+      // function setData() {
+      //   var chart = $('#time-series').highcharts(),
+      //    series = chart.series[0];
 
-        chart.options.legend.itemStyle.color = '#4973d6';
+      //   chart.options.legend.itemStyle.color = '#4973d6';
 
-        chart.addSeries({
-          name: 'mooTools',
-          data: [300000],
-          color: '#4973d6',
-          lineColor: '#4973d6',
-          fillColor: {
-            linearGradient: [0, 0, 0, 300],
-            stops: [
-              [0, 'rgba(73,115,214,.15)'],
-              [1, 'rgba(73,115,214,.07)']
-            ]
-          },
-          marker: {
-            lineColor: '#4973d6'
-          }
-        });
-      }
+      //   chart.addSeries({
+      //     name: 'mooTools',
+      //     data: [300000],
+      //     color: '#4973d6',
+      //     lineColor: '#4973d6',
+      //     fillColor: {
+      //       linearGradient: [0, 0, 0, 300],
+      //       stops: [
+      //         [0, 'rgba(73,115,214,.15)'],
+      //         [1, 'rgba(73,115,214,.07)']
+      //       ]
+      //     },
+      //     marker: {
+      //       lineColor: '#4973d6'
+      //     }
+      //   });
+      // }
 
-      $(".addData").on("click", function(){
-        setData();
-        return false;
-      });
+      // $(".addData").on("click", function(){
+      //   setData();
+      //   return false;
+      // });
 
 			// $data_name.text($chartLabel);
       $chartSubLabel = '';
@@ -627,8 +637,8 @@ var UI = {
 				$data_cols.html($columns);
 				$data_table.html($html);
 			} else {
-				$data_cols.html("<div>library</div><div>site count</div>")
-				$data_table.html("<tr><td class='text-red'>No libraries or scripts were detected on this site.</td><td class='text-red'>Ø</td></tr>");
+				$data_cols.html("")
+				$data_table.html("<tr class='noHover'><td class='text-red'>No libraries or scripts were detected on this site.</td><td class='text-red'></td></tr>");
 			}
 
 			if (matches.length > 900) {
