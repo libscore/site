@@ -129,7 +129,6 @@ input {
 body {
 	cursor: default;
 	height: 100%;
-	border-top: 3px solid white;
 	background: #fff;
 	color: #000;
 	font-family: "Avenir Light";
@@ -539,6 +538,14 @@ body {
 		font-size: 30px;
 		font-weight: 100;
 		margin-top: 24px;
+
+		span.negative {
+			color: #EA473A;
+		}
+
+		span.positive {
+			color: #29BD66;
+		}
 	}
 
 	#time-series {
