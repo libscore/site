@@ -152,6 +152,7 @@ var UI = {
 				queryNormalized;
 
 			function ajax(url) {
+
 				$search.removeClass('error');
 				UI.loading = true;
 				$data_table.removeClass('show');
@@ -172,7 +173,6 @@ var UI = {
 							// UI.loading = false;
 							$searchSymbols.removeClass("show");
 							$html.css("cursor", "default");
-							console.log(url);
 						},
 						success: function (response) {
 							if (response && response.meta) {
@@ -218,6 +218,9 @@ var UI = {
 			}
 
 			$search.val(query);
+
+			
+
 			window.location.hash = query;
 
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
@@ -609,6 +612,13 @@ var UI = {
       var searchedQueries = [];
       var newQuery = '';
       
+      $("[data-query]").on('click',function(){
+      	searchedQueries = [];
+      });
+
+      $(document).on('submit','#mainSearch',function(){
+      	searchedQueries = [];
+      });
 
       $(document).on('submit','form.addData',function(){
       	var searchInput = $(this).find('input');
