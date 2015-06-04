@@ -64,6 +64,7 @@ var $html = $("html"),
 	$subscribe_ = $("#subscribe_"),
 	$subscribe = $("#subscribe"),
 	$searchWrap = $("#searchWrap"),
+	$badge = $("#badge"),
   $hasRendered;
 	
 
@@ -161,7 +162,8 @@ var UI = {
 				$body.addClass("results");
 				$searchSymbols.addClass("show");
 				$html.css("cursor", "wait");
-				
+				$badge.fadeOut(400);
+
 				//giving a lag to let the animation complete
 				setTimeout(function(){
 					$body.removeClass('slim');
@@ -182,6 +184,7 @@ var UI = {
 								$data_table.addClass('show');
 								$data_lib.addClass("show");
 								$data_cols.addClass("show");
+
 
 								var tableHeight = $("#data table").outerHeight();
 								var docHeight = $(window).height() - $("footer").outerHeight();
@@ -352,9 +355,15 @@ var UI = {
 						$body.addClass("slim");
 						$chartLabel = data;
             $chartSubLabel = response.count;
-						$columns = "<div class='left'><span id='data_badge'>" + prettifyNumber(response.count[0]) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div class='right'>site rank</div>";
+						$columns = "<div class='left'><span id='data_badge'>" + prettifyNumber(response.count[0]) + "</span> sites </div></div><div class='right'>site rank</div>";
 						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
+
+						$badge.html("<a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a>");
+						
+						setTimeout(function(){
+							$badge.fadeIn(400);
+						}, 500);
 
 						break;
 

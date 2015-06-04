@@ -541,7 +541,7 @@ body {
 		margin-top: 24px;
 
 		span.negative {
-			color: #FA2F21;
+			color: #FD5A4F;
 		}
 
 		span.positive {
@@ -550,7 +550,6 @@ body {
 
 		span.sinceLast {
 			font-size: 18px;
-			color: #000;
 		}
 	}
 
@@ -564,6 +563,34 @@ body {
 	}
 }
 
+#mainSearch {
+	position: relative;
+}
+
+#badge {
+	position: absolute;
+  top: 12px;
+  right: 12px;
+
+	a {
+		display: block;
+		color: #FFF;
+		text-transform: uppercase;
+		background-color: #29BD66;
+		padding: 8px 0;
+		width: 100px;
+		text-align: center;
+		font-size: 12px;
+		letter-spacing: .5px;
+		border-radius: 3px;
+		font-family: "Avenir Black";
+		transition: all 100ms ease-in-out;
+
+		&:hover {
+			background-color: #18B559;
+		}
+	}
+}
 .loader {
 	display: none;
   position: absolute;
