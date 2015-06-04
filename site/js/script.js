@@ -340,7 +340,7 @@ var UI = {
 						$body.addClass("slim");
 						$chartLabel = data;
             			$chartSubLabel = response.count;
-						$columns = "<div class='left'><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div class='right'>site rank</div>";
+						$columns = "<div class='left'><span id='data_badge'>" + prettifyNumber(response.count[0]) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div class='right'>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-green'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
@@ -356,7 +356,7 @@ var UI = {
 						$body.addClass("slim");
 						$chartLabel = data;
             			$chartSubLabel = response.count;
-						$columns = "<div class='left'>" + prettifyNumber(response.count) + " sites</div><div class='right'>site rank</div>";
+						$columns = "<div class='left'>" + prettifyNumber(response.count[0]) + " sites</div><div class='right'>site rank</div>";
 						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-green'></span></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
