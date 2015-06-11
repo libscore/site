@@ -1,3 +1,5 @@
+// add percentage counts to the legend in (up arrow 34%)
+
 /***************
      Vars
 ***************/
@@ -427,7 +429,7 @@ var UI = {
             text: ''
           },
           xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            categories: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'],
             title: {
               enabled: false
             },
@@ -496,7 +498,7 @@ var UI = {
           },
           series: [{
             name: $chartLabel,
-            data: $chartSubLabel,
+            data: $chartSubLabel.reverse(),
             color: '#29BD66'
           }],
           tooltip: {
@@ -638,7 +640,7 @@ var UI = {
 					searchInput.val('');
 			 		getData();
 			 	} else {
-			 		searchInput.val(newQuery + " already exists on the chart!")
+			 		//searchInput.val(newQuery + " already exists on the chart!")
 			 	}
 
 			 	searchedQueries.push(newQuery);
