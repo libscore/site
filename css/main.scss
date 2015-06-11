@@ -95,7 +95,7 @@ input {
 	border: 1px solid #E0E0E0;
 	border-radius: 2px;
 	color: #4D4D4D;
-	// @include custom-bezier(all, 1500ms);
+	font-size: 17px;
 
 	&:focus {
 		border-color: #d5d5d5;
@@ -383,7 +383,7 @@ body {
 .directions {
   display: none;
   position: absolute;
-  bottom: 35px;
+  bottom: 100px;
   text-align: center;
   margin: 85px auto 0 auto;
   z-index: 100;
@@ -546,6 +546,16 @@ body {
 
 		span.positive {
 			color: #29BD66;
+
+			// &:before {
+			// 	content: '';
+			// 	display: inline-block;
+			// 	margin-right: 5px;
+			// 	background: url("../images/arrow-up.svg");
+			// 	width: 10px;
+			// 	height: 10px;
+			// 	background-size: 10px 10px;
+			// }
 		}
 
 		span.sinceLast {
@@ -950,6 +960,7 @@ tr.noHover {
 footer {
 	position: fixed;
 	bottom: 0;
+	left: 0;
 	padding: 8px 19px;
 	width: 100%;
 	text-align: center;
@@ -958,7 +969,8 @@ footer {
 	z-index: 1000;
 	background-color: #ffffff;
 	line-height: 2;
-  transition: all 800ms ease-in-out;
+  transition: all 0.65s cubic-bezier(0.5, -0.035, 0.24, 1);
+
 
   .footer-chart {
   	display: none;
@@ -999,9 +1011,9 @@ footer {
 
 		#digitalocean {
 			background: url("../images/digitalocean.svg");
-			background-size: 106px 16px;
-			width: 106px;
-			height: 16px;
+			background-size: 100%;
+			width: 30px;
+			height: 17px;
 		}
 
 		#stripe {
@@ -1028,8 +1040,6 @@ footer {
 	.footer-text--divider {
 		color: #adadad;
 		font-size: 10px;
-		margin-right: 2px;
-		margin-left: 2px;
 		position: relative;
 		display: inline-block;
 		vertical-align: middle;
@@ -1126,15 +1136,19 @@ footer {
 	}
 
 	footer {
-		padding: 8px 40px 8px 440px;
-		border-top: 1px solid #E5E5E5;
+		padding: 8px 25px 8px 25px;
+	  // border-top: 1px solid #E5E5E5;
+	  width: 399px;
+	  background-color: #F9F9F9;
 
-		#authors {
-			left: 500px;
-		}
+		// #authors {
+		// 	text-align: center;
+  // 		width: 100%;
+		// }
 
 		#sponsors {
 			right: 0;
+			float: right;
 		}
 	}
 
@@ -1251,7 +1265,7 @@ footer {
 	}
 
   .directions {
-    bottom: 35px;
+    bottom: 100px;
   }
 }
 
