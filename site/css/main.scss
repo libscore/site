@@ -1109,21 +1109,28 @@ tr.noHover {
 
 
 #data_scroll {
-	display: none;
-	z-index: 1;
-	position: fixed;
-	left: 50%;
-	margin-left: 175px;
-	bottom: 60px;
-	color: #373737;
-	font-size: 32px;
-	background: url("../images/arrow-down.svg");
-	width: 37px;
+	  display: none;
+  z-index: 1;
+  position: fixed;
+  left: 50%;
+  margin-left: 175px;
+  bottom: 60px;
+  color: #373737;
+  font-size: 32px;
+  background-image: url("../images/arrow-down.svg");
+  width: 37px;
   height: 20px;
-  background-size: 37px 20px;
-	-moz-animation: bounce 2s infinite;
+  background-size: 33px 17px;
+  -moz-animation: bounce 2s infinite;
   -webkit-animation: bounce 2s infinite;
   animation: bounce 2s infinite;
+  background-color: #FFF;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 1px solid #DDD;
+  background-position: center center;
 }
 
 footer {
