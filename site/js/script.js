@@ -349,9 +349,9 @@ var UI = {
 						var percentChange = (diff * 100).toFixed(2);
 
 						if(percentChange < 0) {
-							$data_name.html($search.val() + ": <span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+							$data_name.html($search.val() + " <span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						} else {
-							$data_name.html($search.val() + ": <span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+							$data_name.html($search.val() + " <span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						}
 	
 						$count = Number(response.count[0]).toLocaleString('en');
@@ -384,9 +384,9 @@ var UI = {
 						var percentChange = (diff * 100).toFixed(2);
 
 						if(percentChange < 0) {
-							$data_name.html($search.val() + ": <span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+							$data_name.html($search.val() + " <span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						} else {
-							$data_name.html($search.val() + ": <span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+							$data_name.html($search.val() + " <span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						}
 	
 						$count = Number(response.count[0]).toLocaleString('en');
@@ -496,6 +496,9 @@ var UI = {
               color: '#29BD66',
               fontSize: 15,
               fontWeight: '400'
+            },
+            itemHoverStyle: {
+            	color: '#1CAD57'
             },
             symbolRadius: 5,
             symbolHeight: 8,
@@ -708,9 +711,6 @@ var UI = {
         });
       }
 
-    
-
-			// $data_name.text($chartLabel);
       $chartSubLabel = '';
 
 			$data_table
