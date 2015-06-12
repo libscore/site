@@ -505,7 +505,7 @@ body {
 	}
 }
 
-.results {
+.slim {
 	.closePanel {
 		display: block;
 	}
@@ -568,7 +568,7 @@ body {
 	z-index: 999;
 	opacity: 0;
 	visibility: hidden;
-	transition: all 450ms ease-in-out;
+	transition: opacity 400ms ease;
 
 	.close {
 		display: none;
@@ -792,6 +792,7 @@ tr.noHover {
 	z-index: 0;
 	position: absolute;
 	transition: right 0.65s cubic-bezier(0.5, -0.035, 0.24, 1);
+	width: 100%;
 
 	#col_wrap {
 		height: 100px;
