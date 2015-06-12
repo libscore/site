@@ -349,15 +349,18 @@ var UI = {
 						var percentChange = (diff * 100).toFixed(2);
 
 						if(percentChange < 0) {
-							$data_name.html($search.val() + ": <span class='negative'>"+ percentChange + "% <span class='sinceLast'>decrease since last crawl</span></span>");
+							$data_name.html($search.val() + ": <span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						} else {
-							$data_name.html($search.val() + ": <span class='positive'>"+ percentChange + "% <span class='sinceLast'>increase since last crawl</span></span>");
+							$data_name.html($search.val() + ": <span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						}
-						
+	
+						$count = Number(response.count[0]).toLocaleString('en');
+						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $count + " Sites'>"+ $count + " Sites</span>");
+
 						$body.addClass("slim");
 						$chartLabel = data;
             $chartSubLabel = response.count;
-						$columns = "<div class='left'><span id='data_badge'>" + prettifyNumber(response.count[0]) + "</span> sites </div></div><div class='right'>site rank</div>";
+						$columns = "<div class='left'>Sites </div></div><div class='right'>site rank</div>";
 						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 
@@ -381,15 +384,18 @@ var UI = {
 						var percentChange = (diff * 100).toFixed(2);
 
 						if(percentChange < 0) {
-							$data_name.html($search.val() + ": <span class='negative'>"+ percentChange + "% <span class='sinceLast'>decrease since last crawl</span></span>");
+							$data_name.html($search.val() + ": <span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						} else {
-							$data_name.html($search.val() + ": <span class='positive'>"+ percentChange + "% <span class='sinceLast'>increase since last crawl</span></span>");
+							$data_name.html($search.val() + ": <span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						}
+	
+						$count = Number(response.count[0]).toLocaleString('en');
+						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $count + " Sites'>"+ $count + " Sites</span>");
 
 						$body.addClass("slim");
 						$chartLabel = data;
             $chartSubLabel = response.count;
-						$columns = "<div class='left'>" + prettifyNumber(response.count[0]) + " sites</div><div class='right'>site rank</div>";
+						$columns = "<div class='left'>Sites</div><div class='right'>site rank</div>";
 						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
@@ -683,9 +689,10 @@ var UI = {
 
         chart.options.legend.itemStyle.color = '#4973d6';
 
+        //need to write script to vary the colors of gradient stops
         chart.addSeries({
           name: newQuery,
-          data: chartData,
+          data: chartData.reverse(),
           color: '#4973d6',
           lineColor: '#4973d6',
           fillColor: {
@@ -781,6 +788,19 @@ $(document).ready(function() {
 		    });
       }
     });
+
+    $('body').on('mouseover mouseenter', '#direction', function(){
+	    $(this).tooltipster({
+        interactive: false,
+	      animation: "fade",
+	      touchDevices: true,
+	      interactiveTolerance: 300,
+	      maxWidth: 320,
+	      offsetY: 10,
+	      onlyOne: true
+	    });
+	    $(this).tooltipster('show');
+		});
 
     $(".directions").on('click', function(){
     	$(this).next('#howTo').addClass('reveal');
