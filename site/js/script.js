@@ -179,6 +179,9 @@ var UI = {
 							$html.css("cursor", "default");
 						},
 						success: function (response) {
+
+							console.log(response);
+
 							if (response && response.meta) {
 
 								$(window).scrollTop(0);
@@ -345,7 +348,7 @@ var UI = {
 						break;
 
 					case "lib":
-						var diff = (response.count[1] - response.count[0]) / response.count[0];
+						var diff = (response.count[0] - response.count[1]) / response.count[1];
 						var percentChange = (diff * 100).toFixed(2);
 
 						if(percentChange < 0) {
@@ -662,7 +665,6 @@ var UI = {
 					url: API.hostname + 'libraries/' + newQuery + '?limit=1000',
 					dataType: "json",
 					success: function (response) {
-						console.log(response);
 						if (response && response.meta) {
 
 							chartData = response.count;
@@ -681,9 +683,70 @@ var UI = {
       	$('.addData input').val("Not a valid search, try again!")
       }
 
+      var index = -1;
+      
+
       function setData() {
         var chart = $('#time-series').highcharts(),
          series = chart.series[0];
+         var currentGadient= [];
+         index = index + 1;
+
+					var gradients = [
+						[
+							['rgba(73,115,214,.15)'],
+							['rgba(41,189,102,.12)']
+							
+						],
+						[
+							['rgba(73,115,214,.07)'],
+              ['rgba(148,196,168,.1)']
+						],
+						[
+							['rgba(73,115,214,.15)'],
+							['rgba(41,189,102,.12)']
+						]
+					]
+
+			    var result = [];
+			    index = index + 1;
+
+			    // SO1
+			    // gradients[index].forEach(function(element, key) {
+			    //     result[key] = [key, element[0]];
+			    // });
+			    // alert(result);
+			    // return result;
+
+			    //SO2
+			    // var resultantGradient = [];
+				   // gradients[index].forEach(function(gradient, index) {
+				   //    resultantGradient.push([index, gradient]);
+				   // });
+				   // return resultantGradient;
+				   // alert(resultantGradient);
+
+
+				
+
+
+
+					// $.each(gradients, function( i, value ) {
+					//   //currentGadient += "[" + i + ",'" + value[index] + "'],";
+
+
+					//   // currentGadient.push(i, value[index]);
+
+
+					//   currentGadient.push({i: value[index]});
+
+					//   // {name: value.name,  index:  value.index}
+					// });
+
+
+
+					// console.log(currentGadient);
+					
 
         chart.options.legend.itemStyle.color = '#4973d6';
 
@@ -696,7 +759,7 @@ var UI = {
           fillColor: {
             linearGradient: [0, 0, 0, 300],
             stops: [
-              [0, 'rgba(73,115,214,.15)'],
+            	[0, 'rgba(73,115,214,.15)'],
               [1, 'rgba(73,115,214,.07)']
             ]
           },
