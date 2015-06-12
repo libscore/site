@@ -811,9 +811,7 @@ $(document).ready(function() {
 
     $(".closePanel").on('click', function(){
     	$body.toggleClass('panelOpen');
-    	setTimeout(function(){
-    		$('#time-series').highcharts().reflow();
-    	}, 500);
+    	$('#time-series').highcharts().reflow();
     	
     	return false;
     });
