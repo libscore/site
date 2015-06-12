@@ -609,9 +609,34 @@ body {
 
 	.bottomCompare {
 		position: absolute;
-		bottom: 40px;
-		right: 40px;
-		left: 40px;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		border-top: 1px solid #E8E8E8;
+		padding: 18px 40px 40px;
+
+		&:before, &:after {
+			content: '';
+			position: absolute;
+			width: 0;
+			height: 0;
+		}
+
+		&:before {
+			top: -20px;
+			left: 40px;
+			border-left: 20px solid rgba(0, 0, 0, 0);
+			border-right: 20px solid rgba(0, 0, 0, 0);
+			border-bottom: 20px solid #E8E8E8;
+		}
+
+		&:after {
+			top: -18px;
+			left: 42px;
+			border-left: 18px solid rgba(0, 0, 0, 0);
+			border-right: 18px solid rgba(0, 0, 0, 0);
+			border-bottom: 18px solid #fcfcfc;
+		}
 
 		h3 {
 			color: #29BD66;
