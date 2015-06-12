@@ -808,6 +808,15 @@ $(document).ready(function() {
     	$(this).remove();
     	return false;
     });	
+
+    $(".closePanel").on('click', function(){
+    	$body.toggleClass('panelOpen');
+    	setTimeout(function(){
+    		$('#time-series').highcharts().reflow();
+    	}, 500);
+    	
+    	return false;
+    });
 });
 
 $(window).load(function() {

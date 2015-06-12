@@ -490,6 +490,51 @@ body {
 	opacity: 1;
 }
 
+.closePanel {
+	display: none;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 10px;
+	text-transform: uppercase;
+}
+
+#data-lib {
+	.closePanel {
+		display: none;
+	}
+}
+
+.results {
+	.closePanel {
+		display: block;
+	}
+}
+
+.panelOpen {
+	&.slim.results {
+		#data {
+			right: -100%;
+		}
+	}
+
+	&.slim {
+		#data-lib {
+			width: 100%;
+			padding-left: 440px;
+			left: 0;
+			bottom: 0;
+
+			.closePanel {
+				display: block;
+			}
+
+			.bottomCompare {
+				left: 400px;
+			}
+		}
+	}
+}
 
 .slim {
 	#data-lib {
@@ -523,7 +568,7 @@ body {
 	z-index: 999;
 	opacity: 0;
 	visibility: hidden;
-	transition: all 800ms ease-in-out;
+	transition: all 450ms ease-in-out;
 
 	.close {
 		display: none;
@@ -745,7 +790,8 @@ tr.noHover {
 #data {
 	font-size: 13px;
 	z-index: 0;
-	position: relative;
+	position: absolute;
+	transition: right 0.65s cubic-bezier(0.5, -0.035, 0.24, 1);
 
 	#col_wrap {
 		height: 100px;
