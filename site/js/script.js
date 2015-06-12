@@ -358,7 +358,7 @@ var UI = {
 						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $count + " Sites'>"+ $count + " Sites</span>");
 						$data_name.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
 
-						$body.addClass("slim");
+						$body.addClass("slim").removeClass("script");
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'>Sites </div></div><div class='right'>site rank</div>";
