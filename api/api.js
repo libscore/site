@@ -157,6 +157,34 @@ MongoClient.connect(MONGO_URL, function(err, db) {
     });
   });
 
+  app.get('/v1/search/:query', function(req, res) {
+    // http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
+    var query = (function(s) {
+      return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    })(req.params.query);
+    var regex = new RegExp(query, 'i');
+    getMostRecentCrawls(function(err, crawls) {
+      var mostRecentCrawlTime = crawls[0].crawlTime;
+      async.parallel({
+        libraries: function(callback) {
+          libraryUsageCollection.find({ library: regex, crawlTime: mostRecentCrawlTime }, { sort: { count: -1 }, limit: 25 }).toArray(callback);
+        },
+        scripts: function(callback) {
+          scriptUsageCollection.find({ script: regex, crawlTime: mostRecentCrawlTime }, { sort: { count: -1 }, limit: 25 }).toArray(callback);
+        }
+      }, function(err, result) {
+        if (err) console.error('Error /v1/search/' + req.params.query, err);
+        res.send({
+          libraries: _.map(result.libraries, function(library) {
+            return { name: library.library, count: library.count };
+          }),
+          scripts: _.map(result.scripts, function(script) {
+            return { name: script.script, count: script.count };
+          })
+        });
+      });
+    });
+  });
 
   app.get('/libraries.txt', function(req, res){
     res.sendfile('DUMP.txt', {root: __dirname+"../../../"})
@@ -189,15 +217,18 @@ MongoClient.connect(MONGO_URL, function(err, db) {
       async.parallel({
         count: function(callback) {
           var query = {};
-          query[type] = name;
+          query[type] = new RegExp(name, 'i');
           collection.find(query, { limit: crawls.length, sort: [['crawlTime', 'desc']] }).toArray(function(err, results) {
+            if (results.length > 0) {
+              name = results[0][type];
+            }
             callback(err, _.pluck(results, 'count'));
           });
         },
         sites: function(callback) {
           var key = (type === 'library') ? 'libraries.name' : 'scripts.name';
           var query = { crawlTime: mostRecentCrawlTime };
-          query[key] = name;
+          query[key] = new RegExp(name, 'i');
           sitesCollection.find(query, {limit: limit, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
             var sites = _.map(sites, function (site) {
               return {
@@ -211,6 +242,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
         }
       }, function(err, results) {
         callback(err, {
+          name: name,
           count: results.count,
           sites: results.sites,
           github: '',
