@@ -356,6 +356,7 @@ var UI = {
 	
 						$count = Number(response.count[0]).toLocaleString('en');
 						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $count + " Sites'>"+ $count + " Sites</span>");
+						$data_name.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
 
 						$body.addClass("slim");
 						$chartLabel = data;
@@ -363,13 +364,6 @@ var UI = {
 						$columns = "<div class='left'>Sites </div></div><div class='right'>site rank</div>";
 						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
-
-						$badge.html("<a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a>");
-						
-						setTimeout(function(){
-							$badge.fadeIn(400);
-						}, 500);
-
 						break;
 
 					case "libs":
@@ -391,8 +385,9 @@ var UI = {
 	
 						$count = Number(response.count[0]).toLocaleString('en');
 						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $count + " Sites'>"+ $count + " Sites</span>");
+						$data_name.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
 
-						$body.addClass("slim");
+						$body.addClass("slim script");
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'>Sites</div><div class='right'>site rank</div>";
@@ -795,7 +790,7 @@ $(document).ready(function() {
 	      animation: "fade",
 	      touchDevices: true,
 	      interactiveTolerance: 300,
-	      maxWidth: 320,
+	      maxWidth: 270,
 	      offsetY: 10,
 	      onlyOne: true
 	    });
