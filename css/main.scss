@@ -383,7 +383,7 @@ body {
 .directions {
   display: none;
   position: absolute;
-  bottom: 100px;
+  bottom: 75px;
   text-align: center;
   margin: 85px auto 0 auto;
   z-index: 100;
@@ -540,22 +540,62 @@ body {
 		font-weight: 100;
 		margin-top: 24px;
 
+		span {
+			font-size: 17px;
+			padding: 6px 24px 3px 5px;
+			border-radius: 3px;
+			position: relative;
+			top: -2px;
+			margin-right: 7px;
+
+			.accent {
+				padding: 0;
+				margin: 0;
+				border-radius: 0;
+			}
+		}
+
+		span.number{
+			border: 1px solid #4973D6;
+			color: #4973D6;
+			padding-right: 5px;
+		}
+
 		span.negative {
 			color: #FD5A4F;
+			border: 1px solid #FD5A4F;
+
+			&:after {
+				content: '';
+				background-image: url("../images/arrow-up-red.svg");
+				background-size: 100%;
+				background-repeat: no-repeat;
+				position: absolute;
+				top: 9px;
+				right: 8px;
+				display: block;
+				width: 9px;
+				height: 9px;
+				transform: rotate(180deg);
+			}
 		}
 
 		span.positive {
 			color: #29BD66;
+			border: 1px solid #29BD66;
 
-			// &:before {
-			// 	content: '';
-			// 	display: inline-block;
-			// 	margin-right: 5px;
-			// 	background: url("../images/arrow-up.svg");
-			// 	width: 10px;
-			// 	height: 10px;
-			// 	background-size: 10px 10px;
-			// }
+			&:before {
+				content: '';
+				background-image: url("../images/arrow-up.svg");
+				background-size: 100%;
+				background-repeat: no-repeat;
+				position: absolute;
+				top: 9px;
+				right: 8px;
+				display: block;
+				width: 9px;
+				height: 9px;
+			}
 		}
 
 		span.sinceLast {
@@ -567,9 +607,19 @@ body {
 		width: 100%;
 	}
 
-	.addData {
-		position: relative;
-		margin-top: 30px;
+	.bottomCompare {
+		position: absolute;
+		bottom: 40px;
+		right: 40px;
+		left: 40px;
+
+		h3 {
+			color: #29BD66;
+		}
+
+		.addData {
+			position: relative;
+		}
 	}
 }
 
@@ -1265,7 +1315,7 @@ footer {
 	}
 
   .directions {
-    bottom: 100px;
+    bottom: 75px;
   }
 }
 
