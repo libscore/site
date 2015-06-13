@@ -107,20 +107,20 @@ input {
 }
 
 #search.error {
-	border: 2px solid #F18B8B;
+	border: 1px solid #F18B8B;
 }
 
 ::-webkit-input-placeholder {
-   color: #D2D2D2;
+   color: #c7c7c7;
 }
 :-moz-placeholder { 
-   color: #D2D2D2;  
+   color: #c7c7c7;  
 }
 ::-moz-placeholder {  
-   color: #D2D2D2;  
+   color: #c7c7c7;  
 }
 :-ms-input-placeholder {  
-   color: #D2D2D2;  
+   color: #c7c7c7;  
 }
 
 /*****************
@@ -833,6 +833,10 @@ body {
 
 		.addData {
 			position: relative;
+
+			input {
+				border: 1px solid #D2D2D2;
+			}
 		}
 	}
 }
