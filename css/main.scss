@@ -176,7 +176,7 @@ body {
 }
 
 #searchWrap {
-	width: 570px;
+	width: 634px;
 	position: absolute;
 	margin-left: -285px;
 	left: 50%;
@@ -184,6 +184,11 @@ body {
   @include custom-bezier(all, .65s);
   height: 100%;
   top: 0;
+  padding: 34px 32px;
+  z-index: 1001;
+  opacity:0.999;
+	-webkit-backface-visibility:hidden;
+	transform: translateZ(0);
 }
 
 #dropDown {
@@ -467,7 +472,7 @@ body {
 		float: left;
 		width: 100%;
 		padding: 0 130px;
-    @include custom-bezier(all, .65s);
+    @include custom-bezier(padding, .65s);
 
 		span {
 			border-radius: 3px;
@@ -1265,7 +1270,7 @@ footer {
 	text-align: center;
 	font-family: "Avenir Medium";
 	font-size: 0.6rem;
-	z-index: 1000;
+	z-index: 10000;
 	background-color: #ffffff;
 	line-height: 2;
   transition: all 0.65s cubic-bezier(0.5, -0.035, 0.24, 1);
@@ -1413,10 +1418,8 @@ footer {
 		width: 400px;
 		height: 100%;
 		border-right: 1px solid #E8E8E8;
-		padding: 34px 32px;
 		margin-left: 0;
 		background-color: #f9f9f9;
-		z-index: 1001;
 	}
 
 	#data-lib {
@@ -1544,7 +1547,7 @@ footer {
 	}
 
 	#header {
-		margin-top: 90px;
+		margin-top: 60px;
 	}
 }
 
@@ -1554,7 +1557,7 @@ footer {
     }
 
     #header {
-    	margin-top: 70px;
+    	margin-top: 40px;
     }
 }
 
