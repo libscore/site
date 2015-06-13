@@ -203,7 +203,7 @@ body {
 		left: 50%;
 		margin-left: -5em;
 		top: 50%;
-		margin-top: -5em;
+		margin-top: -13em;
   }
 
   &:before, &:after {
@@ -235,12 +235,20 @@ body {
   }
 
   ul{
-  	max-height: 200px;
+  	max-height: 130px;
 		overflow: scroll;
 		margin: 0;
 		padding: 0;
 		position: relative;
   	z-index: 1;
+  }
+
+  h3 {
+  	color: #29BD66;
+  	font-size: 14px;
+  	padding: 10px 10px 5px 10px;
+  	margin: 0;
+  	background-color: white;
   }
 
   li {
@@ -249,7 +257,7 @@ body {
   	display: block;
   	border-bottom: 1px solid #f5f5f5;
   	background-color: white;
-  	padding: 8px 10px;
+  	padding: 7px 10px 6px 10px;
   	cursor: pointer;
   	position: relative;
 

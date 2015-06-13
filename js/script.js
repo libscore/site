@@ -120,7 +120,8 @@ $search.one("mouseup", function() {
       UI
 **************/
 var dropdown = $("#dropDown");
-var dropdownList = $("#dropDown ul");
+var dropdownLib = $("#dropDown ul.lib");
+var dropdownScript = $("#dropDown ul.script");
 
 //hide dropdown if click outside
 $(document).mouseup(function (e){
@@ -138,7 +139,7 @@ $search.on('keyup', function(){
 	} else {
 		dropdown.addClass('show');
 	}
-	dropdownList.html('');
+	dropdownLib.html('');
 
 	//need to write conditional, if field isnt empty, run search
 	$.ajax({
@@ -146,9 +147,21 @@ $search.on('keyup', function(){
 		dataType: "json",
 		success: function (response) { 
 			var libs = response.libraries;
-			$.each(libs, function( index, value ) {
-			  dropdownList.append("<li>" + value.name + "</li>")
-			});
+			var scripts = response.libraries;
+
+			if(libs.length > 0) {
+				$('h3.lib').text("Libraries");
+				$.each(libs, function( index, value ) {
+				  dropdownLib.append("<li>" + value.name + "</li>")
+				});
+			}
+
+			if(scripts.length > 0) {
+				$('h3.script').text("Scripts");
+				$.each(scripts, function( index, value ) {
+				  dropdownScript.append("<li>" + value.name + "</li>")
+				});
+			}
 		}
 	});
 });
