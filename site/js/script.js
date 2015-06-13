@@ -136,73 +136,102 @@ $(document).mouseup(function (e){
 
 var compare = false;
 
-$dropdownInputs.on('keyup', function(){
+//for keyup throttle
+var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
 
-	console.log("works");
+$dropdownInputs.on('keyup paste', function(){
 	var values = $(this).val();
 	var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
 	var thisInput = $(this)[0].form.className;
 
-
-	if(thisInput == 'addData') {
-		compare = true;
-		dropdown.addClass('compare');
-	} else {
-		compare = false;
-		dropdown.removeClass('compare');
-	}
-
-
-	dropdownLoader.show();
-
-	if(values == '') {
-		dropdown.removeClass('show');
-	} else {
-		dropdown.addClass('show');
-	}
-	dropdownLib.html('');
-
-	//need to write conditional, if field isnt empty, run search
-	$.ajax({
-		url: searchURL,
-		dataType: "json",
-		success: function (response) { 
-			var libs = response.libraries;
-			var scripts = response.scripts;
-
-			dropdownLoader.fadeOut(200);
-
-			if(libs.length > 0) {
-				$('h3.lib').removeClass('notFound').text("Libraries");
-				$.each(libs, function( index, value ) {
-				  dropdownLib.append("<li>" + value.name + "</li>")
-				});
-			} else {
-				$('h3.lib').addClass('notFound').text("No Libraries Found");
-				dropdownLib.empty();
-			}
-
-			if(scripts.length > 0) {
-				$('h3.script').removeClass('notFound').text("Scripts");
-				$.each(scripts, function( index, value ) {
-				  dropdownScript.append("<li>" + value.name + "</li>")
-				});
-			} else {
-				$('h3.script').addClass('notFound').text("No Scripts Found");
-				dropdownScript.empty();
-			}
+	delay(function(){
+      
+		if(thisInput == 'addData') {
+			compare = true;
+			dropdown.addClass('compare');
+		} else {
+			compare = false;
+			dropdown.removeClass('compare');
 		}
-	});
+
+		dropdownLoader.show();
+
+		if(values == '') {
+			dropdown.removeClass('show');
+		} else {
+			dropdown.addClass('show');
+		}
+		dropdownLib.html('');
+
+		//need to write conditional, if field isnt empty, run search
+		$.ajax({
+			url: searchURL,
+			dataType: "json",
+			success: function (response) { 
+				var libs = response.libraries;
+				var scripts = response.scripts;
+
+				dropdownLoader.fadeOut(200);
+
+				if(libs.length > 0) {
+					$('h3.lib').removeClass('notFound').text("Libraries");
+					$.each(libs, function( index, value ) {
+					  dropdownLib.append("<li class='library'>" + value.name + "</li>")
+					});
+				} else {
+					$('h3.lib').addClass('notFound').text("No Libraries Found");
+					dropdownLib.empty();
+				}
+
+				if(scripts.length > 0) {
+					$('h3.script').removeClass('notFound').text("Scripts");
+					$.each(scripts, function( index, value ) {
+					  dropdownScript.append("<li class='script'>" + value.name + "</li>")
+					});
+				} else {
+					$('h3.script').addClass('notFound').text("No Scripts Found");
+					dropdownScript.empty();
+				}
+			}
+		});
+	}, 200 );
+});
+
+$('body').on('click', '#dropDown li', function(e){
+
+	var thisItem = $(this);
+ 	var findMe = $(this).text();
+
+ 	if(compare) {
+ 		$compare.val(findMe);
+ 		$bigNumber.fadeOut('500');
+ 		$("form.addData").submit();
+ 	} else {
+ 		if(thisItem.hasClass('script')) {
+ 			$search.val('script:' + findMe);
+ 		} else {
+ 			$search.val(findMe);
+ 		}
+ 		UI.query(event.target);
+ 	}
+ 	dropdown.removeClass('show');
 });
 
 var UI = {
 	loading: false,
 	error: function() {
 		$search.addClass('error');
+		$data_table.addClass('show').html("<tr class='noHover'><td class='text-red'>No libraries or scripts were detected!</td><td class='text-red'></td></tr>");
 
-		// $.Velocity.RunSequence([
-		// 	{ elements: $search_, properties: "callout.shake", options: { delay: 800, duration: 450, sequenceQueue: false } }
-		// ]);
+		$.Velocity.RunSequence([
+			{ elements: $search_, properties: "callout.shake", options: { duration: 1050, sequenceQueue: false } }
+		]);
 	},
 	query: function() {
 		var data = $search.val();
@@ -218,20 +247,6 @@ var UI = {
 				$data_cols.removeClass("show");
 				$searchSymbols.removeClass("show");
 			}
-		});
-
-		$('body').on('click', '#dropDown li', function(e){
-		 	var findMe = $(this).text();
-
-		 	if(compare) {
-		 		$compare.val(findMe);
-		 		$bigNumber.fadeOut('500');
-		 		$("form.addData").submit();
-		 	} else {
-		 		UI.query(event.target);
-		 		$search.val(findMe);
-		 	}
-		 	dropdown.removeClass('show');
 		});
 
 		function request (query, callback) {
@@ -293,7 +308,7 @@ var UI = {
 								//reDraw();
 
 							} else {
-								UI.error();
+								error: UI.error
 							}
 						},
 						error: UI.error

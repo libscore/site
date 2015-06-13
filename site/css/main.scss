@@ -828,15 +828,17 @@ body {
 		.bigNumber {
 			display: none;
 			font-size: 110px;
-			color: #29BD66;
+			color: rgba(41,189,102,.1);
 			background-color: none;
-			opacity: 0.1;
 			position: absolute;
 			right: 30px;
 			top: 163px;
 			line-height: 1;
 			margin: 0;
 			padding: 0;
+			background: -webkit-linear-gradient(rgba(41,189,102,.12), rgba(41,189,102,.05));
+		  -webkit-background-clip: text;
+		  -webkit-text-fill-color: transparent;
 		}
 	}
 
