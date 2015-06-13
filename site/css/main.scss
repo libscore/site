@@ -249,6 +249,10 @@ body {
   	padding: 10px 10px 5px 10px;
   	margin: 0;
   	background-color: white;
+
+  	&.notFound {
+  		color: #D8D8D8;
+  	}
   }
 
   li {

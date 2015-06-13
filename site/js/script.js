@@ -154,21 +154,21 @@ $search.on('keyup', function(){
 			dropdownLoader.fadeOut(200);
 
 			if(libs.length > 0) {
-				$('h3.lib').text("Libraries");
+				$('h3.lib').removeClass('notFound').text("Libraries");
 				$.each(libs, function( index, value ) {
 				  dropdownLib.append("<li>" + value.name + "</li>")
 				});
 			} else {
-				$('h3.lib').text("No Libraries Found");
+				$('h3.lib').addClass('notFound').text("No Libraries Found");
 			}
 
 			if(scripts.length > 0) {
-				$('h3.script').text("Scripts");
+				$('h3.script').removeClass('notFound').text("Scripts");
 				$.each(scripts, function( index, value ) {
 				  dropdownScript.append("<li>" + value.name + "</li>")
 				});
 			} else {
-				$('h3.script').text("No Scripts Found");
+				$('h3.script').addClass('notFound').text("No Scripts Found");
 			}
 		}
 	});
