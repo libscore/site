@@ -30,7 +30,6 @@
 			<div id="query">
 				<div id="search_">
 					<form id="mainSearch">
-						<div id="badge"></div>
 						<input id="search" class="field-input" type="text" value="" autocomplete="off" placeholder="search for a JavaScript variable (case sensitive) or domain name..." />
 						<input type="submit" id="mobile-submit" value="Go">
 						<div id="dropDown"><span class="loader"></span><h3 class="lib"></h3><ul class="lib"></ul><h3 class="script"></h3><ul class="script"></ul></div>
@@ -88,9 +87,12 @@
 	<div id="data_scroll"></div>
 
 	<div id="data-lib">
-		<a href="#" class="closePanel">Open Results</a>
+		<!-- <a href="#" class="closePanel">Open Results</a> -->
 		<h3 id="data-name"></h3>
-		<div id="time-series"></div>
+		<div id="time-series">
+			<div class="chartHolder"></div>
+			<h3 class="bigNumber"></h3>
+		</div>
 		<div class="bottomCompare">
 			<h3>Compare Data</h3>
 			<form class="addData">
@@ -102,7 +104,7 @@
 	</div>
 
 	<div id="data">
-		<a href="#" class="closePanel">close</a>
+		<!-- <a href="#" class="closePanel">close</a> -->
 		<div id="col_wrap">
 			<div id="data_cols"></div>
 		</div>
