@@ -122,8 +122,14 @@ $search.one("mouseup", function() {
 var dropdown = $("#dropDown");
 var dropdownList = $("#dropDown ul");
 
-$search.on('keyup', function(){
+//hide dropdown if click outside
+$(document).mouseup(function (e){
+  if (!dropdown.is(e.target) && dropdown.has(e.target).length === 0) {
+    dropdown.removeClass('show');
+  }
+});
 
+$search.on('keyup', function(){
 	var values = $(this).val();
 	var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
 	
@@ -132,7 +138,6 @@ $search.on('keyup', function(){
 	} else {
 		dropdown.addClass('show');
 	}
-	
 	dropdownList.html('');
 
 	//need to write conditional, if field isnt empty, run search
