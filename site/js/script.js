@@ -203,6 +203,16 @@ $dropdownInputs.on('keyup paste', function(){
 	}, 200 );
 });
 
+
+var compareError = 'Not a valid search, try again!'
+//clear compare input if error and focus
+$compare.on('focus', function(){
+	var currentCopy = $(this).val();
+	if(currentCopy == compareError) {
+		$compare.val('');
+	}
+});
+
 $('body').on('click', '#dropDown li', function(e){
 
 	var thisItem = $(this);
@@ -436,13 +446,11 @@ var UI = {
 						break;
 
 					case "lib":
-						$data_name.html('');
 						$libCount = Number(response.count[0]).toLocaleString('en');
-						$data_name.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
-						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $libCount + " Sites'>"+ $libCount + " Sites</span>");
-
 						$bigNumber.text($libCount);
 						$bigNumber.fadeIn('500');
+						$data_name.html('');
+						$data_name.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
 
 						var diff = (response.count[0] - response.count[1]) / response.count[1];
 						var percentChange = (diff * 100).toFixed(2);
@@ -452,6 +460,9 @@ var UI = {
 						} else {
 							$data_name.append($search.val() + " <span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						}
+
+						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $libCount + " Sites'>"+ $libCount + " Sites</span>");
+
 
 						$body.addClass("slim").removeClass("script");
 						$chartLabel = data;
@@ -469,13 +480,11 @@ var UI = {
 						break;
 
 					case "script":
-						$data_name.html('');
 						$scriptCount = Number(response.count[0]).toLocaleString('en');
-						$data_name.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
-						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $scriptCount + " Sites'>"+ $scriptCount + " Sites</span>");
-
 						$bigNumber.text($scriptCount);
 						$bigNumber.fadeIn('500');
+						$data_name.html('');
+						$data_name.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
 
 						var diff = (response.count[1] - response.count[0]) / response.count[0];
 						var percentChange = (diff * 100).toFixed(2);
@@ -485,6 +494,8 @@ var UI = {
 						} else {
 							$data_name.append($search.val() + " <span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						}
+
+						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $scriptCount + " Sites'>"+ $scriptCount + " Sites</span>");
 
 						$body.addClass("slim script");
 						$chartLabel = data;
@@ -517,9 +528,9 @@ var UI = {
         $compareChart.highcharts({
           chart: {
             type: 'area',
-            height: 330,
+            height: 375,
             backgroundColor: 'transparent',
-            spacingBottom: 40,
+            spacingBottom: 50,
             style: {
               fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif', 
               fontSize: '12px'
@@ -536,6 +547,7 @@ var UI = {
             lineColor: '#dcdcdc',
             lineWidth: 1,
             labels: {
+            	y: 25,
               align: 'center',
               style: {
                 fontSize: '12px',
@@ -776,11 +788,11 @@ var UI = {
       }
 
       function searchError() {
-      	$compare.val("Not a valid search, try again!")
+      	$compare.val(compareError)
+      	$compare.blur();
       }
 
       var index = -1;
-      
 
       function setData() {
         var chart = $compareChart.highcharts(),
