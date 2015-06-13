@@ -122,6 +122,7 @@ $search.one("mouseup", function() {
 var dropdown = $("#dropDown");
 var dropdownLib = $("#dropDown ul.lib");
 var dropdownScript = $("#dropDown ul.script");
+var dropdownLoader = $("#dropDown .loader");
 
 //hide dropdown if click outside
 $(document).mouseup(function (e){
@@ -133,7 +134,8 @@ $(document).mouseup(function (e){
 $search.on('keyup', function(){
 	var values = $(this).val();
 	var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
-	
+	dropdownLoader.show();
+
 	if(values == '') {
 		dropdown.removeClass('show');
 	} else {
@@ -148,6 +150,8 @@ $search.on('keyup', function(){
 		success: function (response) { 
 			var libs = response.libraries;
 			var scripts = response.scripts;
+
+			dropdownLoader.fadeOut(200);
 
 			if(libs.length > 0) {
 				$('h3.lib').text("Libraries");
