@@ -119,15 +119,43 @@ $search.one("mouseup", function() {
 /**************
       UI
 **************/
+var dropdown = $("#dropDown");
+var dropdownList = $("#dropDown ul");
+
+$search.on('keyup', function(){
+
+	var values = $(this).val();
+	var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
+	
+	if(values == '') {
+		dropdown.removeClass('show');
+	} else {
+		dropdown.addClass('show');
+	}
+	
+	dropdownList.html('');
+
+	//need to write conditional, if field isnt empty, run search
+	$.ajax({
+		url: searchURL,
+		dataType: "json",
+		success: function (response) { 
+			var libs = response.libraries;
+			$.each(libs, function( index, value ) {
+			  dropdownList.append("<li>" + value.name + "</li>")
+			});
+		}
+	});
+});
 
 var UI = {
 	loading: false,
 	error: function() {
 		$search.addClass('error');
 
-		$.Velocity.RunSequence([
-			{ elements: $search_, properties: "callout.shake", options: { delay: 800, duration: 450, sequenceQueue: false } }
-		]);
+		// $.Velocity.RunSequence([
+		// 	{ elements: $search_, properties: "callout.shake", options: { delay: 800, duration: 450, sequenceQueue: false } }
+		// ]);
 	},
 	query: function() {
 		var data = $search.val();
@@ -143,6 +171,14 @@ var UI = {
 				$data_cols.removeClass("show");
 				$searchSymbols.removeClass("show");
 			}
+		});
+
+		$('body').on('click', '#dropDown li', function(){
+		 	var findMe = $(this).text();
+
+		 	$search.val(findMe);
+		 	dropdown.removeClass('show');
+		 	UI.query(event.target);
 		});
 
 		function request (query, callback) {
@@ -195,7 +231,9 @@ var UI = {
 								var docHeight = $(window).height() - $("footer").outerHeight();
 
 								if(tableHeight > docHeight) {
-									$data_scroll.velocity("transition.fadeIn", { delay: 1000, duration: 1000 });
+									setTimeout(function(){
+										$data_scroll.fadeIn(1000);
+									}, 1000);
 								}
 
 								//refresh the time series graph
@@ -210,25 +248,16 @@ var UI = {
 				}, 700);
 			}
 
-			$data_scroll.velocity("fadeOut");
+			$data_scroll.fadeOut(500);
 
 			if (/\.js$/.test(query)) {
 				alert("Be careful: We noticed you suffixed your search query with '.js'. Instead, you need to enter the exact case-sensitive VARIABLE that a library exposes itself under -- not simply the name of the library.");
 			}
 
 			query = $.trim(query.replace(/^(^https?:\/\/)?(www\.)?/i, "").replace(/^jQuery\./i, "$.").replace(/\.js$/i, ""));
-			if (query === "jquery" || query === "$") {
-				if (query === "jquery") {
-					alert("Be careful: Variable lookup is case sensitive. We've gone ahead and turned 'jquery' into 'jQuery' for you. Remember that you need to enter the exact case-sensitive VARIABLE that a library exposes itself under -- not simply the name of the library.");
-				}
-
-				query = "jQuery";
-			}
-
 			$search.val(query);
 
-			
-
+		
 			window.location.hash = query;
 
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
@@ -241,9 +270,9 @@ var UI = {
 				queryNormalized = query;
 			}
 
-			if (query === "libscore.com") {
-				alert("OMG. RECURSION!!@#!KJ$K BRAIN EXPLOSION. AHAHAHAHAHAHHHHHHH\n\nJust kidding. But there's no data to show right now...")
-			}
+			// if (query === "libscore.com") {
+			// 	alert("OMG. RECURSION!!@#!KJ$K BRAIN EXPLOSION. AHAHAHAHAHAHHHHHHH\n\nJust kidding. But there's no data to show right now...")
+			// }
 
 			switch (queryNormalized) {
 				case "site":
