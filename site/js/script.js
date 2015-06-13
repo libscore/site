@@ -830,7 +830,7 @@ var UI = {
 				$data_table.html($html);
 			} else {
 				$data_cols.html("")
-				$data_table.html("<tr class='noHover'><td class='text-red'>No libraries or scripts were detected on this site.</td><td class='text-red'></td></tr>");
+				$data_table.html("<tr class='noHover'><td class='text-red'>No libraries or scripts were detected!</td><td class='text-red'></td></tr>");
 			}
 
 			if (matches.length > 900) {
