@@ -147,13 +147,15 @@ $search.on('keyup', function(){
 		dataType: "json",
 		success: function (response) { 
 			var libs = response.libraries;
-			var scripts = response.libraries;
+			var scripts = response.scripts;
 
 			if(libs.length > 0) {
 				$('h3.lib').text("Libraries");
 				$.each(libs, function( index, value ) {
 				  dropdownLib.append("<li>" + value.name + "</li>")
 				});
+			} else {
+				$('h3.lib').text("No Libraries Found");
 			}
 
 			if(scripts.length > 0) {
@@ -161,6 +163,8 @@ $search.on('keyup', function(){
 				$.each(scripts, function( index, value ) {
 				  dropdownScript.append("<li>" + value.name + "</li>")
 				});
+			} else {
+				$('h3.script').text("No Scripts Found");
 			}
 		}
 	});
