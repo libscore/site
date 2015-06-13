@@ -186,6 +186,78 @@ body {
   top: 0;
 }
 
+#dropDown {
+  background-color: #FFF;
+  border: 1px solid #29BD66;
+  z-index: 2000;
+  position: absolute;
+  width: 100%;
+  top: 68px;
+  display: none;
+  @include custom-bezier(all, .4s);
+  border-radius: 3px;
+  min-height: 100px;
+
+  .loader {
+  	display: block;
+		left: 50%;
+		margin-left: -5em;
+		top: 50%;
+		margin-top: -5em;
+  }
+
+  &:before, &:after {
+		content: '';
+		position: absolute;
+		width: 0;
+		height: 0;
+	}
+
+	&:before {
+		top: -8px;
+		left: 16px;
+		border-left: 8px solid rgba(0, 0, 0, 0);
+		border-right: 8px solid rgba(0, 0, 0, 0);
+		border-bottom: 8px solid #29BD66;
+	}
+
+	&:after {
+		top: -6px;
+		left: 18px;
+		border-left: 6px solid rgba(0, 0, 0, 0);
+		border-right: 6px solid rgba(0, 0, 0, 0);
+		border-bottom: 6px solid #fff;
+	}
+
+
+  &.show {
+  	display: block;
+  }
+
+  ul{
+  	max-height: 200px;
+		overflow: scroll;
+		margin: 0;
+		padding: 0;
+		position: relative;
+  	z-index: 1;
+  }
+
+  li {
+  	list-style: none;
+  	width: 100%;
+  	display: block;
+  	border-bottom: 1px solid #f5f5f5;
+  	background-color: white;
+  	padding: 8px 10px;
+  	cursor: pointer;
+
+  	&:hover {
+  		background-color: #f5f5f5;
+  	}
+  }
+}
+
 #header {
 	font-family: "Avenir Black";
 	text-transform: uppercase;
