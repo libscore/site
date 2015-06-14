@@ -119,6 +119,30 @@ $search.one("mouseup", function() {
 	$search.select();
 });
 
+
+/***************
+    History
+***************/
+
+
+// var History = window.History;
+// History.Adapter.bind(window,'statechange',function(){ 
+//     var State = History.getState(); 
+
+//     var pathname = window.location.pathname; // Returns path only
+// 		var url      = window.location.href;     // Returns full URL
+
+// 		var path = State.hash;
+
+		
+
+//     console.log(path);
+//     console.log(State);
+//     History.log(State.data, State.title, State.url);
+    
+// });
+
+
 /**************
       UI
 **************/
@@ -146,12 +170,14 @@ var delay = (function(){
 })();
 
 $dropdownInputs.on('keyup paste', function(){
-	var values = $(this).val();
-	var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
-	var thisInput = $(this)[0].form.className;
+	
+	var thisField = $(this);
 
 	delay(function(){
-      
+    var values = thisField.val();
+		var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
+		var thisInput = thisField[0].form.className;
+
 		if(thisInput == 'addData') {
 			compare = true;
 			dropdown.addClass('compare');
@@ -203,7 +229,6 @@ $dropdownInputs.on('keyup paste', function(){
 	}, 200 );
 });
 
-
 var compareError = 'Not a valid search, try again!'
 //clear compare input if error and focus
 $compare.on('focus', function(){
@@ -212,6 +237,7 @@ $compare.on('focus', function(){
 		$compare.val('');
 	}
 });
+var scriptClick = false;
 
 $('body').on('click', '#dropDown li', function(e){
 
@@ -219,10 +245,20 @@ $('body').on('click', '#dropDown li', function(e){
  	var findMe = $(this).text();
 
  	if(compare) {
- 		$compare.val(findMe);
+
+ 		if(thisItem.hasClass('script')) {
+ 			$compare.val(findMe);
+ 			scriptClick = true;
+ 		} else {
+ 			$compare.val(findMe);
+ 			scriptClick = false;
+ 		}
+
  		$bigNumber.fadeOut('500');
  		$("form.addData").submit();
+
  	} else {
+
  		if(thisItem.hasClass('script')) {
  			$search.val('script:' + findMe);
  		} else {
@@ -269,7 +305,6 @@ var UI = {
 				queryNormalized;
 
 			function ajax(url) {
-
 				$search.removeClass('error');
 				UI.loading = true;
 				$data_table.removeClass('show');
@@ -280,7 +315,6 @@ var UI = {
 				$html.css("cursor", "wait");
 				$badge.fadeOut(400);
 
-				//giving a lag to let the animation complete
 				setTimeout(function(){
 					$body.removeClass('slim');
 
@@ -288,22 +322,17 @@ var UI = {
 						url: API.hostname + url,
 						dataType: "json",
 						complete: function() {
-							// UI.loading = false;
 							$searchSymbols.removeClass("show");
 							$html.css("cursor", "default");
 						},
 						success: function (response) {
 
-							console.log(response);
-
 							if (response && response.meta) {
-
 								$(window).scrollTop(0);
 								callback(response);
 								$data_table.addClass('show');
 								$data_lib.addClass("show");
 								$data_cols.addClass("show");
-
 
 								var tableHeight = $("#data table").outerHeight();
 								var docHeight = $(window).height() - $("footer").outerHeight();
@@ -313,9 +342,6 @@ var UI = {
 										$data_scroll.fadeIn(1000);
 									}, 1000);
 								}
-
-								//refresh the time series graph
-								//reDraw();
 
 							} else {
 								error: UI.error
@@ -327,10 +353,8 @@ var UI = {
 			}
 
 			$data_scroll.fadeOut(500);
-
 			query = $.trim(query.replace(/^(^https?:\/\/)?(www\.)?/i, "").replace(/^jQuery\./i, "$.").replace(/\.js$/i, ""));
 			$search.val(query);
-
 			window.location.hash = query;
 
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
@@ -397,12 +421,10 @@ var UI = {
 			if (isRank === true) {
 				prettified = "<span class='text-grey'>#</span>" + prettified;
 			}
-
 			return prettified;
 		}
 
 		var matches;
-
 		request(data, function(response) {
 
 			var $html = "";
@@ -462,13 +484,11 @@ var UI = {
 						}
 
 						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $libCount + " Sites'>"+ $libCount + " Sites</span>");
-
-
 						$body.addClass("slim").removeClass("script");
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'>Sites </div></div><div class='right'>site rank</div>";
-						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
+						$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + "</a> <span class='text-green' data-query='" + match.url + "'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
@@ -501,7 +521,7 @@ var UI = {
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'>Sites</div><div class='right'>site rank</div>";
-						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
+						$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + "</a> <span class='text-green' data-query='" + match.url + "'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
@@ -749,7 +769,11 @@ var UI = {
       $(document).on('submit','form.addData',function(){
       	var searchInput = $(this).find('input');
 				newQuery = searchInput.val();
+
+				//TODO: Need to figure out if a user clicked a script or a lib and then pass this in ajax call below for correct path
 				
+
+
 				//check to see if user already searched for item (exists in chart) to avoid dupes
 				if(jQuery.inArray(newQuery, searchedQueries) == -1) {
 					searchInput.val('');
@@ -766,16 +790,22 @@ var UI = {
       	var API = {
 					hostname: "http://104.131.144.192:3000/v1/",
 				}
-
 				$('.addData .loader').addClass('show');
 
+				if(scriptClick == false) {
+					var path = 'libraries/';
+				} else {
+					var path = 'scripts/';
+				}
+
       	$.ajax({
-					url: API.hostname + 'libraries/' + newQuery + '?limit=1000',
+					url: API.hostname + path + newQuery + '?limit=1000',
 					dataType: "json",
 					success: function (response) {
+						console.log(API.hostname + path + newQuery + '?limit=1000');
 						if (response && response.meta) {
-
 							chartData = response.count;
+						
 							if(chartData.length === 0){
 								searchError();
 							} else {
@@ -825,35 +855,15 @@ var UI = {
 			    // });
 			    // alert(result);
 			    // return result;
+			    
 
 			    //SO2
-			    // var resultantGradient = [];
+			    //  var resultantGradient = [];
 				   // gradients[index].forEach(function(gradient, index) {
 				   //    resultantGradient.push([index, gradient]);
 				   // });
 				   // return resultantGradient;
-				   // alert(resultantGradient);
-
-
-				
-
-
-
-					// $.each(gradients, function( i, value ) {
-					//   //currentGadient += "[" + i + ",'" + value[index] + "'],";
-
-
-					//   // currentGadient.push(i, value[index]);
-
-
-					//   currentGadient.push({i: value[index]});
-
-					//   // {name: value.name,  index:  value.index}
-					// });
-
-
-
-					// console.log(currentGadient);
+				   // console.log(resultantGradient);
 					
 
         chart.options.legend.itemStyle.color = '#4973d6';
