@@ -461,6 +461,9 @@ var UI = {
 						break
 
 					case "sites":
+
+						console.log(match);
+
 						$chartLabel = 'Top Sites';
 						$columns = "<h3 class='middle'><span>Top Sites</span></h3><div class='left'>site</div><div class='right'>site rank</div>";
 						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
