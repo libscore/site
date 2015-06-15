@@ -84,9 +84,13 @@ $body.on("click", "a", function(event) {
 	}
 });
 
+var dataType = 'script';
+
 $body.on("click", "[data-query]", function(event) {
 	var target = event.target,
 		dataQuery = target.getAttribute("data-query");
+	dataType = target.getAttribute("data-type");
+
 
 	if (dataQuery !== null) {
 		var query = dataQuery || $(target).text();
@@ -119,25 +123,26 @@ $search.one("mouseup", function() {
 	$search.select();
 });
 
-
 /***************
     History
 ***************/
 
 
-var History = window.History;
-History.Adapter.bind(window,'statechange',function(){ 
-    var State = History.getState(); 
-		var path = State.hash.replace("/", "");
+// var History = window.History;
+// History.Adapter.bind(window,'statechange',function(){ 
+//     var State = History.getState(); 
+// 		var path = State.hash.replace("/", "");
 
-		$search.val(path);
- 		UI.query(event.target);
+// 		$search.val(path);
+//  		//UI.query(event.target);
 
-    //console.log(path);
-    //History.log(State.data, State.title, State.url); 
-});
+//     //console.log(path);
+//     //History.log(State.data, State.title, State.url); 
+// });
 
-
+// window.onhashchange = function() {
+// 	console.log(window.location.hash);
+// }
 
 /**************
       UI
@@ -270,6 +275,8 @@ $("form.addData").on('submit', function(){
 	$bigNumber.fadeOut('500');
 });
 
+var hashOnLoad = window.location.hash;
+
 var UI = {
 	loading: false,
 	error: function() {
@@ -282,20 +289,6 @@ var UI = {
 	},
 	query: function() {
 		var data = $search.val();
-		
-		$("#header-logo").on("click", function (){
-			if ($("body").hasClass("results")) {
-  			window.location.hash = "";
-  			$data_scroll.hide();
-    		$body.removeClass();
-				$data_table.empty();
-				$data_table.removeClass("show");
-				$data_lib.removeClass("show");
-				$data_cols.removeClass("show");
-				$searchSymbols.removeClass("show");
-			}
-		});
-
 		function request (query, callback) {
 			var API = {
 					hostname: "http://104.131.144.192:3000/v1/",
@@ -327,6 +320,7 @@ var UI = {
 							$html.css("cursor", "default");
 						},
 						success: function (response) {
+							// console.log(response);
 
 							if (response && response.meta) {
 								$(window).scrollTop(0);
@@ -356,7 +350,8 @@ var UI = {
 			$data_scroll.fadeOut(500);
 			query = $.trim(query.replace(/^(^https?:\/\/)?(www\.)?/i, "").replace(/^jQuery\./i, "$.").replace(/\.js$/i, ""));
 			$search.val(query);
-			window.location.hash = query;
+
+			window.history.pushState(null, null, '#' + query);
 
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
 				queryNormalized = "site";
@@ -368,12 +363,23 @@ var UI = {
 				queryNormalized = query;
 			}
 
+
+			//check for hash in window. If it contains script, then run a specific command
+			// if(queryNormalized == 'script') {
+			// 	UI.requestTarget = "script";
+			// 	ajax(API.scriptsPath + query + "?limit=1000");
+			// } else {
+			// 	UI.requestTarget = "lib";
+			// 	ajax(API.librariesPath + query + "?limit=1000");
+			// }
+
+
 			switch (queryNormalized) {
 				case "site":
 					UI.requestTarget = "site";
 					ajax(API.sitesPath + query + "/?");
 					break;
-				case "*.*":
+				case "sites":
 					UI.requestTarget = "sites";
 					ajax(API.sitesPath + "?limit=1000");
 					break;
@@ -381,11 +387,11 @@ var UI = {
 					UI.requestTarget = "script";
 					ajax(API.scriptsPath + query + "?limit=1000");
 					break;
-				case "script:*":
+				case "scripts":
 					UI.requestTarget = "scripts";
 					ajax(API.scriptsPath + "?limit=1000");
 					break;
-				case "*":
+				case "libs":
 					UI.requestTarget = "libs";
 					ajax(API.librariesPath + "?limit=1500");
 					break;
@@ -453,9 +459,9 @@ var UI = {
 						var isScript = /^script:/.test(match.name);
 
 						if (isScript) {
-						  $matchData = "<td><span data-query='script:" + match.name.replace(/^script:/, "") + "'>" + prettifyName(match.name, match.type) + "</span> <span class='text-green'></span></td>";
+						  $matchData = "<td><span data-type='script' data-query='script:" + match.name.replace(/^script:/, "") + "'>" + prettifyName(match.name, match.type) + "</span> <span class='text-green'></span></td>";
 						} else {
-							$matchData = "<td><span data-query='" + match.name + "'>" + prettifyName(match.name, match.type) + "</span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
+							$matchData = "<td><span  data-type='lib' data-query='" + match.name + "'>" + prettifyName(match.name, match.type) + "</span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
 						}
 
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
@@ -465,7 +471,7 @@ var UI = {
 
 						$chartLabel = 'Top Sites';
 						$columns = "<h3 class='middle'><span>Top Sites</span></h3><div class='left'>site</div><div class='right'>site rank</div>";
-						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
+						$matchData = "<td><span data-type='site' data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
@@ -490,14 +496,14 @@ var UI = {
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'>Sites </div></div><div class='right'>site rank</div>";
-						$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + "</a> <span class='text-green' data-query='" + match.url + "'></span></td>";
+						$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + "</a> <span class='text-green' data-type='site' data-query='" + match.url + "'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "libs":
 						$chartLabel = 'Top Libs';
 						$columns = "<div class='left'>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div class='right'>site count</div>";
-						$matchData = "<td><span data-query='" + match.library + "'>" + prettifyName(match.library) + "</span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
+						$matchData = "<td><span data-type='lib' data-query='" + match.library + "'>" + prettifyName(match.library) + "</span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.count[0]) + "</td>";
 						break;
 
@@ -523,14 +529,14 @@ var UI = {
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'>Sites</div><div class='right'>site rank</div>";
-						$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + "</a> <span class='text-green' data-query='" + match.url + "'></span></td>";
+						$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + "</a> <span class='text-green' data-type='site' data-query='" + match.url + "'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "scripts":
 						$chartLabel = 'Top Scripts';
 						$columns = "<div class='left'>script</div><div class='right'>site count</div>";
-						$matchData = "<td><span data-query='script:" + match.script + "'>" + prettifyName(match.script) + "</span> <span class='text-green'></span></td>";
+						$matchData = "<td><span data-type='script' data-query='script:" + match.script + "'>" + prettifyName(match.script) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.count[0]) + "</td>";
 						break;
 				}
@@ -800,7 +806,7 @@ var UI = {
 					url: API.hostname + path + newQuery + '?limit=1000',
 					dataType: "json",
 					success: function (response) {
-						console.log(API.hostname + path + newQuery + '?limit=1000');
+					
 						if (response && response.meta) {
 							chartData = response.count;
 						
@@ -980,6 +986,18 @@ $(document).ready(function() {
     	return false;
     });	
 
+    $("#header-logo").on("click", function (){
+			if ($("body").hasClass("results")) {
+  			window.location.hash = "";
+  			$data_scroll.hide();
+    		$body.removeClass();
+				$data_table.empty();
+				$data_table.removeClass("show");
+				$data_lib.removeClass("show");
+				$data_cols.removeClass("show");
+				$searchSymbols.removeClass("show");
+			}
+		});
 });
 
 $(window).load(function() {
@@ -993,6 +1011,11 @@ $(window).load(function() {
 					if (hash) {
 						$search.attr("placeholder", hash);
 						$search.val(hash);
+						UI.query();
+					} else if (hashOnLoad.includes("script")) {
+						var newQuery = hashOnLoad.replace("#", "");
+						$search.attr("placeholder", newQuery);
+						$search.val(newQuery);
 						UI.query();
 					} else {
 						$search.attr("placeholder", "search for a JavaScript variable (case sensitive) or a domain name...");

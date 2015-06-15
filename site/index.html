@@ -36,9 +36,9 @@
 					</form>
 				</div>
 				<div id="queryButtons">
-					<span><p data-query="*">Top Libs</p></span>
-					<span><p data-query="script:*">Top Scripts</p></span>
-					<span><p data-query="*.*">Top Sites</p></span>
+					<span><p data-query="libs" data-type="libs">Top Libs</p></span>
+					<span><p data-query="scripts" data-type="scripts">Top Scripts</p></span>
+					<span><p data-query="sites" data-type="sites">Top Sites</p></span>
 				</div>
 			</div>
 
@@ -46,7 +46,7 @@
 
 			<div id="howTo">
 				<p class="main">
-					<strong>In the search box above</strong>, enter the case-sensitive variable that a library exposes itself as, e.g. <b data-query>jQuery</b>, <b data-query>Modernizr</b>, <b data-query>$.ui</b>, or <b data-query>$.fn.fancybox</b>.
+					<strong>In the search box above</strong>, enter the case-sensitive variable that a library exposes itself as, e.g. <b data-type="lib" data-query>jQuery</b>, <b data-type="lib" data-query>Modernizr</b>, <b data-type="lib" data-query>$.ui</b>, or <b data-type="lib" data-query>$.fn.fancybox</b>.
 				</p>
 				<p class="popover">You can also query <span id="script-tip">scripts</span> and <span id="domain-tip">domain names</span></p>	
 			</div>
@@ -118,7 +118,7 @@
 	<script src="js/numeral.min.js"></script>
 	<script src="js/jquery.tooltipster.min.js"></script>
 	<script src="js/highcharts.js"></script>
-	
+
 	<script src="js/jquery.history.js"></script>
 
 	<script src="js/script.js"></script>
