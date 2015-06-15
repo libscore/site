@@ -351,8 +351,11 @@ var UI = {
 			query = $.trim(query.replace(/^(^https?:\/\/)?(www\.)?/i, "").replace(/^jQuery\./i, "$.").replace(/\.js$/i, ""));
 			$search.val(query);
 
-			window.history.pushState(null, null, '#' + query);
-
+			//quick fix for wacky script url duplicataion. need to figure out why hash is removed in the first place.
+			if(!hashOnLoad.includes("script")){
+				window.history.pushState(null, null, '#' + query);
+			}
+			
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
 				queryNormalized = "site";
 				query = query.toLowerCase();
@@ -362,17 +365,6 @@ var UI = {
 			} else {
 				queryNormalized = query;
 			}
-
-
-			//check for hash in window. If it contains script, then run a specific command
-			// if(queryNormalized == 'script') {
-			// 	UI.requestTarget = "script";
-			// 	ajax(API.scriptsPath + query + "?limit=1000");
-			// } else {
-			// 	UI.requestTarget = "lib";
-			// 	ajax(API.librariesPath + query + "?limit=1000");
-			// }
-
 
 			switch (queryNormalized) {
 				case "site":
