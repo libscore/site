@@ -125,22 +125,18 @@ $search.one("mouseup", function() {
 ***************/
 
 
-// var History = window.History;
-// History.Adapter.bind(window,'statechange',function(){ 
-//     var State = History.getState(); 
+var History = window.History;
+History.Adapter.bind(window,'statechange',function(){ 
+    var State = History.getState(); 
+		var path = State.hash.replace("/", "");
 
-//     var pathname = window.location.pathname; // Returns path only
-// 		var url      = window.location.href;     // Returns full URL
+		$search.val(path);
+ 		UI.query(event.target);
 
-// 		var path = State.hash;
+    //console.log(path);
+    //History.log(State.data, State.title, State.url); 
+});
 
-		
-
-//     console.log(path);
-//     console.log(State);
-//     History.log(State.data, State.title, State.url);
-    
-// });
 
 
 /**************
@@ -196,36 +192,38 @@ $dropdownInputs.on('keyup paste', function(){
 		dropdownLib.html('');
 
 		//need to write conditional, if field isnt empty, run search
-		$.ajax({
-			url: searchURL,
-			dataType: "json",
-			success: function (response) { 
-				var libs = response.libraries;
-				var scripts = response.scripts;
+		if(values != '') {
+			$.ajax({
+				url: searchURL,
+				dataType: "json",
+				success: function (response) { 
+					var libs = response.libraries;
+					var scripts = response.scripts;
 
-				dropdownLoader.fadeOut(200);
+					dropdownLoader.fadeOut(200);
 
-				if(libs.length > 0) {
-					$('h3.lib').removeClass('notFound').text("Libraries");
-					$.each(libs, function( index, value ) {
-					  dropdownLib.append("<li class='library'>" + value.name + "</li>")
-					});
-				} else {
-					$('h3.lib').addClass('notFound').text("No Libraries Found");
-					dropdownLib.empty();
+					if(libs.length > 0) {
+						$('h3.lib').removeClass('notFound').text("Libraries");
+						$.each(libs, function( index, value ) {
+						  dropdownLib.append("<li class='library'>" + value.name + "</li>")
+						});
+					} else {
+						$('h3.lib').addClass('notFound').text("No Libraries Found");
+						dropdownLib.empty();
+					}
+
+					if(scripts.length > 0) {
+						$('h3.script').removeClass('notFound').text("Scripts");
+						$.each(scripts, function( index, value ) {
+						  dropdownScript.append("<li class='script'>" + value.name + "</li>")
+						});
+					} else {
+						$('h3.script').addClass('notFound').text("No Scripts Found");
+						dropdownScript.empty();
+					}
 				}
-
-				if(scripts.length > 0) {
-					$('h3.script').removeClass('notFound').text("Scripts");
-					$.each(scripts, function( index, value ) {
-					  dropdownScript.append("<li class='script'>" + value.name + "</li>")
-					});
-				} else {
-					$('h3.script').addClass('notFound').text("No Scripts Found");
-					dropdownScript.empty();
-				}
-			}
-		});
+			});
+		}
 	}, 200 );
 });
 
@@ -254,7 +252,6 @@ $('body').on('click', '#dropDown li', function(e){
  			scriptClick = false;
  		}
 
- 		$bigNumber.fadeOut('500');
  		$("form.addData").submit();
 
  	} else {
@@ -267,6 +264,10 @@ $('body').on('click', '#dropDown li', function(e){
  		UI.query(event.target);
  	}
  	dropdown.removeClass('show');
+});
+
+$("form.addData").on('submit', function(){
+	$bigNumber.fadeOut('500');
 });
 
 var UI = {
@@ -461,8 +462,6 @@ var UI = {
 						break
 
 					case "sites":
-
-						console.log(match);
 
 						$chartLabel = 'Top Sites';
 						$columns = "<h3 class='middle'><span>Top Sites</span></h3><div class='left'>site</div><div class='right'>site rank</div>";
@@ -773,10 +772,6 @@ var UI = {
       	var searchInput = $(this).find('input');
 				newQuery = searchInput.val();
 
-				//TODO: Need to figure out if a user clicked a script or a lib and then pass this in ajax call below for correct path
-				
-
-
 				//check to see if user already searched for item (exists in chart) to avoid dupes
 				if(jQuery.inArray(newQuery, searchedQueries) == -1) {
 					searchInput.val('');
@@ -825,69 +820,66 @@ var UI = {
       	$compare.blur();
       }
 
+      function compareOverage() {
+      	$compare.val('You can only compare 4 libraries/scripts at once');
+      	$compare.prop('disabled', true);
+      	$compare.css('opacity', '.5');
+      }
+
       var index = -1;
 
       function setData() {
         var chart = $compareChart.highcharts(),
          series = chart.series[0];
-         var currentGadient= [];
-         index = index + 1;
+        var currentGadient= [];
+        index = index + 1;
+
+        // this number needs to change if we add mroe gradients
+        if(index < 3){
 
 					var gradients = [
 						[
 							['rgba(73,115,214,.15)'],
-							['rgba(41,189,102,.12)']
-							
+							['rgba(73,115,214,.07)']
 						],
 						[
-							['rgba(73,115,214,.07)'],
-              ['rgba(148,196,168,.1)']
+							['rgba(240,120,50,.25)'],
+							['rgba(240,120,50,.1)'],
 						],
 						[
-							['rgba(73,115,214,.15)'],
-							['rgba(41,189,102,.12)']
+							['rgba(255,50,210,.19)'],
+							['rgba(255,50,210,.07)'],
 						]
 					]
 
-			    var result = [];
-			    index = index + 1;
+					var colors = ['rgba(73,115,214,1)', 'rgba(240,120,50,1)', 'rgba(255,50,210,1)'];
 
-			    // SO1
-			    // gradients[index].forEach(function(element, key) {
-			    //     result[key] = [key, element[0]];
-			    // });
-			    // alert(result);
-			    // return result;
-			    
+				  var resultantGradient = [];
+					gradients[index].forEach(function(gradient, index) {
+						resultantGradient.push([index, gradient[0]]);
+					});
 
-			    //SO2
-			    //  var resultantGradient = [];
-				   // gradients[index].forEach(function(gradient, index) {
-				   //    resultantGradient.push([index, gradient]);
-				   // });
-				   // return resultantGradient;
-				   // console.log(resultantGradient);
-					
+					var colorChoice = colors[index];
 
-        chart.options.legend.itemStyle.color = '#4973d6';
+					//this sets the color for the legend label
+	        chart.options.legend.itemStyle.color = colorChoice;
 
-        //need to write script to vary the colors of gradient stops
-        chart.addSeries({
-          name: newQuery,
-          data: chartData.reverse(),
-          color: '#4973d6',
-          lineColor: '#4973d6',
-          fillColor: {
-            linearGradient: [0, 0, 0, 300],
-            stops: [
-            	[0, 'rgba(73,115,214,.15)'],
-              [1, 'rgba(73,115,214,.07)']
-            ]
-          },
-          marker: {
-            lineColor: '#4973d6'
-          }
-        });
+	        chart.addSeries({
+	          name: newQuery,
+	          data: chartData.reverse(),
+	          color: colorChoice,
+	          lineColor: colorChoice,
+	          fillColor: {
+	            linearGradient: [0, 0, 0, 300],
+	            stops: resultantGradient
+	          },
+	          marker: {
+	            lineColor: colorChoice
+	          }
+	        });
+	      } else {
+	      	compareOverage();
+	      }
       }
 
       $chartSubLabel = '';
