@@ -434,7 +434,7 @@ var UI = {
 				switch (UI.requestTarget) {
 					case "site":
 						$data_name.text(data);
-						$columns = "<h3 class='middle'><span>Site: </span><a class='site' href='http://'" + data + ">" + data + "</a></h3><div class='left'>library</div><div class='right'>site count</div>";
+						$columns = "<h3 class='middle'><span>Site: </span><a class='site' target= '_blank' href='http://" + data + "'>" + data + "</a></h3><div class='left'>library</div><div class='right'>site count</div>";
 
 						var isScript = /^script:/.test(match.name);
 
