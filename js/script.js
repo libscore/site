@@ -54,6 +54,7 @@ var $html = $("html"),
 	$data_scroll = $("#data_scroll"),
 	$data_lib = $("#data-lib"),
 	$data_name = $("#data-name"),
+	$badge_container = $(".badge-container"),
 	$about = $("#about"),
 	$sectionHeader_search = $("#sectionHeader--search"),
 	$search_ = $("#search_"),
@@ -271,7 +272,7 @@ var UI = {
 	loading: false,
 	error: function() {
 		$search.addClass('error');
-		$data_table.addClass('show').html("<tr class='noHover'><td class='text-red'>No libraries or scripts were detected!</td><td class='text-red'></td></tr>");
+		$data.html("<p class='noHover'>No libraries or scripts were detected!</p>");
 
 		$.Velocity.RunSequence([
 			{ elements: $search_, properties: "callout.shake", options: { duration: 1050, sequenceQueue: false } }
@@ -456,19 +457,20 @@ var UI = {
 						$libCount = Number(response.count[0]).toLocaleString('en');
 						$bigNumber.text($libCount);
 						$bigNumber.fadeIn('500');
-						$data_name.html('');
-						$data_name.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
+						$data_name.html($search.val() + "<span class='close'>Close Graph</a>");
+						$badge_container.html('');
+						$badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
 
 						var diff = (response.count[0] - response.count[1]) / response.count[1];
 						var percentChange = (diff * 100).toFixed(2);
 
 						if(percentChange < 0) {
-							$data_name.append($search.val() + " <span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+							$badge_container.append("<span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						} else {
-							$data_name.append($search.val() + " <span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+							$badge_container.append("<span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						}
 
-						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $libCount + " Sites'>"+ $libCount + " Sites</span>");
+						$badge_container.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $libCount + " Sites'>"+ $libCount + " Sites</span>");
 						$body.addClass("slim").removeClass("script");
 						$chartLabel = data;
             $chartSubLabel = response.count;
@@ -488,19 +490,20 @@ var UI = {
 						$scriptCount = Number(response.count[0]).toLocaleString('en');
 						$bigNumber.text($scriptCount);
 						$bigNumber.fadeIn('500');
-						$data_name.html('');
-						$data_name.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
+						$data_name.html($search.val() + "<span class='close'>Close Graph</a>");
+						$badge_container.html('');
+						$badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
 
 						var diff = (response.count[1] - response.count[0]) / response.count[0];
 						var percentChange = (diff * 100).toFixed(2);
 
 						if(percentChange < 0) {
-							$data_name.append($search.val() + " <span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+							$badge_container.append("<span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						} else {
-							$data_name.append($search.val() + " <span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+							$badge_container.append("<span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
 						}
 
-						$data_name.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $scriptCount + " Sites'>"+ $scriptCount + " Sites</span>");
+						$badge_container.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $scriptCount + " Sites'>"+ $scriptCount + " Sites</span>");
 
 						$body.addClass("slim script");
 						$chartLabel = data;
@@ -875,7 +878,7 @@ var UI = {
 				$data_table.html($html);
 			} else {
 				$data_cols.html("")
-				$data_table.html("<tr class='noHover'><td class='text-red'>No libraries or scripts were detected!</td><td class='text-red'></td></tr>");
+				$data.html("<p class='noHover'>No libraries or scripts were detected!</p>");
 			}
 
 			if (matches.length > 900) {
@@ -981,9 +984,8 @@ $(document).ready(function() {
 			return false;
 		});
 
-		$(".close").on("click", function (){
+		$('body').on('click', '.close', function(){
 			$("#data-lib").removeClass('open');
-			return false;
 		});
 
 		
@@ -1009,31 +1011,7 @@ $(window).load(function() {
 					} else {
 						$search.attr("placeholder", "search for a JavaScript variable (case sensitive) or a domain name...");
 					}
-
-					[ "location()", "hash()", "map()", "<a href='//medium.com/@Shapiro/introducing-libscore-com-be93165fa497'>Learn more <span style='color: #29bd66'></span></a>" ].forEach(function(val, i) {
-						$.Velocity($header_code_property, "transition.vanishBottomIn",
-							{ 
-								delay: i === 0 ? 125 : 0,
-								duration: 250,
-								begin: function() {
-									$header_code_property.html(val);
-
-									if (i === 1) {
-										$header_code_object.html("Array.");
-									}
-								},
-								complete: function() {
-									if (i === 3) {
-										$.Velocity.RunSequence([
-											{ elements: $header_code_object, properties: "transition.fadeOut", options: { duration: 400 } },
-											{ elements: $header_code_property, properties: "callout.pulse", options: { duration: 650 } }
-										]);
-									}
-								}
-							}
-						);
-					});
-			}
+				}
 			}
 		}
 	]);
@@ -1041,15 +1019,15 @@ $(window).load(function() {
 
 function stickyNav(){
 	var scrollTop     = $(window).scrollTop(),
-  elementOffset = $('#query').offset().top + 30,
+  elementOffset = $('#query').offset().top + 20,
   distance      = (elementOffset - scrollTop);
 
 	if(scrollTop > distance){
 		$("#searchWrap").addClass("sticky");
-		$("#data").addClass("sticky");
+		$("#data, body").addClass("sticky");
 	} else {
 		$("#searchWrap").removeClass("sticky");
-		$("#data").removeClass("sticky");
+		$("#data, body").removeClass("sticky");
 	}
 }
 
