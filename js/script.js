@@ -132,7 +132,6 @@ window.onhashchange = function() {
 	var rawPath = path.replace("#", "");
 	$search.val(rawPath);
 	UI.query(event.target);
-	console.log("State changed to: " + window.location.hash);
 }
 
 /**************
@@ -311,8 +310,6 @@ var UI = {
 							$html.css("cursor", "default");
 						},
 						success: function (response) {
-							// console.log(response);
-
 							if (response && response.meta) {
 								$(window).scrollTop(0);
 								callback(response);
@@ -328,7 +325,6 @@ var UI = {
 										$data_scroll.fadeIn(1000);
 									}, 1000);
 								}
-
 							} else {
 								error: UI.error
 							}
@@ -978,6 +974,18 @@ $(document).ready(function() {
 				$searchSymbols.removeClass("show");
 			}
 		});
+
+		$(".showChart").on("click", function (){
+			$("#data-lib").addClass('open');
+			return false;
+		});
+
+		$(".close").on("click", function (){
+			$("#data-lib").removeClass('open');
+			return false;
+		});
+
+		
 });
 
 $(window).load(function() {

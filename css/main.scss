@@ -986,6 +986,17 @@ tr.noHover {
 	transition: right 0.65s cubic-bezier(0.5, -0.035, 0.24, 1);
 	width: 100%;
 
+	.showChart {
+		display: none;
+	  position: absolute;
+	  left: 0;
+	  font-size: 18px;
+	  top: 35px;
+	  width: 100%;
+	  text-align: center;
+	  z-index: 10;
+	}
+
 	#col_wrap {
 		height: 100px;
 		line-height: 130px;
@@ -1594,19 +1605,11 @@ footer {
 
 @media screen and ( max-width: 1200px ){
 	.results #data {
-
 		table {
 			font-size: 22px;
       margin-bottom: 75px;
 		}
 	}
-
-	.results {
-		footer {
-			padding: 12px 70px 12px 470px;
-		}
-	}
-	
 }
 
 @media screen and ( max-width: 1400px ){
@@ -1614,6 +1617,10 @@ footer {
 		#data_scroll {
 		  left: 50%;
   		margin-left: 190px;
+		}
+
+		#dropDown.compare {
+		  display: none;
 		}
 
 		#data-lib {
@@ -1631,6 +1638,10 @@ footer {
 			  font-size: 27px;
 			  font-weight: 300;
 			  margin-top: 0;
+			}
+
+			.bottomCompare {
+				display: none;
 			}
 		}
 
@@ -1700,24 +1711,13 @@ footer {
 			}
 		}
 	}
-
-	.results {
-		footer {
-			padding: 12px 40px 12px 440px;
-		}
-	}
 }
 
 @media screen and ( max-width: 850px ){
-
 	.slim {
 		#data-lib {
-			bottom: 0;
-			left: 0;
 			top: auto;
-			height: 0;
 			width: 100%;
-			left: 0;
 			border-right: 0;
 			border-bottom: 0;
 			padding-left: 40px;
@@ -1725,6 +1725,14 @@ footer {
 			position: fixed;
 			z-index: 999;
 			transition: all 800ms ease-in-out;
+			bottom: 0;
+		  left: 0;
+		  top: 100%;
+		  height: auto;
+
+		  &.open {
+		  	top: 175px;
+		  }
 
 	  	&.slideUp {
 				height: 100%;
@@ -1732,6 +1740,8 @@ footer {
 
 	  	.close {
 	  		display: block;
+	  		top: 80px;
+  			right: 31px;
 	  	}
 	  }
 
@@ -1744,6 +1754,10 @@ footer {
 			  bottom: auto;
 			  top: auto;
 			  overflow: scroll;
+
+			  .showChart {
+					display: inline-block;
+				}
 			}
 
 			footer {
@@ -1972,39 +1986,12 @@ footer {
 			padding: 0;
 		}
 	}
-
-	footer {
-		#authors {
-			display: none;
-		}
-		#sponsors {
-			float: none;
-		}
-	}
-}
-
-@media screen and ( max-width: 920px ){
-	.results {
-		footer {
-			#authors {
-				display: none;
-			}
-			#sponsors {
-				float: none;
-			}
-		}
-	}
 }
 
 @media screen and ( max-width: 850px ){
 	.results {
 		footer {
-			#authors {
-				display: block;
-			}
-			#sponsors {
-				float: right;
-			}
+			width: 100%;
 		}
 	}
 
@@ -2029,15 +2016,6 @@ footer {
 
 @media screen and ( max-width: 530px ){
 	.results {
-		footer {
-			#authors {
-				display: none;
-			}
-			#sponsors {
-				float: none;
-			}
-		}
-
 		footer {
 			.footer-chart {
 				right: 35px;
