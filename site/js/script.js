@@ -298,6 +298,7 @@ var UI = {
 				$searchSymbols.addClass("show");
 				$html.css("cursor", "wait");
 				$badge.fadeOut(400);
+				$("#data-lib").removeClass('open');
 
 				setTimeout(function(){
 					$body.removeClass('slim');
