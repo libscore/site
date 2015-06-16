@@ -1022,6 +1022,24 @@ tr.noHover {
 			z-index: 0;
 			text-transform: none;
 
+			.site {
+				display: inline-block;
+				position: static;
+				top: 0;
+				left: 0;
+				padding: 0;
+				font-size: 20px;
+				border-radius: 0;
+				transition: all 200ms;
+				color: inherit;
+				border: 0;
+				letter-spacing: 0;
+
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+
 			span {
 				color: #C8C8C8;
 				font-size: 18px;
