@@ -127,22 +127,13 @@ $search.one("mouseup", function() {
     History
 ***************/
 
-
-// var History = window.History;
-// History.Adapter.bind(window,'statechange',function(){ 
-//     var State = History.getState(); 
-// 		var path = State.hash.replace("/", "");
-
-// 		$search.val(path);
-//  		//UI.query(event.target);
-
-//     //console.log(path);
-//     //History.log(State.data, State.title, State.url); 
-// });
-
-// window.onhashchange = function() {
-// 	console.log(window.location.hash);
-// }
+window.onhashchange = function() {
+	var path = window.location.hash;
+	var rawPath = path.replace("#", "");
+	$search.val(rawPath);
+	UI.query(event.target);
+	console.log("State changed to: " + window.location.hash);
+}
 
 /**************
       UI
@@ -351,10 +342,7 @@ var UI = {
 			query = $.trim(query.replace(/^(^https?:\/\/)?(www\.)?/i, "").replace(/^jQuery\./i, "$.").replace(/\.js$/i, ""));
 			$search.val(query);
 
-			//quick fix for wacky script url duplicataion. need to figure out why hash is removed in the first place.
-			if(!hashOnLoad.includes("script")){
-				window.history.pushState(null, null, '#' + query);
-			}
+			window.history.pushState(null, null, '#' + query);
 			
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
 				queryNormalized = "site";
@@ -801,8 +789,8 @@ var UI = {
 					
 						if (response && response.meta) {
 							chartData = response.count;
-						
-							if(chartData.length === 0){
+							
+							if(chartData.length == 0){
 								searchError();
 							} else {
 								setData();	
