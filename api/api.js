@@ -5,6 +5,7 @@ var NodeCache = require( "node-cache" );
 var cors = require('cors');
 var fs = require('fs');
 var app = express();
+var async = require('async');
 
 
 
@@ -22,218 +23,69 @@ var localCache = new NodeCache();
 
 MongoClient.connect(MONGO_URL, function(err, db) {
   console.log("Connected correctly to server");
+  var libraryUsageCollection = db.collection('libraryUsage');
+  var scriptUsageCollection = db.collection('scriptUsage');
+  var sitesCollection = db.collection('sites');
 
   // We will use v1, and switch to v2 when breaking changes.
   // We will just duplicate the code and put it another file
 
-
-
   app.get('/v1/libraries/:library', function(req, res){
 
     // Query parameters
-    var skip = req.query.skip || 0;
     var limit = req.query.limit || 500;
     var library = req.params.library;
 
-    getMostRecentCrawl(function(crawl) {
-
-      var libraryUsageCollection = db.collection('libraryUsage');
-      var sitesCollection = db.collection('sites');
-
-      var mostRecentCrawlTime = crawl.crawlTime;
-      // Find some documents
-      libraryUsageCollection.find({library: library}, {limit: limit, skip: skip, sort: [['crawlTime', 'desc']]}).toArray(function(err, libraries) {
-        history = _.map(libraries, function (lib) {
-          return {
-            crawlTime: lib.crawlTime,
-            count: lib.count
-          };
-        });
-
-        var lib = libraries[0];
-
-        console.log(mostRecentCrawlTime);
-        // TODO - Fix this all when we agree on API
-        sitesCollection.find({'libraries.name': lib.library, crawlTime: mostRecentCrawlTime}, {limit: limit, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
-          sites = _.map(sites, function (site) {
-            console.log(site);
-            return {
-              url: site.url,
-              rank: site.rank,
-              resource: 'http://' + req.headers.host + '/v1/sites/' + site.url
-            }
-          });
-
-          res.send({
-            count: lib.count,
-            sites: sites,
-            history: history,
-            github: '',
-            meta: {
-              crawl: {
-                crawlTime: mostRecentCrawlTime
-              }
-            }
-          });
-        });
-      });      
+    getUtilizingSites('library', library, req.headers.host, limit, function(err, results) {
+      if (err) console.error('Error /v1/libraries/' + library, err);
+      res.send(results);
     });
   });
-  // TODO - THIS IS REPEATED CODE AND ugly
+
+
   app.get('/badge/:library.svg', function(req, res){
 
     // Query parameters
-    var skip = req.query.skip || 0;
-    var limit = req.query.limit || 500;
     var library = req.params.library;
 
-    getMostRecentCrawl(function(crawl) {
-
-      var libraryUsageCollection = db.collection('libraryUsage');
-      var sitesCollection = db.collection('sites');
-
-      var mostRecentCrawlTime = crawl.crawlTime;
-      // Find some documents
-      libraryUsageCollection.find({library: library}, {limit: limit, skip: skip, sort: [['crawlTime', 'desc']]}).toArray(function(err, libraries) {
-        history = _.map(libraries, function (lib) {
-          return {
-            crawlTime: lib.crawlTime,
-            count: lib.count
-          };
-        });
-
-        var lib = libraries[0];
-
-        console.log(mostRecentCrawlTime);
-        // TODO - Fix this all when we agree on API
-        sitesCollection.find({'libraries.name': lib.library, crawlTime: mostRecentCrawlTime}, {limit: limit, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
-          sites = _.map(sites, function (site) {
-            console.log(site);
-            return {
-              url: site.url,
-              rank: site.rank,
-              resource: 'http://' + req.headers.host + '/v1/sites/' + site.url
-            }
-          });
-          res.redirect(301, 'http://img.shields.io/badge/libscore-' + lib.count + '-brightgreen.svg?style=flat-square')
-        });
-      });      
+    libraryUsageCollection.findOne({library: library}, { sort: [['crawlTime', 'desc']]}, function(err, lib) {
+      console.log(lib);
+      res.redirect(301, 'http://img.shields.io/badge/libscore-' + lib.count + '-brightgreen.svg?style=flat-square');
     });
   });
+
+
   app.get('/v1/libraries', function(req, res){
 
     // Query parameters
-    var skip = req.query.skip || 0;
     var limit = req.query.limit || 500;
-    getMostRecentCrawl(function(crawl) {
 
-      var libraryUsageCollection = db.collection('libraryUsage');
-      var mostRecentCrawlTime = crawl.crawlTime;
-
-      // Find some documents
-      libraryUsageCollection.find({crawlTime: mostRecentCrawlTime}, {limit: limit, skip: skip, sort: [['count', 'desc']]}).toArray(function(err, libraries) {
-        libraries = _.map(libraries, function (lib) {
-          return {
-            library: lib.library,
-            count: lib.count,
-            github: '',
-            resource: 'http://' + req.headers.host + '/v1/libraries/' + lib.library
-          };
-        });
-
-        res.send({
-          results: libraries,
-          meta: {
-            crawl: {
-              crawlTime: mostRecentCrawlTime
-            }
-          }
-        });
-
-      });      
+    getResources('library', req.headers.host, limit, function(err, result) {
+      if (err) console.error('Error /v1/libraries', err);
+      res.send(result);
     });
   });
 
   app.get('/v1/scripts/:script', function(req, res){
 
     // Query parameters
-    var skip = req.query.skip || 0;
     var limit = req.query.limit || 500;
     var script = req.params.script;
 
-    getMostRecentCrawl(function(crawl) {
-
-      var scriptUsageCollection = db.collection('scriptUsage');
-      var sitesCollection = db.collection('sites');
-
-      var mostRecentCrawlTime = crawl.crawlTime;
-      // Find some documents
-      scriptUsageCollection.find({script: script}, {limit: limit, skip: skip, sort: [['crawlTime', 'desc']]}).toArray(function(err, scripts) {
-        history = _.map(scripts, function (script) {
-          return {
-            crawlTime: script.crawlTime,
-            count: script.count
-          };
-        });
-
-        var script = scripts[0];
-        console.log(script);
-        // TODO - Fix this all when we agree on API
-        sitesCollection.find({'scripts.name': script.script, crawlTime: mostRecentCrawlTime}, {limit: limit, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
-          sites = _.map(sites, function (site) {
-            console.log(site);
-            return {
-              url: site.url,
-              rank: site.rank,
-              resource: 'http://' + req.headers.host + '/v1/sites/' + site.url
-            }
-          });
-
-          res.send({
-            count: script.count,
-            sites: sites,
-            history: history,
-            meta: {
-              crawl: {
-                crawlTime: mostRecentCrawlTime
-              }
-            }
-          });
-        });
-      });      
+    getUtilizingSites('script', script, req.headers.host, limit, function(err, results) {
+      if (err) console.error('Error /v1/scripts/' + script, err);
+      res.send(results);
     });
   });
 
   app.get('/v1/scripts', function(req, res){
 
     // Query parameters
-    var skip = req.query.skip || 0;
     var limit = req.query.limit || 500;
-    getMostRecentCrawl(function(crawl) {
 
-      var scriptUsageCollection = db.collection('scriptUsage');
-      var mostRecentCrawlTime = crawl.crawlTime;
-
-      // Find some documents
-      scriptUsageCollection.find({crawlTime: mostRecentCrawlTime}, {limit: limit, skip: skip, sort: [['count', 'desc']]}).toArray(function(err, scripts) {
-        scripts = _.map(scripts, function (script) {
-          return {
-            script: script.script,
-            count: script.count,
-            resource: 'http://' + req.headers.host + '/v1/scripts/' + script.script
-          };
-        });
-
-        res.send({
-          results: scripts,
-          meta: {
-            crawl: {
-              crawlTime: mostRecentCrawlTime
-            }
-          }
-        });
-
-      });      
+    getResources('script', req.headers.host, limit, function(err, result) {
+      if (err) console.error('Error /v1/scripts', err);
+      res.send(result);
     });
   });
 
@@ -244,16 +96,12 @@ MongoClient.connect(MONGO_URL, function(err, db) {
     var limit = req.query.limit || 500;
     var site = req.params.site;
 
-    getMostRecentCrawl(function(crawl) {
+    getMostRecentCrawls(function(err, crawls) {
 
-      var sitesCollection = db.collection('sites');
-      var mostRecentCrawlTime = crawl.crawlTime;
+      var mostRecentCrawlTime = crawls[0].crawlTime;
 
       // Find some documents
-      sitesCollection.find({url: site, crawlTime: mostRecentCrawlTime}, {limit: 1, skip: skip, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
-        
-        var site = sites[0];
-        console.log(site);
+      sitesCollection.findOne({url: site, crawlTime: mostRecentCrawlTime}, {limit: 1, skip: skip, sort: [['rank', 'asc']]}, function(err, site) {
         var desktop = _.filter(site.libraries, function(lib){ return lib.type === 'desktop'; });
         var mobile = _.filter(site.libraries, function(lib){ return lib.type === 'mobile'; });
         var libs = desktop.concat(mobile);
@@ -273,7 +121,7 @@ MongoClient.connect(MONGO_URL, function(err, db) {
           }
         });
 
-      });      
+      });
     });
   });
 
@@ -282,10 +130,9 @@ MongoClient.connect(MONGO_URL, function(err, db) {
     // Query parameters
     var skip = req.query.skip || 0;
     var limit = req.query.limit || 500;
-    getMostRecentCrawl(function(crawl) {
+    getMostRecentCrawls(function(err, crawls) {
 
-      var sitesCollection = db.collection('sites');
-      var mostRecentCrawlTime = crawl.crawlTime;
+      var mostRecentCrawlTime = crawls[0].crawlTime;
 
       // Find some documents
       sitesCollection.find({crawlTime: mostRecentCrawlTime}, {limit: limit, skip: skip, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
@@ -306,34 +153,148 @@ MongoClient.connect(MONGO_URL, function(err, db) {
           }
         });
 
-      });      
+      });
     });
   });
 
+  app.get('/v1/search/:query', function(req, res) {
+    // http://stackoverflow.com/questions/3561493/is-there-a-regexp-escape-function-in-javascript
+    var query = (function(s) {
+      return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    })(req.params.query);
+    var regex = new RegExp(query, 'i');
+    getMostRecentCrawls(function(err, crawls) {
+      var mostRecentCrawlTime = crawls[0].crawlTime;
+      async.parallel({
+        libraries: function(callback) {
+          libraryUsageCollection.find({ library: regex, crawlTime: mostRecentCrawlTime }, { sort: { count: -1 }, limit: 25 }).toArray(callback);
+        },
+        scripts: function(callback) {
+          scriptUsageCollection.find({ script: regex, crawlTime: mostRecentCrawlTime }, { sort: { count: -1 }, limit: 25 }).toArray(callback);
+        }
+      }, function(err, result) {
+        if (err) console.error('Error /v1/search/' + req.params.query, err);
+        res.send({
+          libraries: _.map(result.libraries, function(library) {
+            return { name: library.library, count: library.count };
+          }),
+          scripts: _.map(result.scripts, function(script) {
+            return { name: script.script, count: script.count };
+          })
+        });
+      });
+    });
+  });
 
   app.get('/libraries.txt', function(req, res){
     res.sendfile('DUMP.txt', {root: __dirname+"../../../"})
   });
 
   // Get the most crawl and store the details in cache for 30 minutes at a time
-  var getMostRecentCrawl = function (callback) {
-    localCache.get('recentCrawl', function(err, value) {
-      if(typeof value.recentCrawl === 'undefined') {
-        var collection = db.collection('crawls');
-        // Change this to .findOne, internet down couldn't remember syntax
-        collection.find({}, {limit: 1, sort: [['crawlTime', 'desc']]}).toArray(function(err, crawls) {
-          var recentCrawl = crawls[0];
-          localCache.set('recentCrawl', recentCrawl, 10, function (err, success) {
-            console.log(arguments);
-            callback(recentCrawl);
+  var getMostRecentCrawls = function (callback) {
+    localCache.get('recentCrawls', function(err, value) {
+      if(typeof value.recentCrawls === 'undefined') {
+        db.collection('crawls').find({}, {limit: 2, sort: [['crawlTime', 'desc']]}).toArray(function(err, crawls) {
+          callback(err, crawls);
+          localCache.set('recentCrawls', crawls, 10, function (err, success) {
+            if (err) {
+              console.error('Cache save error', err);
+            }
           });
         });
       } else {
-        callback(value.recentCrawl);
+        callback(null, value.recentCrawls);
       }
     });
-
   };
+
+  function getUtilizingSites(type, name, host, limit, callback) {
+    getMostRecentCrawls(function(err, crawls) {
+      var collection = (type === 'library') ? libraryUsageCollection : scriptUsageCollection;
+
+      var mostRecentCrawlTime = crawls[0].crawlTime;
+
+      async.parallel({
+        count: function(callback) {
+          var query = {};
+          query[type] = new RegExp(name, 'i');
+          collection.find(query, { limit: crawls.length, sort: [['crawlTime', 'desc']] }).toArray(function(err, results) {
+            if (results.length > 0) {
+              name = results[0][type];
+            }
+            callback(err, _.pluck(results, 'count'));
+          });
+        },
+        sites: function(callback) {
+          var key = (type === 'library') ? 'libraries.name' : 'scripts.name';
+          var query = { crawlTime: mostRecentCrawlTime };
+          query[key] = new RegExp(name, 'i');
+          sitesCollection.find(query, {limit: limit, sort: [['rank', 'asc']]}).toArray(function(err, sites) {
+            var sites = _.map(sites, function (site) {
+              return {
+                url: site.url,
+                rank: site.rank,
+                resource: 'http://' + host + '/v1/sites/' + site.url
+              };
+            });
+            callback(err, sites);
+          });
+        }
+      }, function(err, results) {
+        callback(err, {
+          name: name,
+          count: results.count,
+          sites: results.sites,
+          github: '',
+          meta: {
+            crawl: {
+              crawlTime: mostRecentCrawlTime
+            }
+          }
+        });
+      });
+    });
+  }
+
+  function getResources(type, host, limit, callback) {
+
+    var collection = (type === 'library') ? libraryUsageCollection : scriptUsageCollection;
+
+    getMostRecentCrawls(function(err, crawls) {
+      async.parallel({
+        resources: function(callback) {
+          collection.find({ crawlTime: crawls[0].crawlTime }, { limit: limit, sort: [['count', 'desc']] })
+                    .toArray(callback);
+        },
+        prevCount: function(callback) {
+          collection.find({ crawlTime: crawls[1].crawlTime }, { limit: limit, sort: [['count', 'desc']] }).toArray(function(err, resources) {
+            callback(err, _.pluck(resources, 'count'));
+          });
+        }
+      }, function(err, results) {
+        var resources = _.map(results.resources, function (resource, i) {
+          var plural = (type === 'library') ? 'libraries' : 'scripts';
+          var result = {
+            count: [resource.count, results.prevCount[i]],
+            resource: 'http://' + host + '/v1/' + plural + '/' + resource[type]
+          };
+          if (type === 'library') {
+            result.github = '';
+          }
+          result[type] = resource[type];
+          return result;
+        });
+        callback(err, {
+          results: resources,
+          meta: {
+            crawl: {
+              crawlTime: crawls[0].crawlTime
+            }
+          }
+        });
+      });
+    });
+  }
 
   app.listen(3000);
 

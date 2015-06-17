@@ -1,3 +1,5 @@
+// add percentage counts to the legend in (up arrow 34%)
+
 /***************
      Vars
 ***************/
@@ -43,7 +45,6 @@ var $html = $("html"),
 	$header_code_object = $("#header-code-object"),
 	$header_code_property = $("#header-code-property"),
 	$header_logo = $("#header-logo"),
-	$header_logo_o = $("#header-logo o"),
 	$main = $("main"),
 	$slogan = $("#slogan"),
 	$subSlogan = $("#subSlogan"),
@@ -51,6 +52,9 @@ var $html = $("html"),
 	$data_table = $("#data table"),
 	$data_cols = $("#data_cols"),
 	$data_scroll = $("#data_scroll"),
+	$data_lib = $("#data-lib"),
+	$data_name = $("#data-name"),
+	$badge_container = $(".badge-container"),
 	$about = $("#about"),
 	$sectionHeader_search = $("#sectionHeader--search"),
 	$search_ = $("#search_"),
@@ -61,7 +65,13 @@ var $html = $("html"),
 	$footer = $("footer"),
 	$subscribe_ = $("#subscribe_"),
 	$subscribe = $("#subscribe"),
-	$searchWrap = $("#searchWrap");
+	$searchWrap = $("#searchWrap"),
+	$badge = $("#badge"),
+	$compare = $(".addData input"),
+	$dropdownInputs = $(".addData input, #search"),
+	$compareChart = $(".chartHolder"),
+	$bigNumber = $('.bigNumber'),
+  $hasRendered;
 	
 
 /**************
@@ -75,9 +85,13 @@ $body.on("click", "a", function(event) {
 	}
 });
 
+var dataType = 'script';
+
 $body.on("click", "[data-query]", function(event) {
 	var target = event.target,
 		dataQuery = target.getAttribute("data-query");
+	dataType = target.getAttribute("data-type");
+
 
 	if (dataQuery !== null) {
 		var query = dataQuery || $(target).text();
@@ -110,37 +124,165 @@ $search.one("mouseup", function() {
 	$search.select();
 });
 
+/***************
+    History
+***************/
+
+window.onhashchange = function() {
+	var path = window.location.hash;
+	var rawPath = path.replace("#", "");
+	$search.val(rawPath);
+	UI.query(event.target);
+}
+
 /**************
       UI
 **************/
+var dropdown = $("#dropDown");
+var dropdownLib = $("#dropDown ul.lib");
+var dropdownScript = $("#dropDown ul.script");
+var dropdownLoader = $("#dropDown .loader");
+
+//hide dropdown if click outside
+$(document).mouseup(function (e){
+  if (!dropdown.is(e.target) && dropdown.has(e.target).length === 0) {
+    dropdown.removeClass('show');
+  }
+});
+
+var compare = false;
+
+//for keyup throttle
+var delay = (function(){
+  var timer = 0;
+  return function(callback, ms){
+    clearTimeout (timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+
+$dropdownInputs.on('keyup paste', function(){
+	
+	var thisField = $(this);
+
+	delay(function(){
+    var values = thisField.val();
+		var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
+		var thisInput = thisField[0].form.className;
+
+		if(thisInput == 'addData') {
+			compare = true;
+			dropdown.addClass('compare');
+		} else {
+			compare = false;
+			dropdown.removeClass('compare');
+		}
+
+		dropdownLoader.show();
+
+		if(values == '') {
+			dropdown.removeClass('show');
+		} else {
+			dropdown.addClass('show');
+		}
+		dropdownLib.html('');
+
+		//need to write conditional, if field isnt empty, run search
+		if(values != '') {
+			$.ajax({
+				url: searchURL,
+				dataType: "json",
+				success: function (response) { 
+					var libs = response.libraries;
+					var scripts = response.scripts;
+
+					dropdownLoader.fadeOut(200);
+
+					if(libs.length > 0) {
+						$('h3.lib').removeClass('notFound').text("Libraries");
+						$.each(libs, function( index, value ) {
+						  dropdownLib.append("<li class='library'>" + value.name + "</li>")
+						});
+					} else {
+						$('h3.lib').addClass('notFound').text("No Libraries Found");
+						dropdownLib.empty();
+					}
+
+					if(scripts.length > 0) {
+						$('h3.script').removeClass('notFound').text("Scripts");
+						$.each(scripts, function( index, value ) {
+						  dropdownScript.append("<li class='script'>" + value.name + "</li>")
+						});
+					} else {
+						$('h3.script').addClass('notFound').text("No Scripts Found");
+						dropdownScript.empty();
+					}
+				}
+			});
+		}
+	}, 200 );
+});
+
+var compareError = 'Not a valid search, try again!'
+//clear compare input if error and focus
+$compare.on('focus', function(){
+	var currentCopy = $(this).val();
+	if(currentCopy == compareError) {
+		$compare.val('');
+	}
+});
+var scriptClick = false;
+
+$('body').on('click', '#dropDown li', function(e){
+
+	var thisItem = $(this);
+ 	var findMe = $(this).text();
+
+ 	if(compare) {
+
+ 		if(thisItem.hasClass('script')) {
+ 			$compare.val(findMe);
+ 			scriptClick = true;
+ 		} else {
+ 			$compare.val(findMe);
+ 			scriptClick = false;
+ 		}
+
+ 		$("form.addData").submit();
+
+ 	} else {
+
+ 		if(thisItem.hasClass('script')) {
+ 			$search.val('script:' + findMe);
+ 		} else {
+ 			$search.val(findMe);
+ 		}
+ 		UI.query(event.target);
+ 	}
+ 	dropdown.removeClass('show');
+});
+
+$("form.addData").on('submit', function(){
+	$bigNumber.fadeOut('500');
+});
+
+var hashOnLoad = window.location.hash;
 
 var UI = {
 	loading: false,
 	error: function() {
 		$search.addClass('error');
+		$data.html("<p class='noHover'>No libraries or scripts were detected!</p>");
 
 		$.Velocity.RunSequence([
-			{ elements: $search_, properties: "callout.shake", options: { delay: 800, duration: 450, sequenceQueue: false } }
+			{ elements: $search_, properties: "callout.shake", options: { duration: 1050, sequenceQueue: false } }
 		]);
 	},
 	query: function() {
 		var data = $search.val();
-		
-		$("#header-logo").on("click", function (){
-			if ($("body").hasClass("results")) {
-      			window.location.hash = "";
-      			$data_scroll.hide();
-        		$body.removeClass("results");
-				$data_table.empty();
-				$data_table.removeClass("show");
-				$data_cols.removeClass("show");
-				$searchSymbols.removeClass("show");
-			}
-		});
-
 		function request (query, callback) {
 			var API = {
-					hostname: "http://api.libscore.com/v1/",
+					hostname: "http://104.131.144.192:3000/v1/",
 					librariesPath: "libraries/",
 					sitesPath: "sites/",
 					scriptsPath: "scripts/"
@@ -151,30 +293,42 @@ var UI = {
 				$search.removeClass('error');
 				UI.loading = true;
 				$data_table.removeClass('show');
+				$data_lib.removeClass("show");
 				$data_cols.removeClass("show");
 				$body.addClass("results");
 				$searchSymbols.addClass("show");
 				$html.css("cursor", "wait");
-				
-				//giving a lag to let the animation complete
+				$badge.fadeOut(400);
+				$("#data-lib").removeClass('open');
+
 				setTimeout(function(){
+					$body.removeClass('slim');
+
 					$.ajax({
 						url: API.hostname + url,
 						dataType: "json",
 						complete: function() {
-							// UI.loading = false;
 							$searchSymbols.removeClass("show");
 							$html.css("cursor", "default");
 						},
 						success: function (response) {
 							if (response && response.meta) {
-
 								$(window).scrollTop(0);
 								callback(response);
 								$data_table.addClass('show');
+								$data_lib.addClass("show");
 								$data_cols.addClass("show");
+
+								var tableHeight = $("#data table").outerHeight();
+								var docHeight = $(window).height() - $("footer").outerHeight();
+
+								if(tableHeight > docHeight) {
+									setTimeout(function(){
+										$data_scroll.fadeIn(1000);
+									}, 1000);
+								}
 							} else {
-								UI.error();
+								error: UI.error
 							}
 						},
 						error: UI.error
@@ -182,25 +336,12 @@ var UI = {
 				}, 700);
 			}
 
-			$data_scroll.velocity("fadeOut");
-
-			if (/\.js$/.test(query)) {
-				alert("Be careful: We noticed you suffixed your search query with '.js'. Instead, you need to enter the exact case-sensitive VARIABLE that a library exposes itself under -- not simply the name of the library.");
-			}
-
+			$data_scroll.fadeOut(500);
 			query = $.trim(query.replace(/^(^https?:\/\/)?(www\.)?/i, "").replace(/^jQuery\./i, "$.").replace(/\.js$/i, ""));
-			if (query === "jquery" || query === "$") {
-				if (query === "jquery") {
-					alert("Be careful: Variable lookup is case sensitive. We've gone ahead and turned 'jquery' into 'jQuery' for you. Remember that you need to enter the exact case-sensitive VARIABLE that a library exposes itself under -- not simply the name of the library.");
-				}
-
-				query = "jQuery";
-			}
-
 			$search.val(query);
-			// disabling this for dev
-			window.location.hash = query;
 
+			window.history.pushState(null, null, '#' + query);
+			
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
 				queryNormalized = "site";
 				query = query.toLowerCase();
@@ -211,16 +352,12 @@ var UI = {
 				queryNormalized = query;
 			}
 
-			if (query === "libscore.com") {
-				alert("OMG. RECURSION!!@#!KJ$K BRAIN EXPLOSION. AHAHAHAHAHAHHHHHHH\n\nJust kidding. But there's no data to show right now...")
-			}
-
 			switch (queryNormalized) {
 				case "site":
 					UI.requestTarget = "site";
 					ajax(API.sitesPath + query + "/?");
 					break;
-				case "*.*":
+				case "sites":
 					UI.requestTarget = "sites";
 					ajax(API.sitesPath + "?limit=1000");
 					break;
@@ -228,11 +365,11 @@ var UI = {
 					UI.requestTarget = "script";
 					ajax(API.scriptsPath + query + "?limit=1000");
 					break;
-				case "script:*":
+				case "scripts":
 					UI.requestTarget = "scripts";
 					ajax(API.scriptsPath + "?limit=1000");
 					break;
-				case "*":
+				case "libs":
 					UI.requestTarget = "libs";
 					ajax(API.librariesPath + "?limit=1500");
 					break;
@@ -269,16 +406,16 @@ var UI = {
 			if (isRank === true) {
 				prettified = "<span class='text-grey'>#</span>" + prettified;
 			}
-
 			return prettified;
 		}
 
 		var matches;
-
 		request(data, function(response) {
 
 			var $html = "";
 			var $columns;
+			var $chartLabel;
+      var $chartSubLabel;
 
 			if (response.scripts) {
 				response.libraries = response.libraries.concat(response.scripts.map(function(obj) { obj.name = "script:" + obj.name; return obj; }));
@@ -294,66 +431,454 @@ var UI = {
 
 				switch (UI.requestTarget) {
 					case "site":
-						$columns = "<h3 class='middle'><span>Site: </span> " + data + " </h3><div>library</div>" + data + "<div>site count</div>";
+						$data_name.text(data);
+						$columns = "<h3 class='middle'><span>Site: </span><a class='site' target= '_blank' href='http://" + data + "'>" + data + "</a></h3><div class='left'>library</div><div class='right'>site count</div>";
 
 						var isScript = /^script:/.test(match.name);
 
 						if (isScript) {
-							$matchData = "<td><a href='//" + match.name.replace(/^script:/, "") + "'>" + prettifyName(match.name, match.type) + "</a> <span class='text-blue'></span></td>";
+						  $matchData = "<td><span data-type='script' data-query='script:" + match.name.replace(/^script:/, "") + "'>" + prettifyName(match.name, match.type) + "</span> <span class='text-green'></span></td>";
 						} else {
-							$matchData = "<td><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "'>" + prettifyName(match.name, match.type);
-							$matchData += " <span class='text-blue'></span></a>";
+							$matchData = "<td><span  data-type='lib' data-query='" + match.name + "'>" + prettifyName(match.name, match.type) + "</span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
 						}
 
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
 						break
 
 					case "sites":
-						$columns = "<h3 class='middle'><span>Top Sites</span></h3><div>site</div><div>site rank</div>";
-						$matchData = "<td><span data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
+
+						$chartLabel = 'Top Sites';
+						$columns = "<h3 class='middle'><span>Top Sites</span></h3><div class='left'>site</div><div class='right'>site rank</div>";
+						$matchData = "<td><span data-type='site' data-query='" + match.url + "'>" + prettifyName(match.url) + "</span> <span class='text-green'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "lib":
-						$columns = "<h3 class='middle'><span>Library: </span> " + data + " </h3><div><span id='data_badge'>" + prettifyNumber(response.count) + "</span> sites <a href='http://107.170.240.125/badge/" + $search.val() + ".svg'>Get badge</a></div></div><div>site rank</div>";
-						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'></span></a></td>";
+						$libCount = Number(response.count[0]).toLocaleString('en');
+						$bigNumber.text($libCount);
+						$bigNumber.fadeIn('500');
+						$data_name.html($search.val() + "<span class='close'>Close Graph</a>");
+						$badge_container.html('');
+						$badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
+
+						var diff = (response.count[0] - response.count[1]) / response.count[1];
+						var percentChange = (diff * 100).toFixed(2);
+
+						if(percentChange < 0) {
+							$badge_container.append("<span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+						} else {
+							$badge_container.append("<span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+						}
+
+						$badge_container.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $libCount + " Sites'>"+ $libCount + " Sites</span>");
+						$body.addClass("slim").removeClass("script");
+						$chartLabel = data;
+            $chartSubLabel = response.count;
+						$columns = "<div class='left'>Sites </div></div><div class='right'>site rank</div>";
+						$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + "</a> <span class='text-green' data-type='site' data-query='" + match.url + "'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "libs":
-						$columns = "<h3 class='middle'><span>Top Libs</span></h3><div>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div>site count</div>";
-						$matchData = "<td><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.'>" + prettifyName(match.library) + "</a> <span class='text-blue'></span></a>";
-						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
+						$chartLabel = 'Top Libs';
+						$columns = "<div class='left'>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div class='right'>site count</div>";
+						$matchData = "<td><span data-type='lib' data-query='" + match.library + "'>" + prettifyName(match.library) + "</span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
+						$matchData += "<td>" + prettifyNumber(match.count[0]) + "</td>";
 						break;
 
 					case "script":
-						$columns = "<h3 class='middle'><span>Script: </span> " + data + " </h3><div>" + prettifyNumber(response.count) + " sites</div><div>site rank</div>";
-						$matchData = "<td><a href='//" + match.url + "'>" + prettifyName(match.url) + " <span class='text-blue'></span></a></td>";
+						$scriptCount = Number(response.count[0]).toLocaleString('en');
+						$bigNumber.text($scriptCount);
+						$bigNumber.fadeIn('500');
+						$data_name.html($search.val() + "<span class='close'>Close Graph</a>");
+						$badge_container.html('');
+						$badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
+
+						var diff = (response.count[1] - response.count[0]) / response.count[0];
+						var percentChange = (diff * 100).toFixed(2);
+
+						if(percentChange < 0) {
+							$badge_container.append("<span class='negative' id='direction' title='"+ $search.val() +" has decreased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+						} else {
+							$badge_container.append("<span class='positive' id='direction' title='"+ $search.val() +" has increased "+ percentChange +"% since the last crawl'>"+ percentChange + "%</span>");
+						}
+
+						$badge_container.append("<span class='number' id='direction' title='"+ $search.val() +" is used by "+ $scriptCount + " Sites'>"+ $scriptCount + " Sites</span>");
+
+						$body.addClass("slim script");
+						$chartLabel = data;
+            $chartSubLabel = response.count;
+						$columns = "<div class='left'>Sites</div><div class='right'>site rank</div>";
+						$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + "</a> <span class='text-green' data-type='site' data-query='" + match.url + "'></span></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "scripts":
-						$columns = "<h3 class='middle'><span>Top Scripts</span></h3><div>script</div><div>site count</div>";
-						$matchData = "<td><span data-query='script:" + match.script + "'>" + prettifyName(match.script) + "</span> <span class='text-green'></span></td>";
-						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
+						$chartLabel = 'Top Scripts';
+						$columns = "<div class='left'>script</div><div class='right'>site count</div>";
+						$matchData = "<td><span data-type='script' data-query='script:" + match.script + "'>" + prettifyName(match.script) + "</span> <span class='text-green'></span></td>";
+						$matchData += "<td>" + prettifyNumber(match.count[0]) + "</td>";
 						break;
 				}
 
 				$html += "<tr>" + $matchData + "</tr>";
 			});
+    
+      //if data is available, we are creating a chart, if not, destroying it.
+      if(typeof $chartSubLabel === 'undefined'){
+        if($hasRendered == true){
+          $compareChart.highcharts().destroy();
+          $hasRendered = false;
+        }
+      } else {
+        $hasRendered = true;
+
+        $compareChart.highcharts({
+          chart: {
+            type: 'area',
+            height: 375,
+            backgroundColor: 'transparent',
+            spacingBottom: 50,
+            style: {
+              fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif', 
+              fontSize: '12px'
+            }
+          },
+          title: {
+            text: ''
+          },
+          xAxis: {
+            categories: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'],
+            title: {
+              enabled: false
+            },
+            lineColor: '#dcdcdc',
+            lineWidth: 1,
+            labels: {
+            	y: 25,
+              align: 'center',
+              style: {
+                fontSize: '12px',
+                color: '#29BD66',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                fontWeight: 'bold'
+              }
+            },
+            tickInterval: null,
+            tickPosition: "outside",
+            pointPadding: null,
+            groupPadding: null,
+            borderWidth: null,
+          },
+          yAxis: {
+            min: 0,
+            title: {
+              text: '',
+            },
+            gridLineColor: 'transparent',
+            lineColor: '#dcdcdc',
+            lineWidth: 1,
+            labels: {
+              align: 'right',
+              step: 1,
+              style: {
+                fontSize: '12px',
+                color: '#29BD66',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                fontWeight: 'bold'
+              }
+            },
+          },
+          credits: {
+            enabled: false
+          },
+          navigation: {
+
+          },
+          legend: {
+            align: 'right',
+            enabled: true,
+            itemDistance: 20,
+            floating: true,
+            y: 38,
+            x: 10,
+            verticalAlign: 'bottom',
+            itemMarginTop: 5,
+            itemStyle: {
+              color: '#29BD66',
+              fontSize: 15,
+              fontWeight: '400'
+            },
+            itemHoverStyle: {
+            	color: '#1CAD57'
+            },
+            symbolRadius: 5,
+            symbolHeight: 8,
+            symbolWidth: 8,
+            symbolPadding: 6
+          },
+          series: [{
+            name: $chartLabel,
+            data: $chartSubLabel.reverse(),
+            color: '#29BD66'
+          }],
+          tooltip: {
+            useHTML: true,
+            headerFormat: '<h4 style="font-size: 11px; margin: 5px 0 7px 0; text-transform: uppercase; letter-spacing: 1px; color: #bcbcbc;">{point.key} Penetration</h4>',
+            pointFormat: '<h2 style="font-size:16px; margin: 0; display: inline; color: #3a3a3a">{series.name}: <span style="color: #29BD66;">{point.y} Sites</span></h2>',
+            borderColor: '#29BD66',
+            borderWidth: 2,
+            backgroundColor: '#ffffff',
+            shadow: false,
+            positioner: function(boxWidth, boxHeight, point) {         
+              var chart = this.chart,
+                distance = this.distance,
+                ret = {},
+                swapped,
+                first = ['y', chart.chartHeight, boxHeight, point.plotY + chart.plotTop - 8],
+                second = ['x', chart.chartWidth, boxWidth, point.plotX + chart.plotLeft],
+
+                preferFarSide = point.ttBelow || (chart.inverted && !point.negative) || (!chart.inverted && point.negative),
+                
+                firstDimension = function (dim, outerSize, innerSize, point) {
+                  var roomLeft = innerSize < point - distance,
+                    roomRight = point + distance + innerSize < outerSize,
+                    alignedLeft = point - distance - innerSize,
+                    alignedRight = point + distance;
+
+                  if (preferFarSide && roomRight) {
+                    ret[dim] = alignedRight;
+                  } else if (!preferFarSide && roomLeft) {
+                    ret[dim] = alignedLeft;
+                  } else if (roomLeft) {
+                    ret[dim] = alignedLeft;
+                  } else if (roomRight) {
+                    ret[dim] = alignedRight;
+                  } else {
+                    return false;
+                  }
+                },
+                
+                secondDimension = function (dim, outerSize, innerSize, point) {
+                  if (point < distance || point > outerSize - distance) {
+                    return false;
+                  
+                  } else if (point < innerSize / 2) {
+                    ret[dim] = 1;
+                  } else if (point > outerSize - innerSize / 2) {
+                    ret[dim] = outerSize - innerSize - 2;
+                  } else {
+                    ret[dim] = point - innerSize / 2;
+                  }
+                },
+                swap = function (count) {
+                  var temp = first;
+                  first = second;
+                  second = temp;
+                  swapped = count;
+                },
+                run = function () {
+                  if (firstDimension.apply(0, first) !== false) {
+                    if (secondDimension.apply(0, second) === false && !swapped) {
+                      swap(true);
+                      run();
+                    }
+                  } else if (!swapped) {
+                    swap(true);
+                    run();
+                  } else {
+                    ret.x = ret.y = 0;
+                  }
+                };
+
+              if (chart.inverted || this.len > 1) {
+                swap();
+              }
+              run();
+
+              return ret;
+            },
+            style: {
+              color: '#333333',
+              fontSize: '13px',
+              padding: '15px'
+            }
+          },
+          plotOptions: {
+            area: {
+              lineColor: '#29BD66',
+              lineWidth: 2,
+              fillColor: {
+                linearGradient: [0, 0, 0, 300],
+                stops: [
+                  [0, 'rgba(41,189,102,.12)'],
+                  [1, 'rgba(148,196,168,.1)']
+                ]
+              },
+              marker: {
+                lineWidth: 2,
+                radius: 6,
+                lineColor: '#29BD66',
+                fillColor: '#fafafa',
+                states: {
+                  hover: {
+                    enabled: true,
+                    radiusPlus: 3,
+                    lineWidth: 0,
+                    lineWidthPlus: 0
+                  }
+                }
+              },
+              states: {
+                hover: {
+                  lineWidthPlus: 0
+                }
+              },
+              pointPlacement: "on"
+            }
+          }
+        });
+      };
+
+      var chartData = [];
+      var searchedQueries = [];
+      var newQuery = '';
+      
+      $("[data-query]").on('click',function(){
+      	searchedQueries = [];
+      });
+
+      $(document).on('submit','#mainSearch',function(){
+      	searchedQueries = [];
+      });
+
+      $(document).on('submit','form.addData',function(){
+      	var searchInput = $(this).find('input');
+				newQuery = searchInput.val();
+
+				//check to see if user already searched for item (exists in chart) to avoid dupes
+				if(jQuery.inArray(newQuery, searchedQueries) == -1) {
+					searchInput.val('');
+			 		getData();
+			 	} else {
+			 		//searchInput.val(newQuery + " already exists on the chart!")
+			 	}
+
+			 	searchedQueries.push(newQuery);
+	    	return false
+	    });
+
+      function getData() {
+      	var API = {
+					hostname: "http://104.131.144.192:3000/v1/",
+				}
+				$('.addData .loader').addClass('show');
+
+				if(scriptClick == false) {
+					var path = 'libraries/';
+				} else {
+					var path = 'scripts/';
+				}
+
+      	$.ajax({
+					url: API.hostname + path + newQuery + '?limit=1000',
+					dataType: "json",
+					success: function (response) {
+					
+						if (response && response.meta) {
+							chartData = response.count;
+							
+							if(chartData.length == 0){
+								searchError();
+							} else {
+								setData();	
+							}
+							$('.addData .loader').removeClass('show');
+						}
+					}
+				});
+      }
+
+      function searchError() {
+      	$compare.val(compareError)
+      	$compare.blur();
+      }
+
+      function compareOverage() {
+      	$compare.val('You can only compare 4 libraries/scripts at once');
+      	$compare.prop('disabled', true);
+      	$compare.css('opacity', '.5');
+      }
+
+      var index = -1;
+
+      function setData() {
+        var chart = $compareChart.highcharts(),
+         series = chart.series[0];
+        var currentGadient= [];
+        index = index + 1;
+
+        // this number needs to change if we add mroe gradients
+        if(index < 3){
+
+					var gradients = [
+						[
+							['rgba(73,115,214,.15)'],
+							['rgba(73,115,214,.07)']
+						],
+						[
+							['rgba(240,120,50,.25)'],
+							['rgba(240,120,50,.1)'],
+						],
+						[
+							['rgba(255,50,210,.19)'],
+							['rgba(255,50,210,.07)'],
+						]
+					]
+
+					var colors = ['rgba(73,115,214,1)', 'rgba(240,120,50,1)', 'rgba(255,50,210,1)'];
+
+				  var resultantGradient = [];
+					gradients[index].forEach(function(gradient, index) {
+						resultantGradient.push([index, gradient[0]]);
+					});
+
+					var colorChoice = colors[index];
+
+					//this sets the color for the legend label
+	        chart.options.legend.itemStyle.color = colorChoice;
+
+	        chart.addSeries({
+	          name: newQuery,
+	          data: chartData.reverse(),
+	          color: colorChoice,
+	          lineColor: colorChoice,
+	          fillColor: {
+	            linearGradient: [0, 0, 0, 300],
+	            stops: resultantGradient
+	          },
+	          marker: {
+	            lineColor: colorChoice
+	          }
+	        });
+	      } else {
+	      	compareOverage();
+	      }
+      }
+
+      $chartSubLabel = '';
 
 			$data_table
 				.scrollTop = 0;
-
-			$data_scroll
-				.velocity("transition.fadeIn", { delay: 1000, duration: 1000 });
 
 			if ($html) {
 				$data_cols.html($columns);
 				$data_table.html($html);
 			} else {
-				$data_cols.html("<div>library</div><div>site count</div>")
-				$data_table.html("<tr><td class='text-red'>No libraries or scripts were detected on this site.</td><td class='text-red'>Ø</td></tr>");
+				$data_cols.html("")
+				$data.html("<p class='noHover'>No libraries or scripts were detected!</p>");
 			}
 
 			if (matches.length > 900) {
@@ -421,18 +946,54 @@ $(document).ready(function() {
       }
     });
 
+    $('body').on('mouseover mouseenter', '#direction', function(){
+	    $(this).tooltipster({
+        interactive: false,
+	      animation: "fade",
+	      touchDevices: true,
+	      interactiveTolerance: 300,
+	      maxWidth: 270,
+	      offsetY: 10,
+	      onlyOne: true
+	    });
+	    $(this).tooltipster('show');
+		});
+
     $(".directions").on('click', function(){
     	$(this).next('#howTo').addClass('reveal');
     	$("#subscribe_").addClass("revealedHowTo");
     	$(this).remove();
     	return false;
     });	
+
+    $("#header-logo").on("click", function (){
+			if ($("body").hasClass("results")) {
+  			window.location.hash = "";
+  			$data_scroll.hide();
+    		$body.removeClass();
+				$data_table.empty();
+				$data_table.removeClass("show");
+				$data_lib.removeClass("show");
+				$data_cols.removeClass("show");
+				$searchSymbols.removeClass("show");
+			}
+		});
+
+		$(".showChart").on("click", function (){
+			$("#data-lib").addClass('open');
+			return false;
+		});
+
+		$('body').on('click', '.close', function(){
+			$("#data-lib").removeClass('open');
+		});
+
+		
 });
 
 $(window).load(function() {
 	$.Velocity.RunSequence([
 		{ elements: $header_logo.add($slogan).add($search_).add($queryButtons).add($howTo).add($howTo.find("p")), properties: "transition.fadeIn", options: { stagger: 50, duration: 300 } },
-		{ elements: $header_logo_o, properties: { opacity: [ 0.6, 1 ] }, options: { sequenceQueue: false, duration: 500, loop: 2 } },
 		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 500
 			, begin: 
 			function() {
@@ -442,57 +1003,47 @@ $(window).load(function() {
 						$search.attr("placeholder", hash);
 						$search.val(hash);
 						UI.query();
+					} else if (hashOnLoad.includes("script")) {
+						var newQuery = hashOnLoad.replace("#", "");
+						$search.attr("placeholder", newQuery);
+						$search.val(newQuery);
+						UI.query();
 					} else {
 						$search.attr("placeholder", "search for a JavaScript variable (case sensitive) or a domain name...");
 					}
-
-					[ "location()", "hash()", "map()", "<a href='//medium.com/@Shapiro/introducing-libscore-com-be93165fa497'>Learn more <span style='color: #29bd66'></span></a>" ].forEach(function(val, i) {
-						$.Velocity($header_code_property, "transition.vanishBottomIn",
-							{ 
-								delay: i === 0 ? 125 : 0,
-								duration: 250,
-								begin: function() {
-									$header_code_property.html(val);
-
-									if (i === 1) {
-										$header_code_object.html("Array.");
-									}
-								},
-								complete: function() {
-									if (i === 3) {
-										$.Velocity.RunSequence([
-											{ elements: $header_code_object, properties: "transition.fadeOut", options: { duration: 400 } },
-											{ elements: $header_code_property, properties: "callout.pulse", options: { duration: 650 } }
-										]);
-									}
-								}
-							}
-						);
-					});
+				}
 			}
-			}
-		},
-		{ elements: $header_logo_o, properties: { opacity: 0.9, color: "#24A85A" }, options: { duration: 2000, loop: true } }
+		}
 	]);
 });
 
 function stickyNav(){
 	var scrollTop     = $(window).scrollTop(),
-  elementOffset = $('#query').offset().top + 65,
+  elementOffset = $('#query').offset().top + 20,
   distance      = (elementOffset - scrollTop);
 
 	if(scrollTop > distance){
 		$("#searchWrap").addClass("sticky");
-		$("#data").addClass("sticky");
+		$("#data, body").addClass("sticky");
 	} else {
 		$("#searchWrap").removeClass("sticky");
-		$("#data").removeClass("sticky");
+		$("#data, body").removeClass("sticky");
 	}
 }
 
 if ($(window).width() < 850) {
 	$(window).on('scroll', function() {
 		stickyNav();
+	});
+
+	$(".footer-chart").on('click', function (){
+		$("#data-lib").toggleClass("slideUp");
+		return false;
+	});
+
+	$(".close").on('click', function (){
+		$("#data-lib").removeClass("slideUp");
+		return false;
 	});
 }
 
