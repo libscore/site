@@ -186,6 +186,7 @@ $dropdownInputs.on('keyup paste', function(){
 			dropdown.addClass('show');
 		}
 		dropdownLib.html('');
+		dropdownScript.html('');
 
 		//need to write conditional, if field isnt empty, run search
 		if(values != '') {
