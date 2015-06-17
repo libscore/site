@@ -197,6 +197,7 @@ $dropdownInputs.on('keyup paste', function(){
 					var scripts = response.scripts;
 
 					dropdownLoader.fadeOut(200);
+					$data.find('.noHover').hide();
 
 					if(libs.length > 0) {
 						$('h3.lib').removeClass('notFound').text("Libraries");
@@ -976,7 +977,7 @@ $(document).ready(function() {
 				$data_lib.removeClass("show");
 				$data_cols.removeClass("show");
 				$searchSymbols.removeClass("show");
-				$data.empty();
+				$data.find('.noHover').hide();
 			}
 		});
 
