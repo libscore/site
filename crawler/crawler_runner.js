@@ -14,7 +14,7 @@ var cluster = require('cluster');
 
 var jobs = kue.createQueue({
 	redis: {
-		host: '188.226.146.102'
+		host: 'crawl-queue'
 	}
 });
 var clusterWorkerSize = require('os').cpus().length;
@@ -74,16 +74,16 @@ function processSitesFile () {
 			var lines = data.split("\n");
 
 			for (var i = 0; i < lines.length; i++) {
-				if (/,/.test(lines[i])) {					
+				if (/,/.test(lines[i])) {
 					var lineData = lines[i].split(",");
 
 					sites.push({ url: lineData[1], rank: lineData[0] });
 				}
 			}
-			
+
 			if (Arguments.siteOffsetStart) {
 				sites = sites.slice(Arguments.siteOffsetStart - 1, Arguments.siteOffsetEnd);
-			} 
+			}
 
 			totalSites = sites.length;
 
@@ -139,7 +139,7 @@ function spawnCrawls (sites) {
 	/*
 	if (Arguments.siteOffset) {
 		sites = sites.slice(Arguments.siteOffset - 1);
-	} 
+	}
 	*/
 	if (cluster.isMaster) {
 	  for (var i = 0; i < clusterWorkerSize; i++) {
