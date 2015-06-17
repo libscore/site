@@ -494,7 +494,7 @@ var UI = {
 						$badge_container.html('');
 						$badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
 
-						var diff = (response.count[1] - response.count[0]) / response.count[0];
+						var diff = (response.count[0] - response.count[1]) / response.count[1];
 						var percentChange = (diff * 100).toFixed(2);
 
 						if(percentChange < 0) {
