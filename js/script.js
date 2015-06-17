@@ -772,7 +772,7 @@ var UI = {
 
       function getData() {
       	var API = {
-					hostname: "http://104.131.144.192:3000/v1/",
+					hostname: "http://api.libscore.com/v1/",
 				}
 				$('.addData .loader').addClass('show');
 
@@ -968,7 +968,7 @@ $(document).ready(function() {
 
     $("#header-logo").on("click", function (){
 			if ($("body").hasClass("results")) {
-  			window.location.hash = "";
+  			window.history.pushState(null, null, '#');
   			$data_scroll.hide();
     		$body.removeClass();
 				$data_table.empty();
@@ -987,8 +987,6 @@ $(document).ready(function() {
 		$('body').on('click', '.close', function(){
 			$("#data-lib").removeClass('open');
 		});
-
-		
 });
 
 $(window).load(function() {
