@@ -976,6 +976,7 @@ $(document).ready(function() {
 				$data_lib.removeClass("show");
 				$data_cols.removeClass("show");
 				$searchSymbols.removeClass("show");
+				$data.empty();
 			}
 		});
 

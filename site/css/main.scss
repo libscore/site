@@ -96,6 +96,9 @@ input {
 	border-radius: 2px;
 	color: #4D4D4D;
 	font-size: 17px;
+	-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 
 	&:focus {
 		border-color: #d5d5d5;
@@ -2217,4 +2220,10 @@ footer {
 			padding: 12px 20px 12px 20px;
 		}
 	}
+}
+
+@media screen and ( max-height: 435px ){
+	.directions {
+    display: none;
+  }
 }
