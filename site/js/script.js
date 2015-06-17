@@ -167,7 +167,7 @@ $dropdownInputs.on('keyup paste', function(){
 
 	delay(function(){
     var values = thisField.val();
-		var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
+		var searchURL = 'http://api.libscore.com/v1/search/' + values;
 		var thisInput = thisField[0].form.className;
 
 		if(thisInput == 'addData') {
@@ -282,7 +282,7 @@ var UI = {
 		var data = $search.val();
 		function request (query, callback) {
 			var API = {
-					hostname: "http://104.131.144.192:3000/v1/",
+					hostname: "http://api.libscore.com/v1/",
 					librariesPath: "libraries/",
 					sitesPath: "sites/",
 					scriptsPath: "scripts/"
