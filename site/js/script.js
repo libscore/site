@@ -477,7 +477,7 @@ var UI = {
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'>Sites </div></div><div class='right'>site rank</div>";
-						$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + "</a> <span class='text-green' data-type='site' data-query='" + match.url + "'></span></td>";
+						$matchData = "<td><span data-type='site' data-query='" + match.url + "'>" + prettifyName(match.url) + "</span><a class='text-green' href='http://" + match.url + "'></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
@@ -511,7 +511,7 @@ var UI = {
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'>Sites</div><div class='right'>site rank</div>";
-						$matchData = "<td><a href='http://" + match.url + "'>" + prettifyName(match.url) + "</a> <span class='text-green' data-type='site' data-query='" + match.url + "'></span></td>";
+						$matchData = "<td><span data-type='script' data-query='" + match.url + "'>" + prettifyName(match.url) + "</span><a class='text-green' href='http://" + match.url + "'></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
