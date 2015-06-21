@@ -1043,11 +1043,6 @@ $(document).ready(function() {
 	    $(this).tooltipster('show');
 		});
 
-     $('body').on('mouseover mouseenter', 'g.highcharts-xaxis-labels', function(){
-	    alert("df");
-		});
-
-
     $(".directions").on('click', function(){
     	$(this).next('#howTo').addClass('reveal');
     	$("#subscribe_").addClass("revealedHowTo");
