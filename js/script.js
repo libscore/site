@@ -686,7 +686,7 @@ var UI = {
             enabled: true,
             itemDistance: 20,
             floating: true,
-            y: 38,
+            y: 40,
             x: 10,
             verticalAlign: 'bottom',
             itemMarginTop: 5,

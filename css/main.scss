@@ -740,15 +740,16 @@ body {
 		text-overflow: ellipsis;
 
 		span {
-			margin-left: 10px;
-		  color: #00D075;
-		  border-bottom: 2px solid #7ADBB1;
-		  font-weight: 600;
-		  font-size: 14px;
-		  letter-spacing: 0.5px;
-		  padding: 0 1px 2px;
+		  text-indent: -999px;
 		  cursor: pointer;
 		  display: none;
+		  position: absolute;
+		  top: 30px;
+		  right: 30px;
+		  background-size: 100%;
+		  width: 30px;
+		  height: 30px;
+		  background-image: url("../images/close.svg");
 		}
 	}
 
@@ -760,9 +761,12 @@ body {
 			padding: 5px 22px 4px 5px;
 			border-radius: 3px;
 			position: relative;
-			top: 0px;
-			margin-left: 5px;
-			height: 29px;
+			top: 40px;
+			right: 40px;
+			overflow: hidden;
+			background-size: 100%;
+			width: 24px;
+			height: 24px;
 			display: inline-block;
 			float: right;
 			font-family: "Avenir Medium";
@@ -1825,6 +1829,11 @@ footer {
 
 		  &.open {
 		  	top: 175px;
+	  		h3#data-name {
+			  	span {
+			  		display: inline-block;
+			  	}
+			  }
 		  }
 
 	  	&.slideUp {
@@ -1837,6 +1846,7 @@ footer {
 	  }
 
 	  &.results {
+
 	  	#data {
 			  padding: 0 35px;
 			  height: inherit;
@@ -2094,10 +2104,6 @@ footer {
 			padding: 0;
 		}
 	}
-}
-
-@media screen and ( max-width: 850px ){
-
 }
 
 @media screen and ( max-height: 675px ){
