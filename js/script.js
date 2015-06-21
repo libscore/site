@@ -302,7 +302,7 @@ $dropdownInputs.on('keydown paste', function(e){
 				}
 			});
 		}
-	}, 200 );
+	}, 0 );
 });
 
 var compareError = 'Not a valid search, try again!'
