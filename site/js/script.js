@@ -1119,6 +1119,10 @@ if ($(window).width() < 850) {
 		stickyNav();
 	});
 
+	$(window).on('touchmove', function() {
+		stickyNav();
+	});
+
 	$(".footer-chart").on('click', function (){
 		$("#data-lib").toggleClass("slideUp");
 		return false;
