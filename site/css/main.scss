@@ -270,7 +270,7 @@ body {
   }
 
   ul{
-  	max-height: 190px;
+  	max-height: 186px;
 		overflow: scroll;
 		margin: 0;
 		padding: 0;
@@ -318,6 +318,10 @@ body {
   		opacity: 1;
   	}
 
+  	&.selected {
+  		background-color: #f5f5f5;
+  	}
+  	
   	&:hover {
   		background-color: #f5f5f5;
 

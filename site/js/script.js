@@ -41,6 +41,7 @@ var hiddenVariableGroups = /^(Goog_.+|G(A|S)_google.+|WebForm_.+|WR[A-z]{1,2}|Cl
 
 var $html = $("html"),
 	$body = $("body"),
+	$input = $("input"),
 	$header_code = $("#header-code"),
 	$header_code_object = $("#header-code-object"),
 	$header_code_property = $("#header-code-property"),
@@ -140,12 +141,12 @@ window.onhashchange = function() {
 **************/
 var dropdown = $("#dropDown");
 var dropdownLib = $("#dropDown ul.lib");
-var dropdownScript = $("#dropDown ul.script");
 var dropdownLoader = $("#dropDown .loader");
+var input = $("input");
 
 //hide dropdown if click outside
 $(document).mouseup(function (e){
-  if (!dropdown.is(e.target) && dropdown.has(e.target).length === 0) {
+  if (!dropdown.is(e.target) && !input.is(e.target) && dropdown.has(e.target).length === 0) {
     dropdown.removeClass('show');
   }
 });
@@ -161,22 +162,115 @@ var delay = (function(){
   };
 })();
 
-$dropdownInputs.on('keyup paste', function(){
+$dropdownInputs.on('keydown paste', function(e){
 	
+	//keyboard up and down handling.
 	var thisField = $(this);
+	var thisItem = dropdown.find('li.selected');
+	var nextItem = thisItem.next('li');
+	var prevItem = thisItem.prev('li');
+	var type = e.which;
+
+	var thisInput = thisField[0].form.className;
+
+	if(thisInput == 'addData') {
+		compare = true;
+		dropdown.addClass('compare');
+
+	} else {
+		compare = false;
+		dropdown.removeClass('compare');
+	}
+
+	if (type == 13) {
+		//if we click enter and there is nothign selected in the dropdown then we append then query, otherwise we query directly
+  	if(thisItem[0] == undefined) {
+  		//we want to submit the form, as  nothing is selected
+  		if(compare) {
+		 		$("form.addData").submit();
+		 	} else {
+		 		UI.query(event.target);
+		 	}
+  	} else {
+  		var findMe = thisItem.contents().filter(function() {
+		    return this.nodeType == 3;
+			}).text();
+
+  		if(compare) {
+  			$compare.val(findMe);
+		 		$("form.addData").submit();
+		 	} else {
+		 		if(thisItem.hasClass('script')) {
+		 			$search.val('script:' + findMe);
+		 		} else {
+		 			$search.val(findMe);
+		 		}
+		 		UI.query(event.target);
+		 	}
+  	}
+  	dropdown.removeClass('show');
+  	return false;
+  }
+
+	if ((type == 40) || (type == 38) || (type == 13)) {
+		//if nothing is yet selected
+		if((nextItem[0] == undefined) && (thisItem[0] == undefined)) {
+			//if down
+			if(type == '40'){
+				dropdownLib.find("li:first-child").addClass('selected');
+			} 
+		} else {
+			var selected = $('.selected');
+			var heightThis = selected.outerHeight();
+			var heightThreshold = heightThis * 6;
+			var selectedParent = selected.parent('ul');
+			var parentCount = selectedParent.find('li').length;
+			var totalHeight = parentCount * heightThis;
+
+			if(type == '40'){
+				var distanceFromTop = selected.position().top + heightThis;
+				var newScroll = currentScroll + heightThis;
+				var skipThreshold = newScroll + heightThreshold;
+
+				if(dropdownLib.find('li:last-child').hasClass('selected')) {
+					//console.log('end');
+				} else {
+					thisItem.removeClass('selected');
+					nextItem.addClass('selected');
+
+					// scroll down
+					if(distanceFromTop >= heightThreshold ) {
+						var currentScroll = dropdownLib.scrollTop();
+						newScroll = currentScroll + heightThis;
+						skipThreshold = newScroll + heightThreshold;
+						dropdownLib.scrollTop(newScroll);
+					}
+				}
+			} else if(type == '38') {
+				var distanceFromTop = selected.position().top;
+				var currentScroll = dropdownLib.scrollTop();
+	
+				//if it isnt the first item of libs continue
+				if(dropdownLib.find('li:first-child').hasClass('selected')) {
+					//console.log('beginning');
+				} else {
+					thisItem.removeClass('selected');
+					prevItem.addClass('selected');
+
+					//scroll up
+					if(distanceFromTop <= 0 ) {
+						var newScroll = currentScroll - heightThis;
+						dropdownLib.scrollTop(newScroll);
+					}
+				}
+			}
+		}
+		return false;
+	}
 
 	delay(function(){
     var values = thisField.val();
 		var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
-		var thisInput = thisField[0].form.className;
-
-		if(thisInput == 'addData') {
-			compare = true;
-			dropdown.addClass('compare');
-		} else {
-			compare = false;
-			dropdown.removeClass('compare');
-		}
 
 		dropdownLoader.show();
 
@@ -231,7 +325,6 @@ $('body').on('click', '#dropDown li', function(e){
 
  	if(compare) {
  		if(thisItem.hasClass('script')) {
-
  			$compare.val(findMe);
  			scriptClick = true;
  		} else {
@@ -949,6 +1042,11 @@ $(document).ready(function() {
 	    });
 	    $(this).tooltipster('show');
 		});
+
+     $('body').on('mouseover mouseenter', 'g.highcharts-xaxis-labels', function(){
+	    alert("df");
+		});
+
 
     $(".directions").on('click', function(){
     	$(this).next('#howTo').addClass('reveal');
