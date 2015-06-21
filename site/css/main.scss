@@ -204,7 +204,7 @@ body {
   display: none;
   @include custom-bezier(all, .4s);
   border-radius: 3px;
-  min-height: 70px;
+  min-height: 36px;
 
   &.compare {
 		left: 440px;
@@ -270,7 +270,7 @@ body {
   }
 
   ul{
-  	max-height: 130px;
+  	max-height: 186px;
 		overflow: scroll;
 		margin: 0;
 		padding: 0;
@@ -281,9 +281,11 @@ body {
   h3 {
   	color: #29BD66;
   	font-size: 14px;
-  	padding: 10px 10px 5px 10px;
+  	padding: 0 10px 0 10px;
   	margin: 0;
   	background-color: white;
+  	height: 36px;
+  	line-height: 42px;
 
   	&.notFound {
   		color: #D8D8D8;
@@ -296,16 +298,18 @@ body {
   	display: block;
   	border-bottom: 1px solid #f5f5f5;
   	background-color: white;
-  	padding: 7px 10px 6px 10px;
-  	cursor: pointer;
-  	position: relative;
+		padding: 0 10px 0 10px;
+		cursor: pointer;
+		position: relative;
+		height: 31px;
+		line-height: 31px;
 
-  	&:after {
+  	&:after, span {
 			content: 'Search';
 			color: #29BD66;
 			position: absolute;
 			right: 9px;
-			top: 11px;
+			top: 0;
 			text-transform: uppercase;
 			font-size: 11px;
 			letter-spacing: 1px;
@@ -313,8 +317,21 @@ body {
 			opacity: 0;
   	}
 
+  	span {
+  		color: #C2C2C2;
+  		opacity: 1;
+  	}
+
+  	&.selected {
+  		background-color: #f5f5f5;
+  	}
+
   	&:hover {
   		background-color: #f5f5f5;
+
+  		span {
+  			opacity: 0;
+  		}
 
   		&:after {
   			opacity: 1;
@@ -843,6 +860,7 @@ body {
 			display: none;
 			font-size: 110px;
 			color: rgba(41,189,102,.1);
+			color: #d2eede;
 			background-color: none;
 			position: absolute;
 			right: 20px;
