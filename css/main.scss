@@ -204,7 +204,7 @@ body {
   display: none;
   @include custom-bezier(all, .4s);
   border-radius: 3px;
-  min-height: 36px;
+  min-height: 42px;
 
   &.compare {
 		left: 440px;
