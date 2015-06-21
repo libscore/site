@@ -204,7 +204,7 @@ body {
   display: none;
   @include custom-bezier(all, .4s);
   border-radius: 3px;
-  min-height: 70px;
+  min-height: 36px;
 
   &.compare {
 		left: 440px;
@@ -270,7 +270,7 @@ body {
   }
 
   ul{
-  	max-height: 130px;
+  	max-height: 190px;
 		overflow: scroll;
 		margin: 0;
 		padding: 0;
@@ -300,7 +300,7 @@ body {
   	cursor: pointer;
   	position: relative;
 
-  	&:after {
+  	&:after, span {
 			content: 'Search';
 			color: #29BD66;
 			position: absolute;
@@ -313,8 +313,17 @@ body {
 			opacity: 0;
   	}
 
+  	span {
+  		color: #C2C2C2;
+  		opacity: 1;
+  	}
+
   	&:hover {
   		background-color: #f5f5f5;
+
+  		span {
+  			opacity: 0;
+  		}
 
   		&:after {
   			opacity: 1;
