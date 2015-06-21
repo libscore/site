@@ -167,7 +167,7 @@ $dropdownInputs.on('keyup paste', function(){
 
 	delay(function(){
     var values = thisField.val();
-		var searchURL = 'http://api.libscore.com/v1/search/' + values;
+		var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
 		var thisInput = thisField[0].form.className;
 
 		if(thisInput == 'addData') {
@@ -186,7 +186,6 @@ $dropdownInputs.on('keyup paste', function(){
 			dropdown.addClass('show');
 		}
 		dropdownLib.html('');
-		dropdownScript.html('');
 
 		//need to write conditional, if field isnt empty, run search
 		if(values != '') {
@@ -194,30 +193,17 @@ $dropdownInputs.on('keyup paste', function(){
 				url: searchURL,
 				dataType: "json",
 				success: function (response) { 
-					var libs = response.libraries;
-					var scripts = response.scripts;
-
 					dropdownLoader.fadeOut(200);
 					$data.find('.noHover').hide();
 
-					if(libs.length > 0) {
-						$('h3.lib').removeClass('notFound').text("Libraries");
-						$.each(libs, function( index, value ) {
-						  dropdownLib.append("<li class='library'>" + value.name + "</li>")
+					if(response.length > 0) {
+						$('h3.lib').removeClass('notFound').text("Libraries & Scripts");
+						$.each(response, function( index, value ) {
+						  dropdownLib.append("<li class='" + value.type + "'>" + value.name + "<span>" + value.type + "</span></li>")
 						});
 					} else {
-						$('h3.lib').addClass('notFound').text("No Libraries Found");
+						$('h3.lib').addClass('notFound').text("No Matches Found");
 						dropdownLib.empty();
-					}
-
-					if(scripts.length > 0) {
-						$('h3.script').removeClass('notFound').text("Scripts");
-						$.each(scripts, function( index, value ) {
-						  dropdownScript.append("<li class='script'>" + value.name + "</li>")
-						});
-					} else {
-						$('h3.script').addClass('notFound').text("No Scripts Found");
-						dropdownScript.empty();
 					}
 				}
 			});
@@ -238,11 +224,14 @@ var scriptClick = false;
 $('body').on('click', '#dropDown li', function(e){
 
 	var thisItem = $(this);
- 	var findMe = $(this).text();
+ 	
+ 	var findMe = thisItem.contents().filter(function() {
+    return this.nodeType == 3;
+	}).text();
 
  	if(compare) {
-
  		if(thisItem.hasClass('script')) {
+
  			$compare.val(findMe);
  			scriptClick = true;
  		} else {
@@ -762,7 +751,7 @@ var UI = {
 
 				//check to see if user already searched for item (exists in chart) to avoid dupes
 				if(jQuery.inArray(newQuery, searchedQueries) == -1) {
-					searchInput.val('');
+					//searchInput.val('');
 			 		getData();
 			 	} else {
 			 		//searchInput.val(newQuery + " already exists on the chart!")
