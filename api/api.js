@@ -174,14 +174,15 @@ MongoClient.connect(MONGO_URL, function(err, db) {
         }
       }, function(err, result) {
         if (err) console.error('Error /v1/search/' + req.params.query, err);
-        res.send({
-          libraries: _.map(result.libraries, function(library) {
-            return { name: library.library, count: library.count };
-          }),
-          scripts: _.map(result.scripts, function(script) {
-            return { name: script.script, count: script.count };
-          })
-        });
+        var combined = _.map(result.libraries, function(library) {
+          return { name: library.library, count: library.count, type: 'library' };
+        }).concat(_.map(result.scripts, function(script) {
+          return { name: script.script, count: script.count, type: 'script' };
+        }));
+        combined.sort(function(r1, r2) {
+          return r2.count - r1.count;
+        })
+        res.send(combined);
       });
     });
   });
