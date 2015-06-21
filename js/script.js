@@ -270,7 +270,7 @@ $dropdownInputs.on('keydown paste', function(e){
 
 	delay(function(){
     var values = thisField.val();
-		var searchURL = 'http://api.libscore.com/v1/search/' + values;
+		var searchURL = 'http://104.131.144.192:3000/v1/search/' + values;
 
 		dropdownLoader.show();
 
