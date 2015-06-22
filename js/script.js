@@ -1083,7 +1083,7 @@ $(window).load(function() {
 			, begin: 
 			function() {
 					var hash = window.location.hash.slice(1);
-
+					
 					if (hash) {
 						$search.attr("placeholder", hash);
 						$search.val(hash);
