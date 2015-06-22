@@ -205,7 +205,7 @@ body {
   @include custom-bezier(all, .4s);
   border-radius: 3px;
   min-height: 42px;
-  overflow: scroll;
+  overflow: hidden;
 
   &.compare {
 		left: 440px;
