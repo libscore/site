@@ -188,6 +188,7 @@ $dropdownInputs.on('keydown paste', function(e){
   		//we want to submit the form, as  nothing is selected
   		if(compare) {
 		 		$("form.addData").submit();
+		 		$bigNumber.fadeOut('500');
 		 	} else {
 		 		UI.query(event.target);
 		 	}
@@ -198,6 +199,7 @@ $dropdownInputs.on('keydown paste', function(e){
 
   		if(compare) {
   			$compare.val(findMe);
+  			$bigNumber.fadeOut('500');
 		 		$("form.addData").submit();
 		 	} else {
 		 		if(thisItem.hasClass('script')) {
