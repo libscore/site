@@ -73,7 +73,7 @@ var $html = $("html"),
 	$compareChart = $(".chartHolder"),
 	$bigNumber = $('.bigNumber'),
   $hasRendered;
-	
+
 
 /**************
     Global
@@ -163,7 +163,7 @@ var delay = (function(){
 })();
 
 $dropdownInputs.on('keydown paste', function(e){
-	
+
 	//keyboard up and down handling.
 	var thisField = $(this);
 	var thisItem = dropdown.find('li.selected');
@@ -220,7 +220,7 @@ $dropdownInputs.on('keydown paste', function(e){
 			//if down
 			if(type == '40'){
 				dropdownLib.find("li:first-child").addClass('selected');
-			} 
+			}
 		} else {
 			var selected = $('.selected');
 			var heightThis = selected.outerHeight();
@@ -251,7 +251,7 @@ $dropdownInputs.on('keydown paste', function(e){
 			} else if(type == '38') {
 				var distanceFromTop = selected.position().top;
 				var currentScroll = dropdownLib.scrollTop();
-	
+
 				//if it isnt the first item of libs continue
 				if(dropdownLib.find('li:first-child').hasClass('selected')) {
 					//console.log('beginning');
@@ -272,7 +272,7 @@ $dropdownInputs.on('keydown paste', function(e){
 
 	delay(function(){
     var values = thisField.val();
-		var searchURL = 'http://api.libscore.com/v1/search/' + values;
+		var searchURL = '//api.libscore.com/v1/search/' + values;
 
 		dropdownLoader.show();
 
@@ -288,7 +288,7 @@ $dropdownInputs.on('keydown paste', function(e){
 			$.ajax({
 				url: searchURL,
 				dataType: "json",
-				success: function (response) { 
+				success: function (response) {
 					dropdownLoader.fadeOut(200);
 					$data.find('.noHover').hide();
 
@@ -320,7 +320,7 @@ var scriptClick = false;
 $('body').on('click', '#dropDown li', function(e){
 
 	var thisItem = $(this);
- 	
+
  	var findMe = thisItem.contents().filter(function() {
     return this.nodeType == 3;
 	}).text();
@@ -368,7 +368,7 @@ var UI = {
 		var data = $search.val();
 		function request (query, callback) {
 			var API = {
-					hostname: "http://api.libscore.com/v1/",
+					hostname: "//api.libscore.com/v1/",
 					librariesPath: "libraries/",
 					sitesPath: "sites/",
 					scriptsPath: "scripts/"
@@ -427,7 +427,7 @@ var UI = {
 			$search.val(query);
 
 			window.history.pushState(null, null, '#' + query);
-			
+
 			if (/^[-A-z0-9]+\.[-A-z0-9]+$/.test(query)) {
 				queryNormalized = "site";
 				query = query.toLowerCase();
@@ -518,14 +518,14 @@ var UI = {
 				switch (UI.requestTarget) {
 					case "site":
 						$data_name.text(data);
-						$columns = "<h3 class='middle'><span>Site: </span><a class='site' target= '_blank' href='http://" + data + "'>" + data + "</a></h3><div class='left'>library</div><div class='right'>site count</div>";
+						$columns = "<h3 class='middle'><span>Site: </span><a class='site' target= '_blank' href='//" + data + "'>" + data + "</a></h3><div class='left'>library</div><div class='right'>site count</div>";
 
 						var isScript = /^script:/.test(match.name);
 
 						if (isScript) {
 						  $matchData = "<td><span data-type='script' data-query='script:" + match.name.replace(/^script:/, "") + "'>" + prettifyName(match.name, match.type) + "</span> <span class='text-green'></span></td>";
 						} else {
-							$matchData = "<td><span  data-type='lib' data-query='" + match.name + "'>" + prettifyName(match.name, match.type) + "</span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
+							$matchData = "<td><span  data-type='lib' data-query='" + match.name + "'>" + prettifyName(match.name, match.type) + "</span><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
 						}
 
 						$matchData += "<td>" + prettifyNumber(match.count) + "</td>";
@@ -545,7 +545,7 @@ var UI = {
 						$bigNumber.fadeIn('500');
 						$data_name.html($search.val() + "<span class='close'>Close Graph</a>");
 						$badge_container.html('');
-						$badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
+						$badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='//107.170.240.125/badge/" + $search.val() + ".svg'></a>");
 
 						var diff = (response.count[0] - response.count[1]) / response.count[1];
 						var percentChange = (diff * 100).toFixed(2);
@@ -561,14 +561,14 @@ var UI = {
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'>Sites </div></div><div class='right'>site rank</div>";
-						$matchData = "<td><span data-type='site' data-query='" + match.url + "'>" + prettifyName(match.url) + "</span><a class='text-green' href='http://" + match.url + "'></a></td>";
+						$matchData = "<td><span data-type='site' data-query='" + match.url + "'>" + prettifyName(match.url) + "</span><a class='text-green' href='//" + match.url + "'></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
 					case "libs":
 						$chartLabel = 'Top Libs';
-						$columns = "<div class='left'>library <a href='http://api.libscore.com/latest/libraries.txt'>Download list</a></div><div class='right'>site count</div>";
-						$matchData = "<td><span data-type='lib' data-query='" + match.library + "'>" + prettifyName(match.library) + "</span><a href='http://" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
+						$columns = "<div class='left'>library <a href='//api.libscore.com/latest/libraries.txt'>Download list</a></div><div class='right'>site count</div>";
+						$matchData = "<td><span data-type='lib' data-query='" + match.library + "'>" + prettifyName(match.library) + "</span><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.count[0]) + "</td>";
 						break;
 
@@ -578,7 +578,7 @@ var UI = {
 						$bigNumber.fadeIn('500');
 						$data_name.html($search.val() + "<span class='close'>Close Graph</a>");
 						$badge_container.html('');
-						$badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='http://107.170.240.125/badge/" + $search.val() + ".svg'></a>");
+						$badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='//api.libscore.com/badge/" + $search.val() + ".svg'></a>");
 
 						var diff = (response.count[0] - response.count[1]) / response.count[1];
 						var percentChange = (diff * 100).toFixed(2);
@@ -595,7 +595,7 @@ var UI = {
 						$chartLabel = data;
             $chartSubLabel = response.count;
 						$columns = "<div class='left'>Sites</div><div class='right'>site rank</div>";
-						$matchData = "<td><span data-type='script' data-query='" + match.url + "'>" + prettifyName(match.url) + "</span><a class='text-green' href='http://" + match.url + "'></a></td>";
+						$matchData = "<td><span data-type='script' data-query='" + match.url + "'>" + prettifyName(match.url) + "</span><a class='text-green' href='//" + match.url + "'></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.rank, true) + "</td>";
 						break;
 
@@ -609,7 +609,7 @@ var UI = {
 
 				$html += "<tr>" + $matchData + "</tr>";
 			});
-    
+
       //if data is available, we are creating a chart, if not, destroying it.
       if(typeof $chartSubLabel === 'undefined'){
         if($hasRendered == true){
@@ -626,7 +626,7 @@ var UI = {
             backgroundColor: 'transparent',
             spacingBottom: 50,
             style: {
-              fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif', 
+              fontFamily: '"Avenir Medium", "Lucida Grande", sans-serif',
               fontSize: '12px'
             }
           },
@@ -718,7 +718,7 @@ var UI = {
             borderWidth: 2,
             backgroundColor: '#ffffff',
             shadow: false,
-            positioner: function(boxWidth, boxHeight, point) {         
+            positioner: function(boxWidth, boxHeight, point) {
               var chart = this.chart,
                 distance = this.distance,
                 ret = {},
@@ -727,7 +727,7 @@ var UI = {
                 second = ['x', chart.chartWidth, boxWidth, point.plotX + chart.plotLeft],
 
                 preferFarSide = point.ttBelow || (chart.inverted && !point.negative) || (!chart.inverted && point.negative),
-                
+
                 firstDimension = function (dim, outerSize, innerSize, point) {
                   var roomLeft = innerSize < point - distance,
                     roomRight = point + distance + innerSize < outerSize,
@@ -746,11 +746,11 @@ var UI = {
                     return false;
                   }
                 },
-                
+
                 secondDimension = function (dim, outerSize, innerSize, point) {
                   if (point < distance || point > outerSize - distance) {
                     return false;
-                  
+
                   } else if (point < innerSize / 2) {
                     ret[dim] = 1;
                   } else if (point > outerSize - innerSize / 2) {
@@ -831,7 +831,7 @@ var UI = {
       var chartData = [];
       var searchedQueries = [];
       var newQuery = '';
-      
+
       $("[data-query]").on('click',function(){
       	searchedQueries = [];
       });
@@ -858,7 +858,7 @@ var UI = {
 
       function getData() {
       	var API = {
-					hostname: "http://api.libscore.com/v1/",
+					hostname: "//api.libscore.com/v1/",
 				}
 				$('.addData .loader').addClass('show');
 
@@ -872,14 +872,14 @@ var UI = {
 					url: API.hostname + path + newQuery + '?limit=1000',
 					dataType: "json",
 					success: function (response) {
-					
+
 						if (response && response.meta) {
 							chartData = response.count;
-							
+
 							if(chartData.length == 0){
 								searchError();
 							} else {
-								setData();	
+								setData();
 							}
 							$('.addData .loader').removeClass('show');
 						}
@@ -1050,7 +1050,7 @@ $(document).ready(function() {
     	$("#subscribe_").addClass("revealedHowTo");
     	$(this).remove();
     	return false;
-    });	
+    });
 
     $("#header-logo").on("click", function (){
 			if ($("body").hasClass("results")) {
@@ -1080,7 +1080,7 @@ $(window).load(function() {
 	$.Velocity.RunSequence([
 		{ elements: $header_logo.add($slogan).add($search_).add($queryButtons).add($howTo).add($howTo.find("p")), properties: "transition.fadeIn", options: { stagger: 50, duration: 300 } },
 		{ elements: $header_code, properties: "transition.fadeIn", options: { sequenceQueue: false, duration: 500
-			, begin: 
+			, begin:
 			function() {
 					var hash = window.location.hash.slice(1);
 					
