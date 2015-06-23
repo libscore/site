@@ -8,7 +8,8 @@ $search = $("#search"),
 $queryButtons = $("#queryButtons span"),
 $howTo = $("#howTo"),
 $dropdownInputs = $(".addData input, #search"),
-$data = $("#data");
+$data = $("#data"),
+$compare = $(".addData input");
 
 $data_name.html("Graph title");
 
@@ -99,8 +100,18 @@ $compareChart.highcharts({
     symbolPadding: 6
   },
   series: [{
-    name: 'Demo',
+    name: 'DemoA',
+    data: [400,300,123,205,799],
+    color: '#29BD66'
+  },
+  {
+    name: 'DemoV',
     data: [23,45,223,555,999],
+    color: '#29BD66'
+  },
+  {
+    name: 'DemoC',
+    data: [223,545,923,1055,1999],
     color: '#29BD66'
   }],
   tooltip: {
