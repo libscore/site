@@ -567,7 +567,7 @@ var UI = {
 
 					case "libs":
 						$chartLabel = 'Top Libs';
-						$columns = "<div class='left'>library <a href='//api.libscore.com/latest/libraries.txt'>Download list</a></div><div class='right'>site count</div>";
+						$columns = "<div class='left'>library</div><div class='right'>site count</div>";
 						$matchData = "<td><span data-type='lib' data-query='" + match.library + "'>" + prettifyName(match.library) + "</span><a href='//" + (match.github ? ("github.com/" + match.github) : "github.com/julianshapiro/libscore/issues/1") + "' data-hint='Click to help track down this library.' class='github'></a></td>";
 						$matchData += "<td>" + prettifyNumber(match.count[0]) + "</td>";
 						break;
