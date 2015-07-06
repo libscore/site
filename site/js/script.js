@@ -398,6 +398,7 @@ var UI = {
 							$html.css("cursor", "default");
 						},
 						success: function (response) {
+
 							if (response && response.meta) {
 								$(window).scrollTop(0);
 								callback(response);
@@ -540,6 +541,7 @@ var UI = {
 						break;
 
 					case "lib":
+
 						$libCount = Number(response.count[0]).toLocaleString('en');
 						$bigNumber.text($libCount);
 						$bigNumber.fadeIn('500');
@@ -960,11 +962,12 @@ var UI = {
 				.scrollTop = 0;
 
 			if ($html) {
+
 				$data_cols.html($columns);
 				$data_table.html($html);
 			} else {
-				$data_cols.html("")
-				$data.html("<p class='noHover'>No libraries or scripts were detected!</p>");
+				$data_cols.html("");
+				$data_table.html("<p class='noHover'>No libraries or scripts were detected!</p>");
 			}
 
 			if (matches.length > 900) {
