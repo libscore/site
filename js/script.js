@@ -636,7 +636,7 @@ var UI = {
             text: ''
           },
           xAxis: {
-            categories: ['Jan', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'],
+            categories: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'Jun', 'Jul'],
             title: {
               enabled: false
             },
