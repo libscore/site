@@ -547,7 +547,7 @@ var UI = {
 						$bigNumber.fadeIn('500');
 						$data_name.html($search.val() + "<span class='close'>Close Graph</a>");
 						$badge_container.html('');
-						$badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='//107.170.240.125/badge/" + $search.val() + ".svg'></a>");
+						// $badge_container.append("<a class='badge' id='direction' title='View the Libscore "+ $search.val() +" Badge' href='//107.170.240.125/badge/" + $search.val() + ".svg'></a>");
 
 						var diff = (response.count[0] - response.count[1]) / response.count[1];
 						var percentChange = (diff * 100).toFixed(2);
@@ -1086,7 +1086,7 @@ $(window).load(function() {
 			, begin:
 			function() {
 					var hash = window.location.hash.slice(1);
-					
+
 					if (hash) {
 						$search.attr("placeholder", hash);
 						$search.val(hash);
